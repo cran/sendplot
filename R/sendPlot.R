@@ -9,21 +9,41 @@ sendplot <- function(mat, plot.calls, x,y, mai.mat=NA, xlim=NA, ylim=NA,
                      z.value="value",type="scatterplot", plt.extras = NA,
                      x.lbls=NA, y.lbls=NA,
                      xy.lbls=NA,
-                     bound.pt = TRUE,
-                     resize="4000x5500", ps.paper="letter",
-                     ps.width=8,ps.height=11,fname.root="test",dir="./",
-                     kolourpaint=TRUE, up.left=c(673,715),low.right=c(2874,4481),
+                     bound.pt = TRUE, source.plot=NA,
+                     resize="4000x5500",
+                     ps.paper="letter",ps.width=8,ps.height=11,
+                     fname.root="test",dir="./",
+                     paint=TRUE, img.prog = NA, up.left=c(673,715),low.right=c(2874,4481),
                      spot.radius=10
                      ){
 
+  
+  # figure out operating system 
+  platform = .Platform$OS.type
+  # if source.plot is not specified default to appropriate file
+  #  source plot can only by png or ps 
+  if(is.na(source.plot) | !(source.plot=="ps" | source.plot=="png")){
+    if(platform == "unix") source.plot = "ps"
+    if(platform == "windows" | platform == "mac") source.plot = "png"   
+  }
+    
   # set up file names
   fname.ps=paste(fname.root,".ps",sep="")
   fname.png=paste(fname.root,".png",sep="")
-
-  # begin postscript file
-  postscript(file=paste(dir,fname.ps,sep=""),paper=ps.paper,width=ps.width,height=ps.height,horizontal=FALSE)
-
-  # initiate layout  
+  
+  # begin png file if flagged
+  if(source.plot=="png"){
+    wi = strsplit(resize, "x")[[1]][1]
+    hi = strsplit(resize, "x")[[1]][2]
+    png(file=fname.png, width=as.real(wi), height=as.real(hi))
+  }
+  # begin postscript file if flagged
+  if(source.plot=="ps"){
+    postscript(file=paste(dir,fname.ps,sep=""),paper=ps.paper,width=ps.width,height=ps.height,horizontal=FALSE)
+  }
+  
+  # initiate layout
+  # lcm(c())
   nf = layout(mat, respect=TRUE)
  
   # loop over plot calls to place plots in order or 1:n in layout
@@ -98,12 +118,26 @@ sendplot <- function(mat, plot.calls, x,y, mai.mat=NA, xlim=NA, ylim=NA,
   # turn off postscript device
   dev.off()
 
-  # convert ps to png
-  system(paste("convert ",dir,fname.ps," -size 800x1100 -resize ",resize," ",dir,fname.png,sep=""))
-  # if flagged system call to open kolourpaint
+  
+  # convert ps to png if ps was made and on unix OS
+  if(source.plot=="ps" & platform=="unix"){
+    system(paste("convert ",dir,fname.ps," -size 800x1100 -resize ",resize," ",dir,fname.png,sep=""))
+  }
+    
+  # if flagged system call to open paint
   # if first time running program to find upper left and lower right corners of main plot
-  if(kolourpaint) system(paste("kolourpaint ", dir,fname.png," &", sep=""))
-
+  if(paint){
+    
+    if(is.na(img.prog)){      
+      if(platform=="unix") system(paste("kolourpaint ", dir,fname.png," &", sep=""))
+      if(platform=="windows") system(paste("mspaint ", dir,fname.png," &", sep=""))
+      if(platform=="mac") cat("automatic open is not supported in this version for MAC OS \n")
+    }else{
+      # some other program has been specified to open png image
+      system(paste(img.prog, " ", dir, fname.png, " &", sep=""))
+    }    
+  }
+    
   # if flagged make interactive html
   if(!bound.pt){ 
   

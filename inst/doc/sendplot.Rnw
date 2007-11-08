@@ -14,9 +14,9 @@
 
 \quad sendplot creates an interactive plot with any number of decoration plots also being displayed. Although the creation of these files must be in R, R is not required for viewing output. The necessary elements for viewing an interactive plot is a web browser that has javascript capabilities. The code used to create this is a modified version of the javascript code from \\
 http://www.onlamp.com/pub/a/onlamp/2007/07/05/writing-advanced-javascript.html . 
-Currently we recommend using mozilla firefox web browser since Internet Explorer does not meet requirements for viewing. Compatiblity issues will be resolved in future versions. This current version only runs in linux. Platform compatibility will also be resolved in future versions.\\
+Currently we recommend using mozilla firefox web browser since Internet Explorer does not meet requirements for viewing. Compatiblity issues will be resolved in future versions.\\
 
-\quad We will now go through an example of running this application. This example is a more advanced usage; for basic examples please see the R help files for sendplot, sendxy or sendimage. We will go through the steps to make Figure 1 where the main image heatmap is interactive.
+\quad We will now go through an example of running this application. This example is a more advanced usage; for basic examples please see the R help files for sendplot, sendxy or sendimage; sendxy and sendimage are wrappers to the sendplot function that will create a single interactive scatterplot or image plot. We will go through the steps to make Figure 1 where the main image heatmap is interactive.
 
 \begin{center}
 \begin{figure}
@@ -38,9 +38,9 @@ Lets look at each argument of the sendplot function call. As a reminder the send
 sendplot <- function(mat, plot.calls, mai.mat, x,y, xlim, ylim,
                      z=NA, z.value="value",type="scatterplot", plt.extras = NA,
                      x.lbls=NA, y.lbls=NA, xy.lbls=NA,
-                     bound.pt = TRUE,resize="4000x5500", ps.paper="letter",
+                     bound.pt = TRUE,source.plot=NA,resize="4000x5500", ps.paper="letter",
                      ps.width=8,ps.height=11,fname.root="test",dir="./",
-                     kolourpaint=TRUE, 
+                     paint=TRUE,  img.prog = NA,
                      up.left=c(673,715),low.right=c(2874,4481),
                      spot.radius=10
                      )
@@ -494,7 +494,6 @@ y.lbls=aCGH$mapping.info[scanDX,c(5,6,8,10,12)]
 
 @ 
 \quad In our example the y values are BACs of specific genomic location. We selected a specific range of BACs by setting scanDX. There are 98 different y value locations and therefore y.lbls will have 98 rows. The y.lbls data frame is smilar to the x.lbls data frame in that it is of the dimension n by m where n is equal to the length of y. Each row of the y.lbl is specific to a certain y value and the rows should be ordered to correspond with the ordering of the graph. Each column of the y.lbls data frame is a unique piece of data. We wish to display the information for genomic location, chromosome, arm, broad.band, and fine.band location in the interactive display. The aCGH object contains a data.frame that holds information about the BACs; The corresponding columns in that data.frame are 5, 6, 8. 10, and 12. \\
-
 \quad The xy.lbls argument is a little different because it is specific to both the selected x value and y value. The xy.lbls argument is therefore a list of matricies; Each matrix is of the dimension n by m where n is equal to the length of y and m is equal to the length of x. For our example the only xy specific data we have are raw log2 ratios and the log2 ratios that have been fitted by circular binary segmentation. Since we have used the fitted log 2 ratios as the z value to create the heatmap, these values are included automatically in the interactive display. Our example therefore has one matrix in the xy.lbls list. 
 
 <<results=hide>>=   
@@ -502,17 +501,17 @@ xy.lbls=list();
 log2.ratio = as.matrix(aCGH$log2.ratios[,hc$order])
 xy.lbls$log2.ratio = log2.ratio
 
-@ 
-\quad The sendplot arguments ps.paper, ps.width, and ps.height are passed into the postscript call for paper, width, and height. A postscript, static image, is generated automatically when the sendplot function is called. The resize argument is passed as part of a system convert command to convert the postscript to the .png. The original 800 by 1100 image is resized to this dimension. This helps expand condensed looking images, or visa versa. For our example plot we wish to resize making the final image smaller in both width and height. 
+@
+\quad The source.plot argument controls what file formats are created. The interactive html file requires a .png file. There are two possible scenerios for making a png file:
+the png file may be made directly, or a postscript file may be made first and then converted into a png file. source.plot will be ps if the postscript file should be created and will be png if the png file should be made directly. If NA, source.plot will be determined by the operating system.  We recommend making the postscript file and converting to the png file because we feel it maintains better clarity and quality. There is a convert call that is automatically executed on linux/unix machines to convert a postscript file into a png file. This convert call is not available for windows users. If a windows or mac user decides to go to postscript first, it is up to the user to convert the file into the appropriate, readable .png file. For this reason if source.plot is left NA, for linux/unix the default is ps and for windows/mac the default is png. If a postscript file is used the sendplot arguments ps.paper, ps.width, and ps.height are passed into the postscript call for paper, width, and height.\\
+\quad The resize argument used different ways depending if source.plot is ps or png. If source.plot is ps, resize is passed as part of a system convert command to convert the postscript to the .png. The original image is resized to this dimension. This helps expand condensed looking images, or visa versa. If source.plot is png, the argument is parsed and the dimensions are passed into the R grDevices package function png as the width and height arguments. For our example plot we wish to resize making the final image smaller in both width and height. 
 
 <<results=hide>>=
  resize="600x900"
 
 @ 
 \quad The arguments fname.root and dir define the name and path of the postscript, png, and html files created. dir is the path of the directory that the files should be created in. The default directory is the currently working directory. fname.root is the base name of the files. The postscript, png, and html file will all have the same name with different extensions. For example, if fname.root =  \"test\"   then the files generated will be test.ps, test.png, and test.html. \\
-
-
-\quad The key to the interactive html is correct mappings of the x and y values in R to pixel locations of the .png. The function will automatically generate this mapping, however the information in up.left and low.right must be accurate. up.left and low.right refer to the upper left hand corner and lower right hand corner of the first, main plot generated. If this is an image it is the corners of the image generated. If this is a scatterplot, it is the corners of the bounding box generated. The sendplot function may need to be run twice to get the finialized interactive version. Consider running our example with the default up.left = (673, 715) and low.right=c(2874,4481). The mappings for the data points will not be correct and the interactive html file will appear not to work correctly. If the correct pixel locations are not known, the png file must be opened in some viewer that will tell pixel locations. We have provided an option to open the png file in kolourpaint. If kolourpaint is TRUE, the png file will open automatically. As stated before, for an image the corners of the image should be used. A scatterplot however is more challenging. A buffer is added to the plot so the bounding box is not clear. When the bounding box location is not known the sendplot argument bound.pt should be TRUE. This will add two red points where the pixel locations should be recorded. (NOTE: blue points are added to an image). If bound.pt is TRUE only the ps and png image is created, not the interactive html file since the mapping would be incorrect. Figure 5 is a snapshot of the sendplot help function example for scatterplot opened in kolourpaint:
+\quad The key to the interactive html is correct mappings of the x and y values in R to pixel locations of the .png. The function will automatically generate this mapping, however the information in up.left and low.right must be accurate. up.left and low.right refer to the upper left hand corner and lower right hand corner of the first, main plot generated. If this is an image it is the corners of the image generated. If this is a scatterplot, it is the corners of the bounding box generated. The sendplot function may need to be run twice to get the finialized interactive version. Consider running our example with the default up.left = (673, 715) and low.right=c(2874,4481). The mappings for the data points will not be correct and the interactive html file will appear not to work correctly. If the correct pixel locations are not known, the png file must be opened in some viewer that will tell pixel locations. We have provided a options to open the png file in default applications or a given application call. This is controlled by the sendplot argument paint. If paint is TRUE, the .png file is openned by the call given by img.prog. If img.prog is NA, the application is determined by the operating system. If unix/linux the kolourpaint application (img.prog=\"kolourpaint\") is used. In windows the microsoft paint application (img.prog=\"mspaint\") is used. Other application may be specified but the user should make sure img.prog is the command line call to execute the application. If paint is TRUE, the png file will open automatically in the appropriate program; we will consider kolourpaint and mspaint for our example. As stated before, for an image the corners of the image should be used. A scatterplot however is more challenging. A buffer is added to the plot so the bounding box is not clear. When the bounding box location is not known the sendplot argument bound.pt should be TRUE. This will add two red points where the pixel locations should be recorded. (NOTE: blue points are added to an image). If bound.pt is TRUE only the ps and/or png image is created, not the interactive html file since the mapping would be incorrect. Figure 5 is a snapshot of the sendplot help function example for scatterplot opened in kolourpaint:
 
 \begin{center}
 \begin{figure}
@@ -528,7 +527,8 @@ sendplot(mat=mat, plot.calls=plot.calls, mai.mat=mai.mat,
          x=x,y=y,z=z,xlim=NA,ylim=NA, z.value=z.value, type="image",
          plt.extras=plt.extras, x.lbls=x.lbls, y.lbls=y.lbls,xy.lbls=xy.lbls, 
          spot.radius=3,up.left=c(673,715),low.right=c(2874,4481),
-         resize=resize,bound.pt=TRUE, kolourpaint=TRUE)
+         source.plot=NA, img.prog=TRUE,
+         resize=resize,bound.pt=TRUE, paint=TRUE)
 \end{verbatim}
 
 
@@ -540,17 +540,27 @@ sendplot(mat=mat, plot.calls=plot.calls, mai.mat=mai.mat,
 \end{figure}
 \end{center}
 
-\quad In Figure 6, We have circled the mouse location in blue to aid in viewing. Your mouse will not have the blue circle surrounding it. The pixel location at this location is 83,97. This therefore should be used as the up.left location. The lower right pixel location is 430, 635. After these values are determined, the sendplot function call should be run again, changing only the up.left, up.right, kolourpaint, and bound.pt argument. up.left and low.right should be updated accordingly. kolourpaint and bound.pt should be tripped to FALSE. The following will make the correct interactive plot.
+\quad In Figure 6, We have circled the mouse location in blue to aid in viewing. Your mouse will not have the blue circle surrounding it. The pixel location at this location is 83,97. This therefore should be used as the up.left location. The lower right pixel location is 430, 635. After these values are determined, the sendplot function call should be run again, changing only the up.left, up.right, paint, and bound.pt argument. up.left and low.right should be updated accordingly. paint and bound.pt should be tripped to FALSE. (NOTE: these are the correct up.left and low.right boundaries when the png is created from the postscript in linux/unix environment. If the png file was generated directly, like when in a windows envirnoment, the up.left and low.right values of this example may be slightly different).  The following will make the correct interactive plot.
 
 <<results=hide>>=
 sendplot(mat=mat, plot.calls=plot.calls, mai.mat=mai.mat,
          x=x,y=y,z=z,xlim=NA,ylim=NA, z.value=z.value, type="image",
          plt.extras=plt.extras, x.lbls=x.lbls, y.lbls=y.lbls,xy.lbls=xy.lbls, 
          spot.radius=3,up.left=c(83,97),low.right=c(430,635),
-         resize=resize, bound.pt=FALSE, kolourpaint=FALSE)
+         source.plot=NA, img.prog=TRUE,
+         resize=resize, bound.pt=FALSE, paint=FALSE)
 
 @ 
-The resulting html file may be openned in any web browser that is capable of running javascript. We recommend using mozilla firefox; Internet Explorer currently is not supported. Briefly, the spot.radius argument controls how large an area will be active when the mouse is scrolled over. If the user selects a larger region, some spot locations may overlap and be lost. If the user selects a low region, the interactive application is very sensitive. 
+\quad The resulting html file may be openned in any web browser that is capable of running javascript. We recommend using mozilla firefox; Internet Explorer currently is not supported. Figure 7 shows a snapshot of the final graph opened in firefox. Notice how the appropriate information for the region located under the white arrow is displayed in the information box.
+
+\begin{center}
+\begin{figure}
+\includegraphics{sendPlot4}
+\caption{snapshot of our example html file opened in firefox. The information is displayed for the region under the white arrow.}
+\end{figure}
+\end{center}
+
+\quad  Briefly, the spot.radius argument controls how large an area will be active when the mouse is scrolled over. If the user selects a larger region, some spot locations may overlap and be lost. If the user selects a low region, the interactive application is very sensitive. 
 
 
 \end{document}

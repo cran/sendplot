@@ -16,7 +16,8 @@ sendimage(plot.call,
           z.value="value",
           x.lbls = NA,y.lbls=NA,xy.lbls=NA,
           mai=NA, plt.extras=NA,
-          bound.pt=TRUE, kolourpaint=TRUE,
+          bound.pt=TRUE, source.plot=NA,
+          paint=TRUE, img.prog=NA,
           resize="800x1100",
           ps.paper="letter",ps.width=8,ps.height=11,
           fname.root="test",dir="./",
@@ -50,9 +51,24 @@ sendimage(plot.call,
     aid in finding the upper left and lower right coordinates. If
     bound.pt is FALSE, indicates that up.left and low.right arguments
     are correct and will make the html file }
-  \item{kolourpaint}{logical indicating if kolourpaint should
+  \item{source.plot}{Indicates whether application should make a
+    postscript file and then convert to png file, or if the png file
+    should be made directly. This value is either ps, png, or NA. If NA
+    the operating system is checked and the appropraite file format is
+    output. Unix has a convert function that can convert a ps file to
+    png file; we by default use this setup because we feel the
+    postscript file maintains better quality. So on unix/linux systems
+    if source.plot is NA, source.plot will be set to ps. Windows does
+    not have this option, for this reason source.plot will be set to png
+    if left NA}
+  \item{paint}{logical indicating if application should
     automatically open .png file for the user to view .png file and/or
     to retrieve needed bounding values of the plot call}
+  \item{img.prog}{If paint is TRUE, the command line call that will open
+    a program to view .png file to retrieve pixil locations of interactive
+    plot bounds. If this is left NA, the operating system is checked and
+    a default program is used. For unix the default application is
+    kolourpaint and for windows it is microsoft paint (mspaint)}
   \item{resize}{character indicating resize value. The postscript
     version will be resized to this value when converted to .png.}
   \item{ps.paper}{postscript paper argument}
@@ -84,13 +100,40 @@ sendimage(plot.call,
   the image. These pixel coordinates change when the postscript
   file is converted into a .png file if the resize option is used. The
   .png file must be opened in some image viewer that allows the user to
-  retrieve pixel coordinates. We recommend and have built in an
-  automatic open into kolourpaint.  If bound.pt is T, two blue points
-  will appear in the image to indicate the edges of the bounding
-  box. box. If bound.pt is T, two red points will appear in the
-  scatterplot. When the file is opened in kolourpaint, the user need
-  only to record the pixel location when the mouse hovers over these blue
-  points (NOTE: in kolourpaint the pixel location appears on the bottom
+  retrieve pixel coordinates. There are two possible scenerios for making
+  a png file:the png file may be made directly, or a postscript file may
+  be made first that then must be converted into a png file. We
+  recommend the later because we feel it maintains better clarity and
+  quality. Whether the ps or png file is made is controlled by
+  source.plot. source.plot may be ps, png, or NA. If ps, the postscript
+  file is created; if this option is chosen and the operating system is
+  unix/linux there is an automatic call to the convert function to
+  convert the postscript into a png file. If png, the .png file is
+  created. If source.plot is NA, the operating system is checked and the
+  appropriate file format is generated. By default, if the operating
+  system is unix/linux, the postscript is created and then converted to
+  png. If the operating system is windows or mac, the png file is
+  created directly. If the ps option is used on windows or mac, it is up
+  to the user to correctly convert the postscript to a png file
+  format. As mentioned above, once the png file is created the pixil
+  locations of the bounding box must be known. If paint is TRUE, the png
+  file is openned with the program given by img.prog. If img.prog is NA,
+  the application used to view the image is determined by the operating
+  system. In windows,img.prog is mspaint which will open the .png file
+  in microsoft paint. In linux/unix, img.prog is kolourpaint. img.prog
+  may be any command line call to a graphics program for viewing .png
+  files. As mentioned above, once the png file is created the pixil
+  locations of the bounding box must be known. If paint is TRUE, the png
+  file is openned with the program given by img.prog. If img.prog is NA,
+  the application used to view the image is determined by the operating
+  system. In windows,img.prog is mspaint which will open the .png file
+  in microsoft paint. In linux/unix, img.prog is kolourpaint. img.prog
+  may be any command line call to a graphics program for viewing .png
+  files.If bound.pt is T, two blue points will appear in the image to
+  indicate the edges of the bounding box. When the file is opened in
+  kolourpaint or mspaint, the user need only to record the pixel
+  location when the mouse hovers over these blue points (NOTE: in
+  kolourpaint and mspaint the pixel location appears on the bottom
   of the window).When bound.pt is TRUE the function assumes that the user
   needs to find the pixel locations of the bounding box and will not
   make the html file. The interactive html file is only created when
@@ -128,9 +171,7 @@ sendimage(plot.call,
 \references{\url{http://www.onlamp.com/pub/a/onlamp/2007/07/05/writing-advanced-javascript.html}}
 
 \note{
-  The sendplot function currently only works in the linux environment.  A
-  windows compatible version will be available in a future version. 
-
+ 
   The interactive html plot currently only works in web browsers that
   implement java script. This means it will work with Mozilla
   Firefox but not with Internet Explorer at this time.
@@ -167,8 +208,8 @@ sendimage(plot.call,
 
  sendimage(plot.call = plot.calls, x=x, y=y, z=z,
            up.left=c(162,75),low.right=c(662,947),
-           bound.pt=FALSE, kolourpaint=FALSE,
-           fname.root="testImg"  )
+           bound.pt=FALSE, source.plot=NA, paint=FALSE,
+           img.prog=NA,fname.root="testImg"  )
 
 
 

@@ -15,10 +15,10 @@ html file with an interactive version of the image.
 sendplot(mat, plot.calls,  x,y, mai.mat=NA, xlim=NA, ylim=NA,
          z=NA,z.value="value", type="scatterplot", plt.extras =NA,
          x.lbls=NA, y.lbls=NA, xy.lbls=NA,
-         bound.pt = TRUE,
+         bound.pt = TRUE,source.plot=NA,
          resize="4000x5500", ps.paper="letter",ps.width=8,
          ps.height=11,fname.root="test",dir="./",
-         kolourpaint=TRUE, 
+         paint=TRUE, img.prog = NA,
          up.left=c(673,715),low.right=c(2874,4481),
          spot.radius=10)
 }
@@ -68,6 +68,16 @@ sendplot(mat, plot.calls,  x,y, mai.mat=NA, xlim=NA, ylim=NA,
     aid in finding the upper left and lower right coordinates of a
     scatterplot. If bound.pt is FALSE, indicates that up.left and
     low.right arguments are correct and will make the html file}
+  \item{source.plot}{Indicates whether application should make a
+    postscript file and then convert to png file, or if the png file
+    should be made directly. This value is either ps, png, or NA. If NA
+    the operating system is checked and the appropraite file format is
+    output. Unix has a convert function that can convert a ps file to
+    png file; we by default use this setup because we feel the
+    postscript file maintains better quality. So on unix/linux systems
+    if source.plot is NA, source.plot will be set to ps. Windows does
+    not have this option, for this reason source.plot will be set to png
+    if left NA}
   \item{resize}{character indicating resize value. The postscript
     version will be resized to this value when converted to .png.}
   \item{ps.paper}{postscript paper argument}
@@ -76,9 +86,15 @@ sendplot(mat, plot.calls,  x,y, mai.mat=NA, xlim=NA, ylim=NA,
   \item{fname.root}{Base name to use for posctscript, .png, and html
     file names.}
   \item{dir}{directory path to where files should be created}
-  \item{kolourpaint}{logical indicating if kolourpaint should
+  \item{paint}{logical indicating if application should
     automatically open .png file for the user to view .png file and/or
-    to retrieve needed bounding values of the first plot call. see details}
+    to retrieve needed bounding values of the first plot call. see
+    details}
+  \item{img.prog}{If paint is TRUE, the command line call that will open
+    a program to view .png file to retrieve pixil locations of interactive
+    plot bounds. If this is left NA, the operating system is checked and
+    a default program is used. For unix the default application is
+    kolourpaint and for windows it is microsoft paint (mspaint)}
   \item{up.left}{The x and y value in pixels of the upper left hand
     corner of the first plot call. see details}
   \item{low.right}{The x and y value in pixels of the lower right hand
@@ -105,18 +121,39 @@ sendplot(mat, plot.calls,  x,y, mai.mat=NA, xlim=NA, ylim=NA,
   coordinates change when the postscript file is converted into a .png
   file if the resize option is used. The .png file must be opened in
   some image viewer that allows the user to retrieve pixel
-  coordinates. We recommend and have built in an automatic open into
-  kolourpaint. The general plot call in R adds a buffer before the axis,
-  for this reason we add two points at the bounding box. If bound.pt is
-  T, two red points will appear in the scatterplot. When the file is
-  opened in kolourpaint, the user need only to record the pixel location
-  when the mouse hovers over these red points (NOTE: in kolourpaint the
+  coordinates. There are two possible scenerios for making a png file:
+  the png file may be made directly, or a postscript file may be made
+  first that then must be converted into a png file. We recommend the
+  later because we feel it maintains better clarity and quality. Whether
+  the ps or png file is made is controlled by source.plot. source.plot
+  may be ps, png, or NA. If ps, the postscript file is created; if
+  this option is chosen and the operating system is unix/linux there is
+  an automatic call to the convert function to convert the postscript
+  into a png file. If png, the .png file is created. If source.plot is
+  NA, the operating system is checked and the appropriate file format is
+  generated. By default, if the operating system is unix/linux, the
+  postscript is created and then converted to png. If the operating
+  system is windows or mac, the png file is created directly. If the ps
+  option is used on windows or mac, it is up to the user to correctly
+  convert the postscript to a png file format. As mentioned above, once
+  the png file is created the pixil locations of the bounding box must
+  be known. If paint is TRUE, the png file is openned with the program
+  given by img.prog. If img.prog is NA, the application used to view the
+  image is determined by the operating system. In windows,img.prog is
+  mspaint which will open the .png file in microsoft paint. In
+  linux/unix, img.prog is kolourpaint. img.prog may be any command line
+  call to a graphics program for viewing .png files. The general plot
+  call in R adds a buffer before the axis, for this reason we add two
+  points at the bounding box. If bound.pt is T, two red points will
+  appear in the scatterplot. When the file is opened in kolourpaint or
+  mspaint, the user need only to record the pixel location when the
+  mouse hovers over these red points (NOTE: in kolourpaint and mspaint the
   pixel location appears on the bottom of the window). If an image is
   desired as the main plot, the upper left and lower right corner of the
   image should be the points used. When the file is opened in
-  kolourpaint, the user need only to record the pixel location when the
-  mouse hovers over these edges. If bound.pt is T, two blue points will
-  appear in the image at these edges to aid in finding the
+  kolourpaint or mspaint, the user need only to record the pixel
+  location when the mouse hovers over these edges. If bound.pt is T, two
+  blue points will appear in the image at these edges to aid in finding the
   location. When bound.pt is TRUE the function assumes that the user
   needs to find the pixel locations of the bounding box and will not
   make the html file. The interactive html file is only created when
@@ -165,9 +202,6 @@ sendplot(mat, plot.calls,  x,y, mai.mat=NA, xlim=NA, ylim=NA,
   interactive, the x and y values of the sendplot argument would be a
   combination of all plotted points. 
   
-  The sendplot function currently only works in the linux environment. A
-  windows compatible version will be available in a future version. 
-
   The interactive html plot currently only works in web browsers that
   implement java script. This means it will work with Mozilla
   Firefox but not with Internet Explorer at this time.
@@ -183,7 +217,8 @@ sendplot(mat, plot.calls,  x,y, mai.mat=NA, xlim=NA, ylim=NA,
 \seealso{\code{layout}, \code{postscript}, \code{\link{sendxy}}, \code{\link{sendimage}}}
 
 \examples{
-# see Sweave for more advanced example
+# see vignette for more advanced example
+
 
 #
 # first example of scatterplot
@@ -191,8 +226,13 @@ sendplot(mat, plot.calls,  x,y, mai.mat=NA, xlim=NA, ylim=NA,
 # note: we assume that the function has already been run once
 #       to retrieve the pixel locations of the upper left and lower
 #       right corners. If this had not been the case, the function would
-#       need to have been run with bound.pt = T, perhaps kolourpaint = T
+#       need to have been run with bound.pt = T, perhaps paint = T
 #       
+#
+# The up.left and low.right values are correct if run in 
+#  unix/linux environment - for window users the coordinates will not be
+#  correct
+
 
 library(sendplot)
 
@@ -238,13 +278,12 @@ x.lbls = as.data.frame(x.lbls)
 
 
 
-
 sendplot(mat, plot.calls, mai.mat,
          xlim=xlim, ylim=ylim,type="scatterplot",
          x=x,y=y,z=NA,
-         x.lbls=x.lbls, y.lbls=NA, xy.lbls=NA,
+         x.lbls=x.lbls, y.lbls=NA, xy.lbls=NA, source.plot=NA,
          resize="1200x1700", fname.root="testScatterplot",dir="",
-         kolourpaint=FALSE, bound.pt=FALSE,
+         paint=FALSE, bound.pt=FALSE,img.prog = NA,
          spot.radius=5, up.left=c(186,199),low.right=c(767,1264))
 
 # there will now be a static postscript and .png file that may be viewed
@@ -260,8 +299,12 @@ sendplot(mat, plot.calls, mai.mat,
 # note: we assume that the function has already been run once
 #       to retrieve the pixel locations of the upper left and lower
 #       right corners. If this had not been the case, the function would
-#       need to have been run with perhaps kolourpaint = T 
+#       need to have been run with perhaps paint = T 
 #       
+#
+# The up.left and low.right values are correct if run in 
+#  unix/linux environment - for window users the coordinates will not be
+#  correct
 
 
 library(sendplot)
@@ -316,8 +359,8 @@ sendplot(mat, plot.calls, mai.mat,
          xlim=NA, ylim=NA,type="image",
          x=x,y=y,z=z, z.value="value",
          x.lbls=x.lbls, y.lbls = y.lbls, xy.lbls=xy.lbls,
-         resize="1200x1700", fname.root="testimage",
-         dir="", kolourpaint=FALSE, bound.pt=FALSE, spot.radius=8,
+         resize="1200x1700", fname.root="testimage",source.plot=NA,
+         dir="", paint=FALSE,img.prog = NA, bound.pt=FALSE, spot.radius=8,
          up.left=c(163,156),low.right=c(790,1310))
 
 
