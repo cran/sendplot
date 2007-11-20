@@ -10,13 +10,13 @@ sendimage <- function(plot.call,
                    x, y, z,
                    z.value="value",
                    x.lbls = NA,y.lbls=NA,xy.lbls=NA,
-                   mai=NA,
+                   mai=NA,mai.prc=FALSE,
                    plt.extras=NA,
                    bound.pt=TRUE, source.plot=NA,
                    paint=TRUE, img.prog=NA,
                    resize="800x1100",
                    ps.paper="letter",ps.width=8,ps.height=11,
-                   fname.root="test",dir="./",
+                   fname.root="test",dir="./",header="v2",
                    up.left=c(188,103),low.right=c(648,912),
                    spot.radius=10
                    ){
@@ -51,7 +51,7 @@ sendimage <- function(plot.call,
     plt.extras$plot1 = plt
   }
   # run sendplot using default or set arguments
-  sendplot(mat = mat, plot.calls = plot.calls, mai.mat = mai.mat , type="image",x = x, y = y,z=z, z.value=z.value, plt.extras=plt.extras, x.lbls = x.lbls,y.lbls = y.lbls,xy.lbls = xy.lbls,bound.pt=bound.pt,resize=resize, ps.paper=ps.paper,ps.width=ps.width,ps.height=ps.height,fname.root=fname.root,dir=dir, paint=paint,source.plot=source.plot, img.prog=img.prog,up.left=up.left,low.right=low.right,spot.radius=spot.radius)
+  sendplot(mat = mat, plot.calls = plot.calls, mai.mat = mai.mat ,mai.prc=mai.prc, type="image",x = x, y = y,z=z, z.value=z.value, plt.extras=plt.extras, x.lbls = x.lbls,y.lbls = y.lbls,xy.lbls = xy.lbls,bound.pt=bound.pt,resize=resize, ps.paper=ps.paper,ps.width=ps.width,ps.height=ps.height,fname.root=fname.root,dir=dir, paint=paint,source.plot=source.plot, img.prog=img.prog,up.left=up.left,low.right=low.right,spot.radius=spot.radius, header=header)
 
   
 }# end sendimage

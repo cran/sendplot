@@ -12,12 +12,12 @@ html file with an interactive version of the image.
 }
 
 \usage{
-sendplot(mat, plot.calls,  x,y, mai.mat=NA, xlim=NA, ylim=NA,
+sendplot(mat, plot.calls,  x,y, mai.mat=NA, mai.prc=FALSE, xlim=NA, ylim=NA,
          z=NA,z.value="value", type="scatterplot", plt.extras =NA,
          x.lbls=NA, y.lbls=NA, xy.lbls=NA,
          bound.pt = TRUE,source.plot=NA,
          resize="4000x5500", ps.paper="letter",ps.width=8,
-         ps.height=11,fname.root="test",dir="./",
+         ps.height=11,fname.root="test",dir="./",header="v2",
          paint=TRUE, img.prog = NA,
          up.left=c(673,715),low.right=c(2874,4481),
          spot.radius=10)
@@ -34,6 +34,8 @@ sendplot(mat, plot.calls,  x,y, mai.mat=NA, xlim=NA, ylim=NA,
   \item{mai.mat}{ n x 4 matrix of values to be passed in for each plots
     par mai. n is equal to the length of plot.calls. If NA, uses default
     margins}
+  \item{mai.prc}{logical indicating if mai mat values are percentages
+    or hard coded values. If mai.proc is T, indicates percentage.}
   \item{xlim}{xlim values for the first plot call. This is required to
     set up intereactive plot for scatterplots. May be left NA. If this
     is NA and type is scatterplot the xlim will become the range of x values}
@@ -90,6 +92,10 @@ sendplot(mat, plot.calls,  x,y, mai.mat=NA, xlim=NA, ylim=NA,
     automatically open .png file for the user to view .png file and/or
     to retrieve needed bounding values of the first plot call. see
     details}
+  \item{header}{May either be v1 or v2. This determines which
+    tooltip header will be in the html file. Each version has different
+    features or works well with different web browsers. see sp.header
+    for details.}
   \item{img.prog}{If paint is TRUE, the command line call that will open
     a program to view .png file to retrieve pixil locations of interactive
     plot bounds. If this is left NA, the operating system is checked and
@@ -191,8 +197,12 @@ sendplot(mat, plot.calls,  x,y, mai.mat=NA, xlim=NA, ylim=NA,
 
 \value{Creates a static .ps and .png file, and an interactive html file}
 
-\references{\url{http://www.onlamp.com/pub/a/onlamp/2007/07/05/writing-advanced-javascript.html}}
+\references{
+  
+  \url{http://www.onlamp.com/pub/a/onlamp/2007/07/05/writing-advanced-javascript.html}
 
+  \url{http://www.walterzorn.com/tooltip/tooltip_e.htm}
+}
 \note{
 
   The x and y mappings to the interactive plot are created using the x
@@ -203,13 +213,12 @@ sendplot(mat, plot.calls,  x,y, mai.mat=NA, xlim=NA, ylim=NA,
   combination of all plotted points. 
   
   The interactive html plot currently only works in web browsers that
-  implement java script. This means it will work with Mozilla
-  Firefox but not with Internet Explorer at this time.
-
-  The code used to create the javascript embedded in html file is a
-  modified version of the javascript code from
-  http://www.onlamp.com/pub/a/onlamp/2007/07/05/writing-advanced-javascript.html
+  implement java script.
   
+  The code used to create the javascript embedded in html file is a
+  modified version of the javascript code or from the open source
+  tooltip library. see reference links
+
 }
 
 \author{Lori Shepherd}

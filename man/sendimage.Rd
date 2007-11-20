@@ -15,12 +15,12 @@ sendimage(plot.call,
           x, y, z,
           z.value="value",
           x.lbls = NA,y.lbls=NA,xy.lbls=NA,
-          mai=NA, plt.extras=NA,
+          mai=NA, mai.prc=FALSE,plt.extras=NA,
           bound.pt=TRUE, source.plot=NA,
           paint=TRUE, img.prog=NA,
           resize="800x1100",
           ps.paper="letter",ps.width=8,ps.height=11,
-          fname.root="test",dir="./",
+          fname.root="test",dir="./",header="v2",
           up.left=c(188,103),low.right=c(648,912),
           spot.radius=10)
 
@@ -47,6 +47,8 @@ sendimage(plot.call,
   \item{mai}{margins for each side of the plot.If NA uses default margins}
   \item{plt.extras}{List of additional plotting calls that should be
     executed for the plot. }
+  \item{mai.prc}{logical indicating if mai mat values are percentages
+    or hard coded values. If mai.proc is T, indicates percentage.}
   \item{bound.pt}{logical indicating if red points should be plotted to
     aid in finding the upper left and lower right coordinates. If
     bound.pt is FALSE, indicates that up.left and low.right arguments
@@ -77,6 +79,10 @@ sendimage(plot.call,
   \item{fname.root}{Base name to use for posctscript, .png, and html
     file names.}
   \item{dir}{directory path to where files should be created}
+  \item{header}{May either be v1 or v2. This determines which
+    tooltip header will be in the html file. Each version has different
+    features or works well with different web browsers. see sp.header
+    for details.}  
   \item{up.left}{The x and y value in pixels of the upper left hand
     corner of the plot call}
   \item{low.right}{The x and y value in pixels of the lower right hand
@@ -168,18 +174,22 @@ sendimage(plot.call,
 
 \value{Creates a static .ps and .png file, and an interactive html file}
 
-\references{\url{http://www.onlamp.com/pub/a/onlamp/2007/07/05/writing-advanced-javascript.html}}
+\references{
+  \url{http://www.onlamp.com/pub/a/onlamp/2007/07/05/writing-advanced-javascript.html}
+
+  \url{http://www.walterzorn.com/tooltip/tooltip_e.htm}
+}
 
 \note{
  
   The interactive html plot currently only works in web browsers that
-  implement java script. This means it will work with Mozilla
-  Firefox but not with Internet Explorer at this time.
-
-  The code used to create the javascript embedded in html file is a
-  modified version of the javascript code from
-  http://www.onlamp.com/pub/a/onlamp/2007/07/05/writing-advanced-javascript.html
+  implement java script.
   
+  The code used to create the javascript embedded in html file is a
+  modified version of the javascript code or from the open source
+  tooltip library. see reference links
+
+   
 
 }
 
@@ -207,7 +217,7 @@ sendimage(plot.call,
 #      locations
 
  sendimage(plot.call = plot.calls, x=x, y=y, z=z,
-           up.left=c(162,75),low.right=c(662,947),
+           up.left=c(100,99),low.right=c(738,917),
            bound.pt=FALSE, source.plot=NA, paint=FALSE,
            img.prog=NA,fname.root="testImg"  )
 

@@ -4,7 +4,7 @@
 
 
   
-sendplot <- function(mat, plot.calls, x,y, mai.mat=NA, xlim=NA, ylim=NA,
+sendplot <- function(mat, plot.calls, x,y, mai.mat=NA, mai.prc=FALSE, xlim=NA, ylim=NA,
                      z=NA,
                      z.value="value",type="scatterplot", plt.extras = NA,
                      x.lbls=NA, y.lbls=NA,
@@ -12,7 +12,7 @@ sendplot <- function(mat, plot.calls, x,y, mai.mat=NA, xlim=NA, ylim=NA,
                      bound.pt = TRUE, source.plot=NA,
                      resize="4000x5500",
                      ps.paper="letter",ps.width=8,ps.height=11,
-                     fname.root="test",dir="./",
+                     fname.root="test",dir="./", header="v2",
                      paint=TRUE, img.prog = NA, up.left=c(673,715),low.right=c(2874,4481),
                      spot.radius=10
                      ){
@@ -44,19 +44,21 @@ sendplot <- function(mat, plot.calls, x,y, mai.mat=NA, xlim=NA, ylim=NA,
   
   # initiate layout
   # lcm(c())
-  nf = layout(mat, respect=TRUE)
- 
+
+
+  if(max(as.vector(mat),na.rm=TRUE)>1) nf = layout(mat, respect=TRUE)
+
+  if(mai.prc) mai.def=par("mai")
+  
   # loop over plot calls to place plots in order or 1:n in layout
   for(i in 1:length(plot.calls)){
 
+    
     if(length(mai.mat)>1){
       # set up plot margins
-      mm = mai.mat[i,]
-      cc = mm[1]
-      for(j in 2:length(mm)){
-        cc= paste(cc, mm[j],sep=",")
-      }
-      eval.js(paste("par(mai=c(",cc,"))",sep=""))
+      cat("setting margins \n")
+      if(!mai.prc) par(mai=mai.mat[i,])
+      if(mai.prc)  par(mai=mai.mat[i,]*mai.def)            
     }
     
     # add xlim and ylim arguments to first plot if plot is scatterplot
@@ -239,7 +241,10 @@ sendplot <- function(mat, plot.calls, x,y, mai.mat=NA, xlim=NA, ylim=NA,
          pix.x = as.vector(mapply(rep,x=x.image,MoreArgs=list(times=length(y.image)))),
          pix.y = rep(y.image, length(x.image))
         )
-    
+       
+       # xy specific data
+       eval.js(paste("dat$",z.value,"=as.vector(z)",sep=""))
+
        # x specific data
        cont = TRUE
        x.lbls = as.data.frame(x.lbls)
@@ -264,9 +269,7 @@ sendplot <- function(mat, plot.calls, x,y, mai.mat=NA, xlim=NA, ylim=NA,
            eval.js(paste("dat$",names(y.lbls)[i], "=rep(y.lbls[,i],length(x.image))", sep=""))
          }
        }
-       # xy specific data
-       eval.js(paste("dat$",z.value,"=as.vector(z)",sep=""))
-
+      
        cont = TRUE
        if(is.na(xy.lbls[1])) cont = FALSE
        # if xy.lbls is not NA continue
@@ -279,33 +282,53 @@ sendplot <- function(mat, plot.calls, x,y, mai.mat=NA, xlim=NA, ylim=NA,
        
      }#end if image
 
-  
+    if(header!="v1" &  header!="v2") header="v2"
+    
     # mapfile header info
-    data(spheader)
+    if(header=="v2") data(v2.header)
+    if(header=="v1") data(v1.header)
+
+    
     # begin html file
     sink(paste(dir,fname.root,".html",sep="")) 
     # add header information
     for(i in 1:length(sp.header)) cat(sp.header[i],fill=TRUE)
     # add data point info
-    for(i in 1:(dim(dat)[1])){   
-      ctmp=paste("<area shape=\"circle\" coords=\"",dat$pix.x[i],",",dat$pix.y[i],
-        ",",spot.radius,"\" onmouseover=\"setData(\'",z.value,"&nbsp;&nbsp;:&nbsp;",
-        as.character(dat[i,3]),sep="")
-
-      if(dim(dat)[2]>3){
-        for(j in 4:(dim(dat)[2])){
-          ctmp = paste(ctmp, "<br> ",names(dat)[j],"&amp;nbsp;&amp;nbsp;:&amp;nbsp;",
-            as.character(dat[i,j]),sep="")
+    for(i in 1:(dim(dat)[1])){
+      if(header=="v1"){
+        ctmp=paste("<area shape=\"circle\" coords=\"",dat$pix.x[i],",",dat$pix.y[i],
+          ",",spot.radius,"\" onmouseover=\"setData(\'",z.value,"&nbsp;&nbsp;:&nbsp;",
+          as.character(dat[i,3]),sep="")
+        
+        if(dim(dat)[2]>3){
+          for(j in 4:(dim(dat)[2])){
+            ctmp = paste(ctmp, "<br> ",names(dat)[j],"&amp;nbsp;&amp;nbsp;:&amp;nbsp;",
+              as.character(dat[i,j]),sep="")
+          }
         }
-      }
-      ctmp = paste(ctmp, "\')\" onMouseOut=\"clearData();\" />",sep="")          
-  
+        ctmp = paste(ctmp, "\')\" onMouseOut=\"clearData();\" />",sep="")          
+        
+      }# end if header==v1
+      if(header=="v2"){
+        ctmp=paste("<area shape=\"circle\" coords=\"",dat$pix.x[i],",",dat$pix.y[i],
+          ",",spot.radius,"\" onmouseover=\"Tip(\'",z.value,"&nbsp;&nbsp;:&nbsp;",
+          as.character(dat[i,3]),sep="")
+        if(dim(dat)[2]>3){
+          for(j in 4:(dim(dat)[2])){
+            ctmp = paste(ctmp, "<br> ",names(dat)[j],"&amp;nbsp;&amp;nbsp;:&amp;nbsp;",
+              as.character(dat[i,j]),sep="")
+          }
+        }
+        ctmp = paste(ctmp, "\')\"  />",sep="")   
+      }# end if header==v2
+      
       cat(ctmp,fill=TRUE)
     }
     
     cat("</map>",fill=TRUE)
     cat("<div class=\"plot\">",fill=TRUE)
-    cat("<img border=\"0\" src=\"",fname.png,"\" usemap=\"img-map\" />",sep="",fill=TRUE)
+    if(header=="v1")cat("<img border=\"0\" src=\"",fname.png,"\" usemap=\"img-map\" />",sep="",fill=TRUE)
+    if(header=="v2")cat("<img border=\"0\" src=\"",fname.png,"\" usemap=\"#img-map\" />",sep="",fill=TRUE)
     cat("</div>",fill=TRUE)
     cat("</body>",fill=TRUE)
     cat("</html>",fill=TRUE)

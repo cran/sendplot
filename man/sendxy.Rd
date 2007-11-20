@@ -13,14 +13,14 @@ interactive scatterplot
 
 sendxy(plot.call,
        x, y, 
-       xy.lbls = NA,
+       xy.lbls = NA, x.lbls = NA,y.lbls=NA,
        xlim = NA, ylim = NA,
-       mai=NA, plt.extras=NA,
+       mai=NA, mai.prc=FALSE,plt.extras=NA,
        bound.pt=TRUE, source.plot=NA,
        paint=TRUE,img.prog = NA,
        resize="800x1100",
        ps.paper="letter",ps.width=8,ps.height=11,
-       fname.root="test",dir="./",
+       fname.root="test",dir="./",header="v2",
        up.left=c(205,131),low.right=c(633,883),
        spot.radius=10)
  
@@ -34,11 +34,22 @@ sendxy(plot.call,
     axis of the plot call. n should be the length of the x argument. m columns
     contains information regarding sample. This information is displayed
     in the interactive plot window}
+  \item{x.lbls}{data frame of n x m which contatins values relating to the x
+    axis of the plot call. n should be the length of the x argument. m columns
+    contains information regarding sample. This information is displayed
+    in the interactive plot window}
+  \item{y.lbls}{data frame of n x m which contatins values relating to the y
+    axis of the plot. n should be the length of the y argument. m columns
+    contains information regarding sample. This information is displayed
+    in the interactive plot window}
   \item{xlim}{xlim values for the plot. If left as NA, the range of x
     will be used.}
   \item{ylim}{ylim values for the plot. If left as NA, the range of y
     will be used.}
-  \item{mai}{margins for each side of the plot.If NA uses default margins}
+  \item{mai}{margins for each side of the plot.If NA uses default
+    margins}
+  \item{mai.prc}{logical indicating if mai mat values are percentages
+    or hard coded values. If mai.proc is T, indicates percentage.}
   \item{plt.extras}{List of additional plotting calls that should be
     executed for the plot. }
   \item{bound.pt}{logical indicating if red points should be plotted to
@@ -73,6 +84,10 @@ sendxy(plot.call,
   \item{dir}{directory path to where files should be created}
   \item{up.left}{The x and y value in pixels of the upper left hand
     corner of the plot call}
+  \item{header}{May either be v1 or v2. This determines which
+    tooltip header will be in the html file. Each version has different
+    features or works well with different web browsers. see sp.header
+    for details.}  
   \item{low.right}{The x and y value in pixels of the lower right hand
     corner of the plot call.}
   \item{spot.radius}{radius of circle in pixels indicating area that
@@ -145,18 +160,22 @@ sendxy(plot.call,
 
 \value{Creates a static .ps and .png file, and an interactive html file}
 
-\references{\url{http://www.onlamp.com/pub/a/onlamp/2007/07/05/writing-advanced-javascript.html}}
+\references{
+  
+  \url{http://www.onlamp.com/pub/a/onlamp/2007/07/05/writing-advanced-javascript.html}
+  
+  \url{http://www.walterzorn.com/tooltip/tooltip_e.htm}
+  }
 
 \note{
   
   The interactive html plot currently only works in web browsers that
-  implement java script. This means it will work with Mozilla
-  Firefox but not with Internet Explorer at this time.
+  implement java script.
 
-  The code used to create the javascript embedded in html file is a
-  modified version of the javascript code from
-  http://www.onlamp.com/pub/a/onlamp/2007/07/05/writing-advanced-javascript.html
   
+  The code used to create the javascript embedded in html file is a
+  modified version of the javascript code or from the open source
+  tooltip library. see reference links
 
 }
 
@@ -212,7 +231,7 @@ pch=4, cex=1.5, col='purple')"
          xy.lbls=xy.lbls, plt.extras=NA,
          bound.pt=FALSE, source.plot=NA, paint=FALSE,
          img.prog=NA,fname.root="testXY",
-         up.left=c(179,106),low.right=c(646,915))
+         up.left=c(124,130),low.right=c(713,883))
 
 
 }
