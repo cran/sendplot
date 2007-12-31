@@ -151,9 +151,7 @@ sendxy(plot.call,
   updating the up.left and low.right with the values retrieved and with
   bound.pt = FALSE. This results in an html with embedded javascript to be
   created. The user may open the html file in a web browser that has
-  javascript capabilities; we recommended using mozilla firefox (NOTE:
-  Internet Explorer currently does not support this function. Capability
-  issues will be resolved in future releases).  The information that
+  javascript capabilities.  The information that
   appears when a point is scrolled over is controlled by the function
   argument xy.lbls. 
 }

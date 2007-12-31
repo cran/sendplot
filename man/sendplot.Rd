@@ -168,9 +168,7 @@ sendplot(mat, plot.calls,  x,y, mai.mat=NA, mai.prc=FALSE, xlim=NA, ylim=NA,
   the up.left and low.right with the values retrieved and with bound.pt
   = FALSE. This results in an html with embedded javascript to be
   created. The user may open the html file in a web browser that has
-  javascript capabilities; we recommended using mozilla firefox (NOTE:
-  Internet Explorer currently does not support this function. Capability
-  issues will be resolved in future releases). The information that
+  javascript capabilities.  The information that
   appears when a point is scrolled over is controlled by the function
   arguments x.lbls, y.lbls, and xy.lbls. In a scatterplot x.lbls,
   y.lbls, and xy.lbls all refer to the same points. It is, therefore
@@ -198,6 +196,8 @@ sendplot(mat, plot.calls,  x,y, mai.mat=NA, mai.prc=FALSE, xlim=NA, ylim=NA,
 \value{Creates a static .ps and .png file, and an interactive html file}
 
 \references{
+
+  \url{http://www.R-project.org}
   
   \url{http://www.onlamp.com/pub/a/onlamp/2007/07/05/writing-advanced-javascript.html}
 
@@ -223,7 +223,8 @@ sendplot(mat, plot.calls,  x,y, mai.mat=NA, mai.prc=FALSE, xlim=NA, ylim=NA,
 
 \author{Lori Shepherd}
 
-\seealso{\code{layout}, \code{postscript}, \code{\link{sendxy}}, \code{\link{sendimage}}}
+\seealso{\code{layout}, \code{postscript}, \code{\link{sendxy}},
+  \code{\link{sendimage}}, \code{\link{heatmap.send}}}
 
 \examples{
 # see vignette for more advanced example
