@@ -1,9 +1,8 @@
 \name{sendimage}
 
 \alias{sendimage}
-\alias{sendImage}
 
-\title{INTERACTIVE IMAGE}
+\title{INTERACTIVE IMAGE - DEPRECATED}
 
 \description{
 This function is a wrapper to sendplot that will create a single
@@ -15,6 +14,8 @@ sendimage(plot.call,
           x, y, z,
           z.value="value",
           x.lbls = NA,y.lbls=NA,xy.lbls=NA,
+          x.links=NA, y.links=NA,
+          xy.links=NA,asLinks=NA,
           mai=NA, mai.prc=FALSE,plt.extras=NA,
           bound.pt=FALSE, source.plot=NA,
           paint=FALSE, img.prog=NA,
@@ -33,17 +34,39 @@ sendimage(plot.call,
   \item{z}{vector of z values for image call}
   \item{z.value}{character vector indicating the label for what the z
     argument holds.}
-  \item{x.lbls}{data frame of n x m which contatins values relating to the x
+  \item{x.lbls}{data frame of n x m which contains values relating to the x
     axis of the plot call. n should be the length of the x argument. m columns
     contains information regarding sample. This information is displayed
     in the interactive plot window}
-  \item{y.lbls}{data frame of n x m which contatins values relating to the y
+  \item{y.lbls}{data frame of n x m which contains values relating to the y
     axis of the plot. n should be the length of the y argument. m columns
     contains information regarding sample. This information is displayed
     in the interactive plot window}
   \item{xy.lbls}{list of matricies. All matricies should be of n x m
     where n is the length of y and m is the length of x. This
     information is displayed in the interactive plot window }
+  \item{x.links}{data frame of n x m which contains web addresses
+    for links relating to the x axis of the first plot. n should be the
+    length of the x argument. m columns contains information regarding
+    sample. This information is displayed as hyperlinks in the
+    interactive plot window.}
+  \item{y.links}{data frame of n x m which contains web addresses
+    for links relating to the y axis of the first plot. n should be the
+    length of the y argument. m columns contains information regarding
+    sample. This information is displayed as hyperlinks in the
+    interactive plot window.}
+  \item{xy.links}{list of matricies. All matricies should be of n x m
+    where n is the length of y and m is the length of x. This
+    information is displayed in the interactive plot window as
+    hyperlinks. The values in these matricies should be complete web
+    address}
+  \item{asLinks}{contains complete web address for points that should be
+    treated as hyperlinks. May be a data.frame or matrix of n x m where
+    n is the length of y and m is the length of x, a vector of length x
+    indicating x specific links that will be repeated, a vector of
+    length y indicating y specific links that will be repeated, a non NA
+    value of length 1 that will be repeated for all points, or a vector
+    of length x*y}  
   \item{mai}{margins for each side of the plot.If NA uses default margins}
   \item{plt.extras}{List of additional plotting calls that should be
     executed for the plot. }
@@ -127,13 +150,16 @@ sendimage(plot.call,
   modified version of the javascript code or from the open source
   tooltip library. see reference links
 
-   
+  This function is deprecated. Please see imagesend for updated version.
+
 
 }
 
 \author{Lori A. Shepherd, Daniel P. Gaile}
 
-\seealso{\code{\link{sendplot}}, \code{\link{sendxy}}, \code{\link{heatmap.send}}}
+\seealso{\code{\link{imagesend}}, \code{\link{initSplot}},
+  \code{\link{makeImap}}, \code{\link{makeSplot}},
+  \code{\link{sendplot}}}
 
 \examples{
 # load the library 

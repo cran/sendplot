@@ -1,0 +1,38 @@
+\contentsline {section}{\numberline {1}Introduction}{2}
+\contentsline {section}{\numberline {2}xy.send: scatter-plot wrapper}{4}
+\contentsline {subsection}{\numberline {2.1}specifying the plot call}{4}
+\contentsline {subsection}{\numberline {2.2}specifying the interactive points, tool-tip content, and incorporating hyperlinks}{6}
+\contentsline {subsection}{\numberline {2.3}specifying the image.size and spot radius}{6}
+\contentsline {subsection}{\numberline {2.4}creating the xy.send example output}{7}
+\contentsline {subsection}{\numberline {2.5}summary of code used to generate the sendxy example}{7}
+\contentsline {section}{\numberline {3}imagesend: image wrapper}{9}
+\contentsline {subsection}{\numberline {3.1}specifying the plot call}{9}
+\contentsline {subsection}{\numberline {3.2}specifying the interactive points, tool-tip content, and hyperlinks}{10}
+\contentsline {subsection}{\numberline {3.3}specifying the image.size and spot radius}{12}
+\contentsline {subsection}{\numberline {3.4}creating the imagesend example output}{12}
+\contentsline {subsection}{\numberline {3.5}summary of code used to generate imagesend example}{12}
+\contentsline {section}{\numberline {4}heatmap.send: heatmap wrapper}{15}
+\contentsline {subsection}{\numberline {4.1}specifying the plot call}{16}
+\contentsline {subsection}{\numberline {4.2}specifying the interactive points,tool-tip content, and hyperlinks}{16}
+\contentsline {subsection}{\numberline {4.3}specifying the image.size and spot radius}{18}
+\contentsline {subsection}{\numberline {4.4}creating the heatmap.send example output}{18}
+\contentsline {subsection}{\numberline {4.5}summary of code used to generate the heatmap.send example}{20}
+\contentsline {section}{\numberline {5}Interactive Layout of Plots}{21}
+\contentsline {subsection}{\numberline {5.1}initSplot: Initializing the 'Splot' Object}{21}
+\contentsline {subsubsection}{\numberline {5.1.1}specifying the plot call}{22}
+\contentsline {subsubsection}{\numberline {5.1.2}Setting the device}{29}
+\contentsline {subsubsection}{\numberline {5.1.3}Returning and Saving Splot Object}{31}
+\contentsline {subsubsection}{\numberline {5.1.4}Running initSplot}{31}
+\contentsline {subsection}{\numberline {5.2}First Look at Data: Static plot}{31}
+\contentsline {subsection}{\numberline {5.3}makeImap: Adding Interactive Tool-tip Regions}{31}
+\contentsline {subsubsection}{\numberline {5.3.1}specifying the interactive points}{32}
+\contentsline {subsubsection}{\numberline {5.3.2}specifying tool-tip data}{33}
+\contentsline {subsubsection}{\numberline {5.3.3}altering tool-tip display}{35}
+\contentsline {subsubsection}{\numberline {5.3.4}Generated objects and Files}{35}
+\contentsline {subsubsection}{\numberline {5.3.5}Comments on automap feature and helpful hints}{36}
+\contentsline {subsubsection}{\numberline {5.3.6}Examples of makeImap}{37}
+\contentsline {subsection}{\numberline {5.4}makeSplot: Making the Plot}{49}
+\contentsline {subsection}{\numberline {5.5}Extra Functions}{51}
+\contentsline {subsubsection}{\numberline {5.5.1}addDefault: Add Default Tool-tip Region}{51}
+\contentsline {subsubsection}{\numberline {5.5.2}removeImap: Removing Interactive Regions}{53}
+\contentsline {section}{\numberline {6}closing remarks}{54}

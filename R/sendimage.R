@@ -10,6 +10,8 @@ sendimage <- function(plot.call,
                    x, y, z,
                    z.value="value",
                    x.lbls = NA,y.lbls=NA,xy.lbls=NA,
+                   x.links=NA, y.links=NA,
+                   xy.links=NA,asLinks=NA,
                    mai=NA,mai.prc=FALSE,
                    plt.extras=NA,
                    bound.pt=FALSE, source.plot=NA,
@@ -21,6 +23,12 @@ sendimage <- function(plot.call,
                    spot.radius=5,automap=FALSE, automap.method="mode"
                    ){
 
+
+  cat("NOTE:  sendimage function is deprecated\n      Please see imagesend \n\n\n")
+  
+
+
+  
   # check plot call length -- this is wrapper for single plot
   if(length(plot.call)>1){
     cat("NOTICE: you have chosen a wrapper for a single plot.\n The first plot call in plot.calls will be used \n Additional plotting arguments, i.e. points, lines, abline, axes, should be placed in plt.extras \n ")
@@ -51,7 +59,7 @@ sendimage <- function(plot.call,
     plt.extras$plot1 = plt
   }
   # run sendplot using default or set arguments
-  sendplot(mat = mat, plot.calls = plot.calls, mai.mat = mai.mat ,mai.prc=mai.prc, type="image",x = x, y = y,z=z, z.value=z.value, plt.extras=plt.extras, x.lbls = x.lbls,y.lbls = y.lbls,xy.lbls = xy.lbls,bound.pt=bound.pt,resize=resize, ps.paper=ps.paper,ps.width=ps.width,ps.height=ps.height,fname.root=fname.root,dir=dir, paint=paint,source.plot=source.plot, img.prog=img.prog,up.left=up.left,low.right=low.right,spot.radius=spot.radius, header=header, automap=automap, automap.method=automap.method)
+  sendplot(mat = mat, plot.calls = plot.calls, mai.mat = mai.mat ,mai.prc=mai.prc, type="image",x = x, y = y,z=z, z.value=z.value, plt.extras=plt.extras, x.lbls = x.lbls,y.lbls = y.lbls,xy.lbls = xy.lbls,x.links=x.links,y.links=y.links,xy.links=xy.links,asLinks=asLinks,bound.pt=bound.pt,resize=resize, ps.paper=ps.paper,ps.width=ps.width,ps.height=ps.height,fname.root=fname.root,dir=dir, paint=paint,source.plot=source.plot, img.prog=img.prog,up.left=up.left,low.right=low.right,spot.radius=spot.radius, header=header, automap=automap, automap.method=automap.method)
 
   
 }# end sendimage

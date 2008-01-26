@@ -1,0 +1,849 @@
+This is pdfTeXk, Version 3.14159-1.10b (Web2C 7.4.5) (format=pdflatex 2006.7.19)  26 JAN 2009 08:57
+ file:line:error style messages enabled.
+**\nonstopmode \input /projects/aCGH/Active/CodeDevelopment/sendplot/inst/doc/s
+endplot.tex
+(/projects/aCGH/Active/CodeDevelopment/sendplot/inst/doc/sendplot.tex
+(/usr/share/texmf/tex/latex/base/article.cls
+Document Class: article 2001/04/21 v1.4e Standard LaTeX document class
+(/usr/share/texmf/tex/latex/base/size10.clo
+File: size10.clo 2001/04/21 v1.4e Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@section=\count80
+\c@subsection=\count81
+\c@subsubsection=\count82
+\c@paragraph=\count83
+\c@subparagraph=\count84
+\c@figure=\count85
+\c@table=\count86
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+(/projects/aCGH/Active/CodeDevelopment/R/lib/R/share/texmf/Sweave.sty
+
+LaTeX Warning: You have requested package `/projects/aCGH/Active/CodeDevelopmen
+t/R/lib/R/share/texmf/Sweave',
+               but the package provides `Sweave'.
+
+Package: Sweave 
+(/usr/share/texmf/tex/latex/base/ifthen.sty
+Package: ifthen 2001/05/26 v1.1c Standard LaTeX ifthen package (DPC)
+)
+(/usr/share/texmf/tex/latex/graphics/graphicx.sty
+Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texmf/tex/latex/graphics/keyval.sty
+Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
+\KV@toks@=\toks14
+)
+(/usr/share/texmf/tex/latex/graphics/graphics.sty
+Package: graphics 2001/07/07 v1.0n Standard LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texmf/tex/latex/graphics/trig.sty
+Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
+)
+(/usr/share/texmf/tex/latex/config/graphics.cfg
+File: graphics.cfg 2001/08/31 v1.1 graphics configuration of teTeX/TeXLive
+)
+Package graphics Info: Driver file: pdftex.def on input line 80.
+
+(/usr/share/texmf/tex/latex/graphics/pdftex.def
+File: pdftex.def 2002/06/19 v0.03k graphics/color for pdftex
+\Gread@gobject=\count87
+))
+\Gin@req@height=\dimen103
+\Gin@req@width=\dimen104
+)
+(/usr/share/texmf/tex/latex/fancyvrb/fancyvrb.sty
+Package: fancyvrb 2000/03/21
+
+Style option: `fancyvrb' v2.7, with DG/SPQR fixes <2000/03/21> (tvz)
+\FV@CodeLineNo=\count88
+\FV@InFile=\read1
+\FV@TabBox=\box26
+\c@FancyVerbLine=\count89
+\FV@StepNumber=\count90
+\FV@OutFile=\write3
+)
+(/projects/aCGH/Active/CodeDevelopment/R/lib/R/share/texmf/upquote.sty
+Package: upquote 2003/08/11 v1.1 Covington's upright-quote modification to verb
+atim and verb
+
+(/usr/share/texmf/tex/latex/base/textcomp.sty
+Package: textcomp 2001/06/05 v1.94 Standard LaTeX package
+
+(/usr/share/texmf/tex/latex/base/ts1enc.def
+File: ts1enc.def 2001/06/05 v3.0e (jk/car/fm) Standard LaTeX file
+)))
+(/usr/share/texmf/tex/latex/base/fontenc.sty
+Package: fontenc 2001/06/05 v1.94 Standard LaTeX package
+
+(/usr/share/texmf/tex/latex/base/t1enc.def
+File: t1enc.def 2001/06/05 v1.94 Standard LaTeX file
+LaTeX Font Info:    Redeclaring font encoding T1 on input line 38.
+))
+(/usr/share/texmf/tex/latex/ae/ae.sty
+Package: ae 2001/02/12 1.3 Almost European Computer Modern
+
+(/usr/share/texmf/tex/latex/base/fontenc.sty
+Package: fontenc 2001/06/05 v1.94 Standard LaTeX package
+
+(/usr/share/texmf/tex/latex/base/t1enc.def
+File: t1enc.def 2001/06/05 v1.94 Standard LaTeX file
+LaTeX Font Info:    Redeclaring font encoding T1 on input line 38.
+)
+LaTeX Font Info:    Try loading font information for T1+aer on input line 95.
+
+(/usr/share/texmf/tex/latex/ae/t1aer.fd
+File: t1aer.fd 1997/11/16 Font definitions for T1/aer.
+)))) (./sendplot.aux)
+\openout1 = `sendplot.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 21.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 21.
+
+(/usr/share/texmf/tex/latex/base/ts1cmr.fd
+File: ts1cmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    ... okay on input line 21.
+
+(/usr/share/texmf/tex/context/base/supp-pdf.tex
+(/usr/share/texmf/tex/context/base/supp-mis.tex
+loading : Context Support Macros / Missing
+\protectiondepth=\count91
+\scratchcounter=\count92
+\scratchtoks=\toks15
+\scratchdimen=\dimen105
+\scratchskip=\skip43
+\scratchmuskip=\muskip10
+\scratchbox=\box27
+\scratchread=\read2
+\scratchwrite=\write4
+\zeropoint=\dimen106
+\minusone=\count93
+\thousandpoint=\dimen107
+\emptytoks=\toks16
+\nextbox=\box28
+\nextdepth=\dimen108
+\everyline=\toks17
+\!!counta=\count94
+\!!countb=\count95
+\recursecounter=\count96
+)
+loading : Context Support Macros / PDF
+\nofMPsegments=\count97
+\nofMParguments=\count98
+\everyMPtoPDFconversion=\toks18
+)
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <12> on input line 23.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 23.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 23.
+LaTeX Font Info:    Try loading font information for T1+aett on input line 33.
+ (/usr/share/texmf/tex/latex/ae/t1aett.fd
+File: t1aett.fd 1997/11/16 Font definitions for T1/aett.
+) (./sendplot.toc
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 3.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 3.
+ [1
+
+{/usr/share/texmf/dvips/config/pdftex.map}])
+\tf@toc=\write5
+\openout5 = `sendplot.toc'.
+
+
+Overfull \hbox (1.20193pt too wide) in paragraph at lines 46--47
+[]/aer10/There are three main func-tions of the 'send-plot' li-brary: init-Splo
+t, makeImap,
+ []
+
+LaTeX Font Info:    Try loading font information for TS1+aer on input line 49.
+(/projects/aCGH/Active/CodeDevelopment/R/lib/R/share/texmf/ts1aer.fd
+File: ts1aer.fd 
+)
+LaTeX Font Info:    Font shape `TS1/aer/m/n' in size <10> not available
+(Font)              Font shape `TS1/cmr/m/n' tried instead on input line 49.
+ [2]
+Underfull \hbox (badness 10000) in paragraph at lines 77--78
+
+ []
+
+[3] <exPlotXY.png, id=30, 803.0pt x 602.25pt>
+File: exPlotXY.png Graphic file (type png)
+ <use exPlotXY.png>
+LaTeX Font Info:    Try loading font information for TS1+aett on input line 163
+.
+
+(/projects/aCGH/Active/CodeDevelopment/R/lib/R/share/texmf/ts1aett.fd
+File: ts1aett.fd 
+)
+LaTeX Font Info:    Try loading font information for TS1+cmtt on input line 163
+.
+
+(/usr/share/texmf/tex/latex/base/ts1cmtt.fd
+File: ts1cmtt.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `TS1/aett/m/n' in size <10> not available
+(Font)              Font shape `TS1/cmtt/m/n' tried instead on input line 163.
+ [4]
+Underfull \hbox (badness 10000) in paragraph at lines 166--167
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 168--169
+
+ []
+
+
+Overfull \hbox (11.35425pt too wide) in paragraph at lines 180--180
+[]                     /aett10/c(/tctt1000/'/aett10/automatic/tctt1000/'/aett10
+/,/tctt1000/'/aett10/manual/tctt1000/'/aett10/)[c(rep(1,3),rep(2,3))]),[] 
+ []
+
+[5 <./exPlotXY.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 202--204
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 202--204
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 210--212
+
+ []
+
+[6] <iExPlotXY.png, id=45, 861.2175pt x 786.94pt>
+File: iExPlotXY.png Graphic file (type png)
+ <use iExPlotXY.png> [7 <./iExPlotXY.png>]
+Overfull \hbox (11.35425pt too wide) in paragraph at lines 275--275
+[]                     /aett10/c(/tctt1000/'/aett10/automatic/tctt1000/'/aett10
+/,/tctt1000/'/aett10/manual/tctt1000/'/aett10/)[c(rep(1,3),rep(2,3))]),[] 
+ []
+
+[8] <exPlotImage.png, id=53, 803.0pt x 602.25pt>
+File: exPlotImage.png Graphic file (type png)
+ <use exPlotImage.png> [9]
+Underfull \hbox (badness 10000) in paragraph at lines 370--371
+
+ []
+
+[10 <./exPlotImage.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 384--385
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 409--410
+
+ []
+
+[11] <iExPlotImage.png, id=64, 845.1575pt x 798.985pt>
+File: iExPlotImage.png Graphic file (type png)
+ <use iExPlotImage.png>
+[12] [13 <./iExPlotImage.png>] [14]
+Underfull \hbox (badness 10000) in paragraph at lines 573--574
+
+ []
+
+[15] <exHeat.png, id=78, 602.25pt x 903.375pt>
+File: exHeat.png Graphic file (type png)
+ <use exHeat.png> [16] [17 <./exHeat.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 618--619
+
+ []
+
+<iExHeat.png, id=86, 673.51625pt x 1097.09875pt>
+File: iExHeat.png Graphic file (type png)
+ <use iExHeat.png> [18]
+[19 <./iExHeat.png>] [20]
+Underfull \hbox (badness 10000) in paragraph at lines 776--777
+
+ []
+
+[21] <FirstLookEx.png, id=100, 803.0pt x 1104.125pt>
+File: FirstLookEx.png Graphic file (type png)
+ <use FirstLookEx.png>
+Overfull \hbox (58.48355pt too wide) in paragraph at lines 794--795
+[]/aer10/figTypes: char-ac-ter vec-tor of the fig-ures' plot type E.g. 'scat-te
+r-plot','image','heatmap','tiling' 
+ []
+
+<LayoutFig.png, id=101, 707.64375pt x 722.7pt>
+File: LayoutFig.png Graphic file (type png)
+ <use LayoutFig.png> [22]
+[23 <./FirstLookEx.png>] [24 <./LayoutFig.png>]
+Overfull \hbox (16.57678pt too wide) in paragraph at lines 858--858
+[]    /aett10/"boxplot(count ~ spray, data = InsectSprays, col = /tctt1000/'/ae
+tt10/lightgray/tctt1000/'/aett10/)",[] 
+ []
+
+
+Overfull \hbox (69.02905pt too wide) in paragraph at lines 858--858
+[]    /aett10/"plot(1:3,1:3, col=/tctt1000/'/aett10/blue/tctt1000/'/aett10/, xl
+ab=/tctt1000/''/aett10/, ylab=/tctt1000/''/aett10/); points(1:2, 2:3, col=/tctt
+1000/'/aett10/red/tctt1000/'/aett10/)",[] 
+ []
+
+
+Overfull \hbox (11.35425pt too wide) in paragraph at lines 858--858
+[]    /aett10/"image(1:2,1:3, z=matrix(myX,ncol=3,nrow=2), xlab=/tctt1000/''/ae
+tt10/, ylab=/tctt1000/''/aett10/)",[] 
+ []
+
+
+Overfull \hbox (69.0116pt too wide) in paragraph at lines 858--858
+[]    /aett10/"plot(cos, xlim = c(-pi,3*pi), n = 1001, col = /tctt1000/'/aett10
+/blue/tctt1000/'/aett10/, xlab=/tctt1000/''/aett10/, ylab=/tctt1000/''/aett10/)
+" )[] 
+ []
+
+<boxplot.png, id=112, 578.16pt x 433.62pt>
+File: boxplot.png Graphic file (type png)
+ <use boxplot.png>
+Overfull \hbox (32.34912pt too wide) in paragraph at lines 880--880
+[]/aett10/plot(1:3,1:3, col=/tctt1000/'/aett10/blue/tctt1000/'/aett10/, xlab=/t
+ctt1000/''/aett10/, ylab=/tctt1000/''/aett10/); points(1:2, 2:3, col=/tctt1000/
+'/aett10/red/tctt1000/'/aett10/)[] 
+ []
+
+[25 <./boxplot.png>] <scatter.png, id=117, 578.16pt x 433.62pt>
+File: scatter.png Graphic file (type png)
+
+<use scatter.png> <image.png, id=118, 578.16pt x 433.62pt>
+File: image.png Graphic file (type png)
+ <use image.png>
+Overfull \hbox (27.09167pt too wide) in paragraph at lines 907--907
+[]/aett10/plot(cos, xlim = c(-pi,3*pi), n = 1001, col = /tctt1000/'/aett10/blue
+/tctt1000/'/aett10/, xlab=/tctt1000/''/aett10/, ylab=/tctt1000/''/aett10/)[] 
+ []
+
+<sinCurve.png, id=119, 578.16pt x 433.62pt>
+File: sinCurve.png Graphic file (type png)
+ <use sinCurve.png>
+Underfull \hbox (badness 10000) in paragraph at lines 920--921
+
+ []
+
+[26 <./scatter.png>] [27 <./image.png> <./sinCurve.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 928--929
+
+ []
+
+
+Overfull \hbox (58.47925pt too wide) in paragraph at lines 956--956
+[]    /aett10/figure1= "rect(xleft=c(3,1), ytop=c(25,5),xright=c(4,2),ybottom=c
+(20,0));[] 
+ []
+
+
+Overfull \hbox (0.83936pt too wide) in paragraph at lines 956--956
+[]    /aett10/figure2=list(c("polygon(x=c(2,2.5,3,2.5), y=c(1,2.5,1,1.5))"),[] 
+
+ []
+
+[28]
+Overfull \hbox (42.8291pt too wide) in paragraph at lines 986--986
+[]/aett10/"plot(1:3,1:3, col=/tctt1000/'/aett10/blue/tctt1000/'/aett10/, xlab=/
+tctt1000/''/aett10/, ylab=/tctt1000/''/aett10/); points(1:2, 2:3, col=/tctt1000
+/'/aett10/red/tctt1000/'/aett10/)"[] 
+ []
+
+
+Overfull \hbox (42.8291pt too wide) in paragraph at lines 993--993
+[]/aett10/"plot(1:3,1:3, col=/tctt1000/'/aett10/blue/tctt1000/'/aett10/, xlab=/
+tctt1000/''/aett10/, ylab=/tctt1000/''/aett10/); points(1:2, 2:3, col=/tctt1000
+/'/aett10/red/tctt1000/'/aett10/);[] 
+ []
+
+
+Overfull \hbox (37.53674pt too wide) in paragraph at lines 993--993
+[]      /aett10/polygon(x=c(2,2.5,3,2.5), y=c(1,2.5,1,1.5));title(main=/tctt100
+0/'/aett10/B/tctt1000/'/aett10/, cex=3)"[] 
+ []
+
+[29]
+Underfull \hbox (badness 10000) in paragraph at lines 1011--1012
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1013--1014
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1020--1021
+
+ []
+
+[30] [31]
+Underfull \hbox (badness 10000) in paragraph at lines 1089--1090
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1091--1092
+
+ []
+
+[32]
+Underfull \hbox (badness 10000) in paragraph at lines 1093--1094
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1095--1096
+
+ []
+
+[33]
+Underfull \hbox (badness 10000) in paragraph at lines 1112--1113
+
+ []
+
+
+Overfull \hbox (16.2862pt too wide) in paragraph at lines 1114--1115
+/aer10/re-spec-tive links) can be seen when the xy.type is im-age.midpoints, im
+-age.boundaries,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1114--1115
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1116--1117
+
+ []
+
+[34] [35]
+Underfull \hbox (badness 10000) in paragraph at lines 1147--1148
+
+ []
+
+[36]
+Overfull \hbox (0.83936pt too wide) in paragraph at lines 1188--1188
+[]/aett10/x.lbls = as.data.frame(matrix(c("boxplot.group1","boxplot.group2",[] 
+
+ []
+
+
+Overfull \hbox (0.83936pt too wide) in paragraph at lines 1188--1188
+[]                                /aett10/"boxplot.group3","boxplot.group4",[] 
+
+ []
+
+
+Overfull \hbox (0.83936pt too wide) in paragraph at lines 1188--1188
+[]                                /aett10/"boxplot.group5","boxplot.group6",[] 
+
+ []
+
+[37]
+Overfull \hbox (63.71924pt too wide) in paragraph at lines 1198--1198
+[]/aett10/x.links[,2] = "http://www.buffalo.edu, http://www.bioinformatics.buff
+alo.edu/"[] 
+ []
+
+
+Overfull \hbox (89.91919pt too wide) in paragraph at lines 1206--1206
+[]/aett10/asLinks = c(NA, NA, "http://sphhp.buffalo.edu/biostat/research/softwa
+re/index.php",[] 
+ []
+
+
+Overfull \hbox (84.6792pt too wide) in paragraph at lines 1206--1206
+[]           /aett10/"http://sphhp.buffalo.edu/biostat/research/software/index.
+php", NA, NA)[] 
+ []
+
+
+Overfull \hbox (27.0393pt too wide) in paragraph at lines 1217--1217
+[]                 /aett10/x.labels = x.lbls, asLinks = asLinks, x.links=x.link
+s,[] 
+ []
+
+<tip1.png, id=161, 151.56625pt x 102.3825pt>
+File: tip1.png Graphic file (type png)
+ <use tip1.png> [38 <./tip1.png>]
+Overfull \hbox (95.15918pt too wide) in paragraph at lines 1245--1245
+[]               /aett10/x.labels = list(Xlabel1.xyType="point", Xlabel2.asLink
+s="im a link"),[] 
+ []
+
+
+Overfull \hbox (32.2793pt too wide) in paragraph at lines 1245--1245
+[]               /aett10/y.labels = list(ylabel1.yValue="7", tooltip.font="aria
+l",[] 
+ []
+
+
+Overfull \hbox (58.47925pt too wide) in paragraph at lines 1245--1245
+[]                               /aett10/tooltip.size="20",tooltip.fontcolor="h
+otpink",[] 
+ []
+
+
+Overfull \hbox (116.11914pt too wide) in paragraph at lines 1245--1245
+[]               /aett10/font.type="arial", font.size="20", font.color="hotpink
+", bg.color="blue")[] 
+ []
+
+<tip2.png, id=165, 243.91125pt x 176.66pt>
+File: tip2.png Graphic file (type png)
+ <use tip2.png> [39 <./tip2.png>]
+Overfull \hbox (16.55933pt too wide) in paragraph at lines 1268--1268
+[]/aett10/[1] "rect(xleft=c(3,1), ytop=c(25,5),xright=c(4,2), ybottom=c(20,0));
+[] 
+ []
+
+
+Overfull \hbox (63.71924pt too wide) in paragraph at lines 1293--1293
+[]/aett10/x.links[,2] = "http://www.buffalo.edu, http://www.bioinformatics.buff
+alo.edu/"[] 
+ []
+
+
+Overfull \hbox (58.47925pt too wide) in paragraph at lines 1293--1293
+[]                 /aett10/x.labels = as.data.frame(list(Xlabel.1=c("rect.1","r
+ect.2"),[] 
+ []
+
+
+Overfull \hbox (105.63916pt too wide) in paragraph at lines 1293--1293
+[]                      /aett10/Xlabel.2.coordinates=c("3,20-3,25-4,25-4,20","1
+,0-1,5-2,5-2,0"),[] 
+ []
+
+
+Overfull \hbox (11.31934pt too wide) in paragraph at lines 1293--1293
+[]                                 /aett10/tooltip.fontcolor=c("cyan","cyan"),[
+] 
+ []
+
+
+Overfull \hbox (32.2793pt too wide) in paragraph at lines 1293--1293
+[]                                 /aett10/tooltip.background=c("black","black"
+)),[] 
+ []
+
+[40]
+Overfull \hbox (95.15918pt too wide) in paragraph at lines 1293--1293
+[]                 /aett10/x.links=x.links, font.size=15, font.color="cyan", bg
+.color="black")[] 
+ []
+
+<tip3.png, id=172, 284.06125pt x 192.72pt>
+File: tip3.png Graphic file (type png)
+ <use tip3.png>
+Overfull \hbox (63.78906pt too wide) in paragraph at lines 1325--1325
+[]/aett10/[1] "plot(1:3,1:3, col=/tctt1000/'/aett10/blue/tctt1000/'/aett10/, xl
+ab=/tctt1000/''/aett10/, ylab=/tctt1000/''/aett10/); points(1:2, 2:3, col=/tctt
+1000/'/aett10/red/tctt1000/'/aett10/)"[] 
+ []
+
+[41 <./tip3.png>]
+Overfull \hbox (47.99927pt too wide) in paragraph at lines 1353--1353
+[]/aett10/x.lbls = as.data.frame(list(xLabel1.xyType=c("point1", "point2", "poi
+nt3"),[] 
+ []
+
+
+Overfull \hbox (105.63916pt too wide) in paragraph at lines 1353--1353
+[]                            /aett10/xLabel2.asLinks=c("im a link", "im a link
+", "im a link")))[] 
+ []
+
+
+Overfull \hbox (79.43921pt too wide) in paragraph at lines 1353--1353
+[]/aett10/y.links[2:3,2] = "http://www.buffalo.edu, http://www.bioinformatics.b
+uffalo.edu/"[] 
+ []
+
+
+Overfull \hbox (74.19922pt too wide) in paragraph at lines 1353--1353
+[]                 /aett10/y.labels = list(tooltip.fontcolor=c("green", "green"
+, "green"),[] 
+ []
+
+
+Overfull \hbox (116.11914pt too wide) in paragraph at lines 1353--1353
+[]                     /aett10/tooltip.background=c("transparent", "transparent
+", "transparent")),[] 
+ []
+
+<tip4.png, id=176, 440.64626pt x 222.8325pt>
+File: tip4.png Graphic file (type png)
+ <use tip4.png>
+Overfull \hbox (79.43921pt too wide) in paragraph at lines 1377--1377
+[]                            /aett10/xLabel2.asLinks=c("im not a link", "im no
+t a link")))[] 
+ []
+
+
+Overfull \hbox (95.15918pt too wide) in paragraph at lines 1377--1377
+[]                 /aett10/x.labels = list(tooltip=c("default settings", "defau
+lt settings")),[] 
+ []
+
+
+Overfull \hbox (0.83936pt too wide) in paragraph at lines 1377--1377
+[]                 /aett10/fname.root="sendPlotEx", bb.cex=5,spot.radius=15)[] 
+
+ []
+
+<tip5.png, id=177, 174.6525pt x 65.24374pt>
+File: tip5.png Graphic file (type png)
+ <use tip5.png> [42]
+Overfull \hbox (32.29675pt too wide) in paragraph at lines 1400--1400
+[]/aett10/[1] "polygon(x=c(2,2.5,3,2.5), y=c(1,2.5,1,1.5));title(main=/tctt1000
+/'/aett10/B/tctt1000/'/aett10/, cex=3)"[] 
+ []
+
+[43 <./tip4.png> <./tip5.png>]
+Overfull \hbox (47.99927pt too wide) in paragraph at lines 1425--1425
+[]                 /aett10/x.labels = as.data.frame(list(xLabel.xyType = "Polyg
+on")),[] 
+ []
+
+
+Overfull \hbox (6.07935pt too wide) in paragraph at lines 1425--1425
+[]                 /aett10/x.links=x.links,fname.root="sendPlotEx", bb.cex=5,[]
+ 
+ []
+
+
+Overfull \hbox (47.99927pt too wide) in paragraph at lines 1425--1425
+[]                 /aett10/y.labels = as.data.frame(list(yLabel1.asLinks="Im a 
+link",[] 
+ []
+
+
+Overfull \hbox (27.0393pt too wide) in paragraph at lines 1425--1425
+[]                                          /aett10/tooltip.fonttype="san-serif
+",[] 
+ []
+
+
+Overfull \hbox (32.2793pt too wide) in paragraph at lines 1425--1425
+[]                                          /aett10/tooltip.fontcolor="purple" 
+)),[] 
+ []
+
+
+Overfull \hbox (47.99927pt too wide) in paragraph at lines 1425--1425
+[]                 /aett10/font.size=30, font.type="sans-serif", font.color="pu
+rple")[] 
+ []
+
+<tip6.png, id=185, 371.3875pt x 370.38374pt>
+File: tip6.png Graphic file (type png)
+ <use tip6.png> [44 <./tip6.png>]
+Overfull \hbox (6.11426pt too wide) in paragraph at lines 1456--1456
+[]/aett10/[1] "image(1:2,1:3, z=matrix(myX,ncol=3,nrow=2), xlab=/tctt1000/''/ae
+tt10/, ylab=/tctt1000/''/aett10/)"[] 
+ []
+
+<imageMidEx.png, id=189, 803.0pt x 1104.125pt>
+File: imageMidEx.png Graphic file (type png)
+ <use imageMidEx.png> [45 <./imageMidEx.png>] <imageBoxEx.png, id=194, 803.0pt 
+x 1104.125pt>
+File: imageBoxEx.png Graphic file (type png)
+
+<use imageBoxEx.png> [46 <./imageBoxEx.png>]
+Overfull \hbox (27.0393pt too wide) in paragraph at lines 1483--1483
+[]/aett10/x.lbls=as.data.frame(list(xLabels.xy.type= c("image.box", "image.box"
+),[] 
+ []
+
+
+Overfull \hbox (37.51929pt too wide) in paragraph at lines 1501--1501
+[]/aett10/xy.lbls=list(XY.label = matrix(c("image.box1","image.box2", "image.bo
+x3",[] 
+ []
+
+
+Overfull \hbox (79.43921pt too wide) in paragraph at lines 1501--1501
+[]                                 /aett10/"image.box4","image.box5","image.box
+6"),ncol=2),[] 
+ []
+
+
+Overfull \hbox (6.07935pt too wide) in paragraph at lines 1501--1501
+[]                                  /aett10/"X2.Y1","X2.Y2","X2.Y3"),ncol=2))[]
+ 
+ []
+
+
+Overfull \hbox (0.83936pt too wide) in paragraph at lines 1514--1514
+[]/aett10/x.links=as.data.frame(list(X.links.1 = c("http://www.buffalo.edu",[] 
+
+ []
+
+
+Overfull \hbox (100.39917pt too wide) in paragraph at lines 1514--1514
+[]                /aett10/"http://www.buffalo.edu, http://sphhp.buffalo.edu/bio
+stat/index.php",[] 
+ []
+
+
+Overfull \hbox (37.51929pt too wide) in paragraph at lines 1527--1527
+[]                 /aett10/x.labels = x.lbls, y.labels = y.lbls, xy.labels=xy.l
+bls,[] 
+ []
+
+
+Overfull \hbox (6.07935pt too wide) in paragraph at lines 1527--1527
+[]                 /aett10/fname.root="sendPlotEx", bb.cex=5, spot.radius=10)[]
+ 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1529--1530
+
+ []
+
+[47] <imageToolTip.png, id=202, 1432.35126pt x 1111.15125pt>
+File: imageToolTip.png Graphic file (type png)
+
+<use imageToolTip.png> [48 <./imageToolTip.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 1588--1589
+
+ []
+
+[49]
+Underfull \hbox (badness 10000) in paragraph at lines 1590--1591
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1600--1601
+
+ []
+
+[50]
+Underfull \hbox (badness 10000) in paragraph at lines 1602--1603
+
+ []
+
+[51]
+Underfull \hbox (badness 10000) in paragraph at lines 1652--1653
+
+ []
+
+
+Overfull \hbox (11.40572pt too wide) in paragraph at lines 1654--1655
+[]/aer10/The ar-gu-ments for con-trol-ling the tool-tip dis-play are the same a
+s the makeImap
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1654--1655
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1656--1657
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1658--1659
+
+ []
+
+
+Overfull \hbox (47.99927pt too wide) in paragraph at lines 1679--1679
+[]                   /aett10/data=c("", "quick", "convenient", "highly customiz
+able",[] 
+ []
+
+
+Overfull \hbox (89.91919pt too wide) in paragraph at lines 1679--1679
+[]                   /aett10/data.labels=c("Sendplot selling points", "   1", "
+   2", "   3",[] 
+ []
+
+
+Overfull \hbox (116.11914pt too wide) in paragraph at lines 1679--1679
+[]                         /aett10/"tooltip.font", "tooltip.backgroundColor","t
+ooltip.fontColor"),[] 
+ []
+
+
+Overfull \hbox (16.55933pt too wide) in paragraph at lines 1679--1679
+[]                           /aett10/"http://www.bioinformatics.buffalo.edu/"),
+[] 
+ []
+
+
+Overfull \hbox (68.95923pt too wide) in paragraph at lines 1687--1687
+[]/aett10/Splot = makeSplot(Splot, fname.root="sendPlotEx", returnObj=TRUE, Def
+ault=TRUE)[] 
+ []
+
+<DefaultToolTip.png, id=216, 149.55875pt x 138.5175pt>
+File: DefaultToolTip.png Graphic file (type png)
+
+<use DefaultToolTip.png> [52] [53 <./DefaultToolTip.png>]
+Overfull \hbox (42.75928pt too wide) in paragraph at lines 1726--1726
+[]/aett10/Splot = removeImap(Splot, figure="Default", returnVl=TRUE, saveFlag=F
+ALSE)[] 
+ []
+
+
+Overfull \hbox (53.23926pt too wide) in paragraph at lines 1735--1735
+[]/aett10/Splot = removeImap(Splot, figure=2, subset=2, returnVl=TRUE, saveFlag
+=FALSE)[] 
+ []
+
+
+Overfull \hbox (58.47925pt too wide) in paragraph at lines 1744--1744
+[]/aett10/Splot = removeImap(Splot, figure=1, subset=NA, returnVl=TRUE, saveFla
+g=FALSE)[] 
+ []
+
+[54] (./sendplot.aux) ) 
+Here is how much of TeX's memory you used:
+ 2184 strings out of 95437
+ 29940 string characters out of 1190233
+ 71809 words of memory out of 1000001
+ 5137 multiletter control sequences out of 10000+50000
+ 27351 words of font info for 62 fonts, out of 500000 for 1000
+ 14 hyphenation exceptions out of 1000
+ 35i,6n,21p,1881b,314s stack positions out of 1500i,500n,5000p,200000b,5000s
+ 225 PDF objects out of 300000
+ 0 named destinations out of 131072
+ 110 words of extra memory for PDF output out of 65536
+{/usr/share/texmf/dvips/tetex/aae443f0.enc}</usr/share/t
+exmf/fonts/type1/bluesky/cm/cmmi10.pfb> </var/lib/texmf/pk/ljfour/jknappen/tc/t
+ctt1000.600pk>{/usr/share/texmf/dvips/tetex/09fbbfac.enc}</usr/share/texmf/font
+s/type1/bluesky/cm/cmsltt10.pfb> </var/lib/texmf/pk/ljfour/jknappen/tc/tcrm1000
+.600pk>{/usr/share/texmf/dvips/tetex/f7b6d320.enc}</usr/share/texmf/fonts/type1
+/bluesky/cm/cmbx10.pfb></usr/share/texmf/fonts/type1/bluesky/cm/cmbx12.pfb></us
+r/share/texmf/fonts/type1/bluesky/cm/cmtt10.pfb></usr/share/texmf/fonts/type1/b
+luesky/cm/cmr10.pfb></usr/share/texmf/fonts/type1/bluesky/cm/cmr12.pfb></usr/sh
+are/texmf/fonts/type1/bluesky/cm/cmr17.pfb>
+Output written on sendplot.pdf (54 pages, 483057 bytes).

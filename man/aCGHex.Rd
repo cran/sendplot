@@ -1,5 +1,5 @@
 \name{aCGHex}
-
+\docType{data}
 \alias{aCGHex}
 \alias{aCGH}
 

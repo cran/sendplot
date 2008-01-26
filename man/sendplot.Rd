@@ -1,9 +1,8 @@
-\name{sendPlot}
+\name{sendplot}
 
 \alias{sendplot}
-\alias{sendPlot}
 
-\title{CREATES WEB BROWSER INTERACTIVE PLOT}
+\title{CREATES WEB BROWSER INTERACTIVE PLOT - DEPRECATED}
 
 \description{
 This function takes in a layout, a list of plot calls, and sample
@@ -15,6 +14,8 @@ html file with an interactive version of the image.
 sendplot(mat, plot.calls,  x,y, mai.mat=NA, mai.prc=FALSE, xlim=NA, ylim=NA,
          z=NA,z.value="value", type="scatterplot", plt.extras =NA,
          x.lbls=NA, y.lbls=NA, xy.lbls=NA,
+         x.links=NA, y.links=NA,
+         xy.links=NA,asLinks=NA,
          bound.pt = FALSE,source.plot=NA,
          resize="800x1100", ps.paper="letter",ps.width=8,
          ps.height=11,fname.root="test",dir="./",header="v2",
@@ -27,7 +28,7 @@ sendplot(mat, plot.calls,  x,y, mai.mat=NA, mai.prc=FALSE, xlim=NA, ylim=NA,
   \item{mat}{matrix indicating layout. This argument will be passed into
     the graphics package layout call as mat.Each value in the matrix
     must be '0' or a positive integer.  If N is the largest positive
-    integer in the matrix, then the integers {1,...,N-1} must also
+    integer in the matrix, then the integers 1,...,N-1 must also
     appear at least once in the matrix. 
   }
   \item{plot.calls}{character vector containing plot calls}
@@ -55,17 +56,39 @@ sendplot(mat, plot.calls,  x,y, mai.mat=NA, mai.prc=FALSE, xlim=NA, ylim=NA,
     additional plotting calls that should be executed for the plot. Each
     entry must be a character vector. If no additional plotting is
     required, an NA should be used}
-  \item{x.lbls}{data frame of n x m which contatins values relating to the x
+  \item{x.lbls}{data frame of n x m which contains values relating to the x
     axis of the first plot. n should be the length of the x argument. m columns
     contains information regarding sample. This information is displayed
     in the interactive plot window}
-  \item{y.lbls}{data frame of n x m which contatins values relating to the y
+  \item{y.lbls}{data frame of n x m which contains values relating to the y
     axis of the first plot. n should be the length of the y argument. m columns
     contains information regarding sample. This information is displayed
     in the interactive plot window}
   \item{xy.lbls}{list of matricies. All matricies should be of n x m
     where n is the length of y and m is the length of x. This
     information is displayed in the interactive plot window }
+  \item{x.links}{data frame of n x m which contains web addresses
+    for links relating to the x axis of the first plot. n should be the
+    length of the x argument. m columns contains information regarding
+    sample. This information is displayed as hyperlinks in the
+    interactive plot window.}
+  \item{y.links}{data frame of n x m which contains web addresses
+    for links relating to the y axis of the first plot. n should be the
+    length of the y argument. m columns contains information regarding
+    sample. This information is displayed as hyperlinks in the
+    interactive plot window.}
+  \item{xy.links}{list of matricies. All matricies should be of n x m
+    where n is the length of y and m is the length of x. This
+    information is displayed in the interactive plot window as
+    hyperlinks. The values in these matricies should be complete web
+    address}
+  \item{asLinks}{contains complete web address for points that should be
+    treated as hyperlinks. May be a data.frame or matrix of n x m where
+    n is the length of y and m is the length of x, a vector of length x
+    indicating x specific links that will be repeated, a vector of
+    length y indicating y specific links that will be repeated, a non NA
+    value of length 1 that will be repeated for all points, or a vector
+    of length x*y}
   \item{bound.pt}{logical indicating if red points should be plotted to
     aid in finding the upper left and lower right coordinates of a
     scatterplot. If bound.pt is FALSE, indicates that up.left and
@@ -83,7 +106,7 @@ sendplot(mat, plot.calls,  x,y, mai.mat=NA, mai.prc=FALSE, xlim=NA, ylim=NA,
   \item{resize}{character indicating resize value. The postscript
     version will be resized to this value when converted to .png.}
   \item{ps.paper}{postscript paper argument}
-  \item{ps.width}{poscript width argument}
+  \item{ps.width}{postscript width argument}
   \item{ps.height}{postscript height argument}
   \item{fname.root}{Base name to use for posctscript, .png, and html
     file names.}
@@ -223,13 +246,16 @@ sendplot(mat, plot.calls,  x,y, mai.mat=NA, mai.prc=FALSE, xlim=NA, ylim=NA,
   The code used to create the javascript embedded in html file is a
   modified version of the javascript code or from the open source
   tooltip library. see reference links
+  
+  This function is deprecated. Please see initSplot, makeImap, and makeSplot  for updated version.
 
 }
 
 \author{Daniel P. Gaile, Lori A. Shepherd}
 
-\seealso{\code{layout}, \code{postscript}, \code{\link{sendxy}},
-  \code{\link{sendimage}}, \code{\link{heatmap.send}}}
+\seealso{\code{\link{initSplot}}, \code{\link{makeImap}},
+  \code{\link{makeSplot}}, \code{\link{imagesend}},
+  \code{\link{xy.send}}, \code{\link{heatmap.send}}, \code{layout}}
 
 \examples{
 # see vignette for more advanced example

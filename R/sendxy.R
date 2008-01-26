@@ -8,6 +8,8 @@
 sendxy <- function(plot.call,
                    x, y, 
                    xy.lbls = NA, x.lbls = NA,y.lbls=NA,
+                   x.links=NA, y.links=NA,
+                   xy.links=NA,asLinks=NA,
                    xlim = NA,
                    ylim = NA,
                    mai=NA,
@@ -21,6 +23,9 @@ sendxy <- function(plot.call,
                    up.left=c(205,131),low.right=c(633,883),
                    spot.radius=5, automap=FALSE, automap.method="mode"
                    ){
+
+  cat("NOTE:  sendxy function is deprecated\n      Please see xy.send \n\n\n")
+  
 
   # check plot call length -- this is wrapper for single plot
   if(length(plot.call)>1){
@@ -58,7 +63,7 @@ sendxy <- function(plot.call,
     plt.extras$plot1 = plt
   }
   # run sendplot using default or set arguments
-  sendplot(mat = mat, plot.calls = plot.calls, mai.mat = mai.mat ,mai.prc=mai.prc, type="scatterplot",x = x, y = y, xlim = xlim, ylim = ylim, plt.extras=plt.extras, xy.lbls = xy.lbls,x.lbls = x.lbls,y.lbls=y.lbls,bound.pt=bound.pt,resize=resize, ps.paper=ps.paper,ps.width=ps.width,ps.height=ps.height,fname.root=fname.root,dir=dir, paint=paint,source.plot=source.plot, img.prog=img.prog,up.left=up.left,low.right=low.right,spot.radius=spot.radius, header=header, automap=automap, automap.method=automap.method)
+  sendplot(mat = mat, plot.calls = plot.calls, mai.mat = mai.mat ,mai.prc=mai.prc, type="scatterplot",x = x, y = y, xlim = xlim, ylim = ylim, plt.extras=plt.extras, xy.lbls = xy.lbls,x.lbls = x.lbls,y.lbls=y.lbls,x.links=x.links,y.links=y.links,xy.links=xy.links,asLinks=asLinks,bound.pt=bound.pt,resize=resize, ps.paper=ps.paper,ps.width=ps.width,ps.height=ps.height,fname.root=fname.root,dir=dir, paint=paint,source.plot=source.plot, img.prog=img.prog,up.left=up.left,low.right=low.right,spot.radius=spot.radius, header=header, automap=automap, automap.method=automap.method)
 
   
 }# end sendxy

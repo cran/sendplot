@@ -1,7 +1,7 @@
 
 
 
-heatmap.send <- function (x,
+heatmap.send.legacy <- function (x,
                           Rowv = NULL,
                           Colv = if (symm) "Rowv" else NULL, 
                           distfun = dist,
@@ -29,6 +29,8 @@ heatmap.send <- function (x,
                           x.lbls=NA,
                           y.lbls=NA,
                           xy.lbls=NA,
+                          x.links=NA, y.links=NA,
+                          xy.links=NA,asLinks=NA,
                           bound.pt = FALSE, source.plot=NA,
                           resize="800x1100",
                           ps.paper="letter",ps.width=8,ps.height=11,
@@ -37,7 +39,9 @@ heatmap.send <- function (x,
                           up.left=c(288,203),low.right=c(620,940),
                           spot.radius=5, automap=FALSE, automap.method="mode"
                           ) {
+
   
+  cat("NOTE:  heatmap.send.legacy function is deprecated\n      Please see heatmap.send \n\n\n")
 
     scale <- if (symm && missing(scale)) 
         "none"
@@ -283,7 +287,7 @@ heatmap.send <- function (x,
     # check dimensions and fix index of x.lbls,y.lbls, xy.lbls
     br = FALSE
     if(is.null(dim(x.lbls))){
-      br = TRUE
+      if(length(x.lbls) != 1) br = TRUE
     }
     if(!is.null(dim(x.lbls))){
       if( (dim(x.lbls)[1] == length(colInd))){
@@ -298,7 +302,7 @@ heatmap.send <- function (x,
     }
     br = FALSE
     if(is.null(dim(y.lbls))){
-      br = TRUE
+      if(length(y.lbls) != 1) br = TRUE
     }
     if(!is.null(dim(y.lbls))){
       if( (dim(y.lbls)[1] == length(rowInd))){
@@ -360,11 +364,125 @@ heatmap.send <- function (x,
       }
     }
     if(br){
-      cat(paste("an xy.lbls dimension is not correct.\n number of rows should be equal to ",nr ," \n and the number of columns equal to ", nc, "\n continuing with y.lbls =NA \n", sep=""))
+      cat(paste("an xy.lbls dimension is not correct.\n number of rows should be equal to ",nr ," \n and the number of columns equal to ", nc, "\n continuing with xy.lbls =NA \n", sep=""))
       xy.lbls = NA
     }
 
+    # check dimensions and fix index of x.links,y.links, xy.links, asLinks
+    br = FALSE
+    if(is.null(dim(x.links))){
+      if(length(x.links) != 1) br = TRUE
+    }
+    if(!is.null(dim(x.links))){
+      if( (dim(x.links)[1] == length(colInd))){
+        x.links = x.links[colInd,]
+      }else{
+        br = TRUE
+      }
+    }
+    if(br){
+      cat(paste("x.links dimension is not correct. \n x.links should be a matrix with number of rows equal to ",nc ," \n continuing with x.links =NA \n", sep=""))
+      x.links = NA
+    }
+    br = FALSE
+    if(is.null(dim(y.links))){
+      if(length(y.links) != 1) br = TRUE
+    }
+    if(!is.null(dim(y.links))){
+      if( (dim(y.links)[1] == length(rowInd))){
+        y.links = y.links[rowInd,]
+      }else{
+        br = TRUE
+      }
+    }
+    if(br){
+      cat(paste("y.links dimension is not correct. \n y.links should be a matrix with number of rows equal to ",nr ," \n continuing with y.links =NA \n", sep=""))
+      y.links = NA
+    }
 
+    br = FALSE
+    if(!is.null(dim(xy.links))){
+      if(dim(xy.links)[1]!=nr) {
+        br = TRUE
+      }
+      if(dim(xy.links)[2]!=nc) {
+        
+         br = TRUE
+      }
+      if(br){
+        cat(paste("xy.links dimension is not correct. \n xy.links should be a matrix with \n number of rows equal to ",nr ," \n and the number of columns equal to ", nc, "\n continuing with y.links =NA \n", sep=""))
+        xy.links=NA
+      } 
+      if(!is.null(dim(xy.links))){
+        newDF = list()
+        newDF$xy.lbl = xy.links
+        xy.links = newDF
+      }    
+    }
+    br = FALSE
+    if(length(xy.links)==1){
+      if(!is.na(xy.links[1])){
+        if(dim(xy.links[[1]])[1]==nr) {
+          xy.links[[1]] = xy.links[[1]][rowInd,]
+        }else{
+          br = TRUE
+        }        
+        if(dim(xy.links[[1]])[2]==nc) {
+          xy.links[[1]] = xy.links[[1]][,colInd]
+        }else{
+          br = TRUE
+        }
+        if(br){
+          cat(paste("xy.links dimension is not correct. \n xy.links should be a matrix with \n number of rows equal to ",nr ," \n and the number of columns equal to ", nc, "\n continuing with xy.links =NA \n", sep=""))
+          xy.links=NA
+        } 
+      }
+    }       
+    br = FALSE
+    if(length(xy.links)>1){
+      for(k in 1:length(xy.links)){
+        if(dim(xy.links[[k]])[1]==nr) xy.links[[k]] = xy.links[[k]][rowInd,]
+        if(dim(xy.links[[k]])[1]!=nr) br = TRUE
+        if(dim(xy.links[[k]])[2]==nc) xy.links[[k]] = xy.links[[k]][,colInd]
+        if(dim(xy.links[[k]])[2]!=nc) br = TRUE
+      }
+    }
+    if(br){
+      cat(paste("an xy.links dimension is not correct.\n number of rows should be equal to ",nr ," \n and the number of columns equal to ", nc, "\n continuing with yx.links =NA \n", sep=""))
+      xy.links = NA
+    }
+    
+    br = FALSE
+    if(is.null(dim(asLinks))){
+      if(length(asLinks) == (length(rowInd)*length(colInd))) asLinks = matrix(asLinks, ncol=length(colInd))
+    }    
+    if(!is.null(dim(asLinks))){
+      if( (dim(asLinks)[1] == length(rowInd))){
+        asLinks = asLinks[rowInd,]
+      }else{
+        br = TRUE
+      }
+      if( (dim(asLinks)[2] == length(colInd))){
+        asLinks = asLinks[,colInd]
+      }else{
+        br = TRUE
+      }
+    }
+    if(is.null(dim(asLinks))){
+      if(length(asLinks) == 1){
+        if(!is.na(asLinks)) asLinks = rep(asLinks, (length(rowInd)*length(colInd)))
+      }
+      if(length(asLinks) == length(rowInd)) asLinks = rep(asLinks, length(colInd))
+      if(length(asLinks) == length(colInd)) asLinks = rep(asLinks, length(rowInd))
+      
+      if(length(asLinks) != (length(rowInd)*length(colInd))) br = TRUE
+    }
+    if(br){
+      cat(paste("asLinks is not of correct dimension or length \n continuing with asLinks =NA \n", sep=""))
+      asLinks = NA
+  
+    }
+    
     # load required library
     require("sendplot")
 
@@ -372,7 +490,7 @@ heatmap.send <- function (x,
     environment(sendplot) <- environment()
 
     # call sendplot 
-    sendplot(mat=mat, x=sendX, y=sendY,plot.calls = plt.calls, z=tempVar, type="image",mai.mat=mai.mat, mai.prc=mai.prc, plt.extras = plot.extras, x.lbls=x.lbls, y.lbls=y.lbls, xy.lbls=xy.lbls, bound.pt=bound.pt, source.plot=source.plot, z.value=z.value, resize=resize, ps.paper=ps.paper, ps.width=ps.width,ps.height=ps.height,fname.root=fname.root,dir=dir, header= header,paint=paint,img.prog=img.prog,up.left=up.left,low.right=low.right,spot.radius=spot.radius, automap=automap, automap.method=automap.method)
+    sendplot(mat=mat, x=sendX, y=sendY,plot.calls = plt.calls, z=tempVar, type="image",mai.mat=mai.mat, mai.prc=mai.prc, plt.extras = plot.extras, x.lbls=x.lbls, y.lbls=y.lbls, xy.lbls=xy.lbls,x.links=x.links, y.links=y.links, xy.links=xy.links, asLinks=asLinks,bound.pt=bound.pt, source.plot=source.plot, z.value=z.value, resize=resize, ps.paper=ps.paper, ps.width=ps.width,ps.height=ps.height,fname.root=fname.root,dir=dir, header= header,paint=paint,img.prog=img.prog,up.left=up.left,low.right=low.right,spot.radius=spot.radius, automap=automap, automap.method=automap.method)
 
        
 }

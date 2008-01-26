@@ -2,7 +2,7 @@
 
 \alias{sendxy}
 
-\title{INTERACTIVE SCATTERPLOT}
+\title{INTERACTIVE SCATTERPLOT- DEPRECATED}
 
 \description{
 This function is a wrapper to sendplot that will create a single
@@ -14,6 +14,8 @@ interactive scatterplot
 sendxy(plot.call,
        x, y, 
        xy.lbls = NA, x.lbls = NA,y.lbls=NA,
+       x.links=NA, y.links=NA,
+       xy.links=NA,asLinks=NA,
        xlim = NA, ylim = NA,
        mai=NA, mai.prc=FALSE,plt.extras=NA,
        bound.pt=FALSE, source.plot=NA,
@@ -34,14 +36,36 @@ sendxy(plot.call,
     axis of the plot call. n should be the length of the x argument. m columns
     contains information regarding sample. This information is displayed
     in the interactive plot window}
-  \item{x.lbls}{data frame of n x m which contatins values relating to the x
+  \item{x.lbls}{data frame of n x m which contains values relating to the x
     axis of the plot call. n should be the length of the x argument. m columns
     contains information regarding sample. This information is displayed
     in the interactive plot window}
-  \item{y.lbls}{data frame of n x m which contatins values relating to the y
+  \item{y.lbls}{data frame of n x m which contains values relating to the y
     axis of the plot. n should be the length of the y argument. m columns
     contains information regarding sample. This information is displayed
     in the interactive plot window}
+  \item{x.links}{data frame of n x m which contains web addresses
+    for links relating to the x axis of the first plot. n should be the
+    length of the x argument. m columns contains information regarding
+    sample. This information is displayed as hyperlinks in the
+    interactive plot window.}
+  \item{y.links}{data frame of n x m which contains web addresses
+    for links relating to the y axis of the first plot. n should be the
+    length of the y argument. m columns contains information regarding
+    sample. This information is displayed as hyperlinks in the
+    interactive plot window.}
+  \item{xy.links}{list of matricies. All matricies should be of n x m
+    where n is the length of y and m is the length of x. This
+    information is displayed in the interactive plot window as
+    hyperlinks. The values in these matricies should be complete web
+    address}
+  \item{asLinks}{contains complete web address for points that should be
+    treated as hyperlinks. May be a data.frame or matrix of n x m where
+    n is the length of y and m is the length of x, a vector of length x
+    indicating x specific links that will be repeated, a vector of
+    length y indicating y specific links that will be repeated, a non NA
+    value of length 1 that will be repeated for all points, or a vector
+    of length x*y} 
   \item{xlim}{xlim values for the plot. If left as NA, the range of x
     will be used.}
   \item{ylim}{ylim values for the plot. If left as NA, the range of y
@@ -128,12 +152,16 @@ sendxy(plot.call,
   The code used to create the javascript embedded in html file is a
   modified version of the javascript code or from the open source
   tooltip library. see reference links
+  
+  This function is deprecated. Please see xy.send for updated version.
 
 }
 
 \author{Lori A. Shepherd, Daniel P. Gaile}
 
-\seealso{\code{\link{sendplot}}, \code{\link{sendimage}}}
+\seealso{\code{\link{initSplot}}, \code{\link{makeImap}},
+  \code{\link{makeSplot}}, \code{\link{xy.send}},
+  \code{\link{imagesend}}, \code{\link{heatmap.send}}}
 
 \examples{
 # load the library

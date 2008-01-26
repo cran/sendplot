@@ -9,6 +9,8 @@ sendplot <- function(mat, plot.calls, x,y, mai.mat=NA, mai.prc=FALSE,
                      z.value="value",type="scatterplot", plt.extras = NA,
                      x.lbls=NA, y.lbls=NA,
                      xy.lbls=NA,
+                     x.links=NA, y.links=NA,
+                     xy.links=NA,asLinks=NA,
                      bound.pt = FALSE, source.plot=NA,
                      resize="800x1100",
                      ps.paper="letter",ps.width=8,ps.height=11,
@@ -17,6 +19,10 @@ sendplot <- function(mat, plot.calls, x,y, mai.mat=NA, mai.prc=FALSE,
                      spot.radius=5, automap=FALSE, automap.method="mode"
                      ){
 
+
+   cat("NOTE:  sendplot function is deprecated\n      Please see makeSplot \n\n\n")
+ 
+  
   
   # figure out operating system 
   platform = .Platform$OS.type
@@ -92,8 +98,8 @@ sendplot <- function(mat, plot.calls, x,y, mai.mat=NA, mai.prc=FALSE,
 
       # add points to measure bounds
       if(i==1 & type=="scatterplot" & bound.pt){
-        points(xlim[1],ylim[2], pch=22,bg="red",col="red")
-        points(xlim[2],ylim[1], pch=22,bg="red",col="red")
+        points(xlim[1],ylim[2], pch=22,bg="red",col="red", cex=3)
+        points(xlim[2],ylim[1], pch=22,bg="red",col="red", cex=3)
       }
       if(i==1 & type=="image" & bound.pt){
         nx=length(x)
@@ -104,8 +110,8 @@ sendplot <- function(mat, plot.calls, x,y, mai.mat=NA, mai.prc=FALSE,
         ymax=y[ny]+(y[ny]-y[ny-1])/2
       
         # changed to blue since default image colors are red and orange
-        points(xmin,ymax, pch=22,bg="blue",col="blue", cex=2)
-        points(xmax,ymin, pch=22,bg="blue",col="blue", cex=2)
+        points(xmin,ymax, pch=22,bg="blue",col="blue", cex=3)
+        points(xmax,ymin, pch=22,bg="blue",col="blue", cex=3)
       }
 
       # evaluate other plotting call if necessary
@@ -214,8 +220,8 @@ sendplot <- function(mat, plot.calls, x,y, mai.mat=NA, mai.prc=FALSE,
 
     # add points to measure bounds
     if(i==1 & type=="scatterplot"){
-      points(xlim[1],ylim[2], pch=21,bg="red",col="red")
-      points(xlim[2],ylim[1], pch=21,bg="red",col="red")
+      points(xlim[1],ylim[2], pch=21,bg="red",col="red", cex=3)
+      points(xlim[2],ylim[1], pch=21,bg="red",col="red", cex=3)
     }
     if(i==1 & type=="image"){
       nx=length(x)
@@ -226,8 +232,8 @@ sendplot <- function(mat, plot.calls, x,y, mai.mat=NA, mai.prc=FALSE,
       ymax=y[ny]+(y[ny]-y[ny-1])/2
       
       # changed to blue since default image colors are red and orange
-      points(xmin,ymax, pch=21,bg="blue",col="blue", cex=2)
-      points(xmax,ymin, pch=21,bg="blue",col="blue", cex=2)
+      points(xmin,ymax, pch=21,bg="blue",col="blue", cex=3)
+      points(xmax,ymin, pch=21,bg="blue",col="blue", cex=3)
     }
 
     # evaluate other plotting call if necessary
@@ -611,12 +617,22 @@ sendplot <- function(mat, plot.calls, x,y, mai.mat=NA, mai.prc=FALSE,
         pix.x = x.new,
         pix.y =y.new
       )
-    
+      dat2 = data.frame(rep(NA, (dim(dat)[1])))
+      names(dat2) = "tempNA"
+
       # x specific data
       contx = TRUE
       x.lbls = as.data.frame(x.lbls)
       if( (dim(x.lbls)[1]==1) & (dim(x.lbls)[2]==1)){
         if(is.na(x.lbls[1,1])) contx = FALSE
+      }
+      # dimension check
+      if(contx){
+        if((dim(x.lbls)[1] != length(x)) & contx){
+          contx = FALSE
+          cat(paste("Warning: x.lbls does not have correct dimensions \n   number of rows should equal length(x):",length(x), "\n   Continuing with x.lbls = NA", sep=""))
+          x.lbls = NA
+        }
       }
       # if x.lbls is not NA continue
       if(contx){     
@@ -631,6 +647,12 @@ sendplot <- function(mat, plot.calls, x,y, mai.mat=NA, mai.prc=FALSE,
       if( (dim(y.lbls)[1]==1) & (dim(y.lbls)[2]==1)){
         if(is.na(y.lbls[1,1])) conty = FALSE
       }
+      # dimension check
+      if((dim(y.lbls)[1] != length(y)) & conty){
+        conty = FALSE
+        cat(paste("Warning: y.lbls does not have correct dimensions \n   number of rows should equal length(y):",length(y), "\n   Continuing with y.lbls = NA", sep=""))
+        y.lbls = NA
+      }      
       # if y.lbls is not NA continue
       if(conty){     
         for(i in 1:dim(y.lbls)[2]){
@@ -644,6 +666,12 @@ sendplot <- function(mat, plot.calls, x,y, mai.mat=NA, mai.prc=FALSE,
       if( (dim(xy.lbls)[1]==1) & (dim(xy.lbls)[2]==1)){
         if(is.na(xy.lbls[1,1])) contxy = FALSE
       }
+      # dimension check
+      if(((dim(xy.lbls)[1] != length(y)) | (dim(xy.lbls)[1] != length(x))) & contxy){
+        contxy = FALSE
+        cat(paste("Warning: xy.lbls does not have correct dimensions \n   number of rows should equal length(y):",length(y), " or length(x):", length(x), "\n   Continuing with xy.lbls = NA", sep=""))
+        xy.lbls = NA
+      }         
       # if xy.lbls is not NA continue
       if(contxy){     
         for(i in 1:dim(xy.lbls)[2]){
@@ -656,91 +684,395 @@ sendplot <- function(mat, plot.calls, x,y, mai.mat=NA, mai.prc=FALSE,
       if(!contx & !conty & !contxy){  
         eval.js(paste("dat$", z.value, "=rep('',dim(dat)[2])",sep=""))
       }
+
+
+      # if x specific hyperlinks
+      cont = TRUE
+      x.links = as.data.frame(x.links)
+      if( (dim(x.links)[1]==1) & (dim(x.links)[2]==1)){
+        if(is.na(x.links[1,1])) cont = FALSE
+      }
+      # dimension check
+      if(cont){
+        if(dim(x.links)[1] != length(x)){
+          cont = FALSE
+          cat(paste("Warning: x.lbls.link does not have correct dimensions \n   number of rows should equal length(x):",length(x), "\n   Continuing with x.links = NA", sep=""))
+          x.links = NA
+        }
+      }
+      # if x.links is not NA
+      if(cont){
+        # for each column get links
+        for(i in 1:dim(x.links)[2]){
+          eval.js("temp=as.vector(x.links[,i])")
+          # for each points link
+          for(j in 1:length(temp)){
+            tmp = temp[j]
+            # if not NA
+            if(is.na(tmp)){
+              temp[j] = NA
+            # split multiple links...assumed seperated by a comma  
+            }else{
+              links = strsplit(tmp, split=",")[[1]]
+              new.t = " "
+              for(l in 1:length(links)){
+                new.t = paste(new.t, paste("<a href=\\'", gsub(links[l], pattern=" ", replacement=""), "\\'> ", paste((names(x.links)[i]),l, sep="."), " </a>", sep=""), sep=",")          
+              }
+              new.t = gsub(new.t, pattern=" ,", replacement="")
+              temp[j] = new.t
+            }
+          }
+          # put link in correct syntax into character matrix
+          eval.js(paste("dat2$", names(x.links)[i], "=temp", sep=""))    
+        }  
+      }
+
+      # if y specific hyperlinks
+      cont = TRUE
+      y.links = as.data.frame(y.links)
+      if( (dim(y.links)[1]==1) & (dim(y.links)[2]==1)){
+        if(is.na(y.links[1,1])) cont = FALSE
+      }
+      # dimension check
+      if(cont){
+        if(dim(y.links)[1] != length(y)){
+          cont = FALSE
+          cat(paste("Warning: y.lbls.link does not have correct dimensions \n   number of rows should equal length(y):",length(y), "\n   Continuing with y.links = NA", sep=""))
+          y.links = NA
+        }
+      }
+      # if y.links is not NA
+      if(cont){
+        # for each column get links
+        for(i in 1:dim(y.links)[2]){
+          eval.js("temp=as.vector(y.links[,i])")
+          # for each points link
+          for(j in 1:length(temp)){
+            tmp = temp[j]
+            # if not NA
+            if(is.na(tmp)){
+              temp[j] = NA
+            # split multiple links...assumed seperated by a comma 
+            }else{
+              links = strsplit(tmp, split=",")[[1]]
+              new.t = " "
+              for(l in 1:length(links)){
+                new.t = paste(new.t, paste("<a href=\\'", gsub(links[l], pattern=" ", replacement=""), "\\'> ", paste((names(y.links)[i]),l, sep="."), " </a>", sep=""), sep=",")          
+              }
+              new.t = gsub(new.t, pattern=" ,", replacement="")
+              temp[j] = new.t
+            }
+          }
+          # put link in correct syntax into character matrix
+          eval.js(paste("dat2$", names(y.links)[i], "=temp", sep=""))    
+        }  
+      }
+      
+      # if xy specific hyperlinks
+      cont = TRUE
+      xy.links = as.data.frame(xy.links)
+      if( (dim(xy.links)[1]==1) & (dim(xy.links)[2]==1)){
+        if(is.na(xy.links[1,1])) cont = FALSE
+      }
+      # dimension check
+      if(((dim(xy.links)[1] != length(y)) | (dim(xy.links)[1] != length(x))) & cont){
+        cont = FALSE
+        cat(paste("Warning: xy.links does not have correct dimensions \n   number of rows should equal length(y):",length(y), " or length(x):", length(x), "\n   Continuing with xy.links = NA", sep=""))
+        xy.links = NA
+      }
+      # if xy.links is not NA
+      if(cont){
+        # for each column get links
+        for(i in 1:length(xy.links)){
+          eval.js("temp=as.vector(xy.links[,i])")
+          # for each points link
+          for(j in 1:length(temp)){
+            tmp = temp[j]
+            # if not NA
+            if(is.na(tmp)){
+              temp[j] = NA
+            # split multiple links...assumed seperated by a comma   
+            }else{
+              links = strsplit(tmp, split=",")[[1]]
+              new.t = " "
+              for(l in 1:length(links)){
+                new.t = paste(new.t, paste("<a href=\\'", gsub(links[l], pattern=" ", replacement=""), "\\'> ", paste((names(xy.links)[i]),l, sep="."), " </a>", sep=""), sep=",")          
+              }
+              new.t = gsub(new.t, pattern=" ,", replacement="")
+              temp[j] = new.t
+            }
+          }
+          # put link in correct syntax into character matrix
+          eval.js(paste("dat2$", names(xy.links)[i], "=temp", sep=""))    
+        }  
+      }
+
+
+  
+
+      # get points as Links information 
+      contLinks = TRUE
+      # if data frame convert to matrix
+      if(class(asLinks) == "data.frame") asLinks = as.matrix(asLinks)
+      # if matrix convert to vector
+      if(class(asLinks) == "matrix") asLinks = as.vector(asLinks)
+      # if single entry assume same for all points
+      if((length(asLinks) == 1) & !is.na(asLinks[1])) asLinks = rep(asLinks, length(x))
+      # convert to character vector
+      asLinks = as.character(asLinks)
+      # check dimensions
+      if((length(asLinks) != length(x)) & !is.na(asLinks[1])){
+        cat("Warning: cannot create points as links \n     length must be equal to x or y \n")
+        contLinks = FALSE
+      }
+    
+
+      
+      
       
     }# end if scatterplot
     
     if(type=="image"){
       
-       # calculate width and height of active image
-       wdth=low.right[1]-up.left[1]
-       hght=low.right[2]-up.left[2]
-       # get min and max x values for image      
-       nx=length(x)
-       xmin=x[1]-(x[2]-x[1])/2
-       xmax=x[nx]+(x[nx]-x[nx-1])/2
-       # calculate cuts and center of x values on image
-       bndrs=c(xmin,(x[1:(nx-1)]+x[2:nx])/2,xmax)
-       cntrs=(bndrs[1:(length(bndrs)-1)]+bndrs[2:length(bndrs)])/2
-       # adjust 
-       unit.int.wdth=cntrs-xmin
-       unit.int.wdth=unit.int.wdth/(xmax-xmin)
-       # calculate pixil positions
-       x.image=round(unit.int.wdth*wdth+up.left[1])
-       # get min and max y values for image
-       ny=length(y)
-       ymin=y[1]-(y[2]-y[1])/2
-       ymax=y[ny]+(y[ny]-y[ny-1])/2
-       # calculate cuts and centers of y values on image
-       bndrs=c(ymin,(y[1:(ny-1)]+y[2:ny])/2,ymax)
-       cntrs=(bndrs[1:(length(bndrs)-1)]+bndrs[2:length(bndrs)])/2
-       # adjust
-       unit.int.hght=cntrs-ymin
-       unit.int.hght=unit.int.hght/(ymax-ymin)
-       # calculate pixil positions
-       y.image= round((1-unit.int.hght)*hght+up.left[2])
+      # calculate width and height of active image
+      wdth=low.right[1]-up.left[1]
+      hght=low.right[2]-up.left[2]
+      # get min and max x values for image      
+      nx=length(x)
+      xmin=x[1]-(x[2]-x[1])/2
+      xmax=x[nx]+(x[nx]-x[nx-1])/2
+      # calculate cuts and center of x values on image
+      bndrs=c(xmin,(x[1:(nx-1)]+x[2:nx])/2,xmax)
+      cntrs=(bndrs[1:(length(bndrs)-1)]+bndrs[2:length(bndrs)])/2
+      # adjust 
+      unit.int.wdth=cntrs-xmin
+      unit.int.wdth=unit.int.wdth/(xmax-xmin)
+      # calculate pixil positions
+      x.image=round(unit.int.wdth*wdth+up.left[1])
+      # get min and max y values for image
+      ny=length(y)
+      ymin=y[1]-(y[2]-y[1])/2
+      ymax=y[ny]+(y[ny]-y[ny-1])/2
+      # calculate cuts and centers of y values on image
+      bndrs=c(ymin,(y[1:(ny-1)]+y[2:ny])/2,ymax)
+      cntrs=(bndrs[1:(length(bndrs)-1)]+bndrs[2:length(bndrs)])/2
+      # adjust
+      unit.int.hght=cntrs-ymin
+      unit.int.hght=unit.int.hght/(ymax-ymin)
+      # calculate pixil positions
+      y.image= round((1-unit.int.hght)*hght+up.left[2])
           
-       # initiate data frame of info
-       dat = data.frame(
-         # pixil locations
-         pix.x = as.vector(mapply(rep,x=x.image,MoreArgs=list(times=length(y.image)))),
-         pix.y = rep(y.image, length(x.image))
+      # initiate data frame of info
+      dat = data.frame(
+        # pixil locations
+        pix.x = as.vector(mapply(rep,x=x.image,MoreArgs=list(times=length(y.image)))),
+        pix.y = rep(y.image, length(x.image))
         )
-       
-       # xy specific data
-       eval.js(paste("dat$",z.value,"=as.vector(z)",sep=""))
+      dat2 = data.frame(rep(NA, (length(y.image)*length(x.image))))
+      names(dat2) = "tempNA"
 
-       # x specific data
-       cont = TRUE
-       x.lbls = as.data.frame(x.lbls)
-       if( (dim(x.lbls)[1]==1) & (dim(x.lbls)[2]==1)){
-         if(is.na(x.lbls[1,1])) cont = FALSE
-       }
-       # if x.lbls is not NA continue
-       if(cont){     
-         for(i in 1:dim(x.lbls)[2]){
-           eval.js(paste("dat$",names(x.lbls)[i], "=as.vector(mapply(rep,x=x.lbls[,i], MoreArgs=list(times=length(y.image))))", sep=""))
-         }
-       }
-       # y specific data
-       cont = TRUE
-       y.lbls = as.data.frame(y.lbls)
-       if( (dim(y.lbls)[1]==1) & (dim(y.lbls)[2]==1)){
-         if(is.na(y.lbls[1,1])) cont = FALSE
-       }
-       # if y.lbls is not NA continue
-       if(cont){     
-         for(i in 1:dim(y.lbls)[2]){
-           eval.js(paste("dat$",names(y.lbls)[i], "=rep(y.lbls[,i],length(x.image))", sep=""))
-         }
-       }
+      # xy specific data
+      eval.js(paste("dat$",z.value,"=as.vector(z)",sep=""))
+
+      # x specific data
+      cont = TRUE
+      x.lbls = as.data.frame(x.lbls)
+      if( (dim(x.lbls)[1]==1) & (dim(x.lbls)[2]==1)){
+        if(is.na(x.lbls[1,1])) cont = FALSE
+      }
+      # dimension check
+      if(cont){
+        if(dim(x.lbls)[1] != length(x)){
+          cont = FALSE
+          cat(paste("Warning: x.lbls does not have correct dimensions \n   number of rows should equal length(x):",length(x), "\n   Continuing with x.lbls = NA", sep=""))
+          x.lbls = NA      
+        }         
+      }       
+      # if x.lbls is not NA continue
+      if(cont){     
+        for(i in 1:dim(x.lbls)[2]){
+          eval.js(paste("dat$",names(x.lbls)[i], "=as.vector(mapply(rep,x=x.lbls[,i], MoreArgs=list(times=length(y.image))))", sep=""))
+        }
+      }
+      # y specific data
+      cont = TRUE
+      y.lbls = as.data.frame(y.lbls)
+      if( (dim(y.lbls)[1]==1) & (dim(y.lbls)[2]==1)){
+        if(is.na(y.lbls[1,1])) cont = FALSE
+      }
+      # dimension check
+      if(cont){
+        if(dim(y.lbls)[1] != length(y)){
+          cont = FALSE
+          cat(paste("Warning: y.lbls does not have correct dimensions \n   number of rows should equal length(y):",length(y), "\n   Continuing with y.lbls = NA", sep=""))
+          y.lbls = NA      
+        }         
+      }    
+      # if y.lbls is not NA continue
+      if(cont){     
+        for(i in 1:dim(y.lbls)[2]){
+          eval.js(paste("dat$",names(y.lbls)[i], "=rep(y.lbls[,i],length(x.image))", sep=""))
+        }
+      }
+      cont = TRUE
+      if(is.na(xy.lbls[1])) cont = FALSE
+      # if xy.lbls is not NA continue
+      if(cont){
+        for(i in 1:length(xy.lbls)){
+          # check dimension
+          if((dim(xy.lbls[[i]])[2] == length(x)) & (dim(xy.lbls[[i]])[1] == length(y))){                  
+            eval.js(paste("dat$",names(xy.lbls)[i],"=as.vector(xy.lbls[[i]])", sep=""))
+          }else{
+            cat(paste("Warning: at least one of the xy.lbls matricies are not of the correct dimension. \n    All should be of the dimension ",length(x), " by ", length(y), "\n", sep="")) 
+          }                  
+        }
+      }
       
-       cont = TRUE
-       if(is.na(xy.lbls[1])) cont = FALSE
-       # if xy.lbls is not NA continue
-       if(cont){
-         for(i in 1:length(xy.lbls)){
-           #eval.js(paste("dat$",names(xy.lbls)[i],"=as.vector(xy.lbls[i]$",names(xy.lbls)[i],")", sep=""))
-           eval.js(paste("dat$",names(xy.lbls)[i],"=as.vector(xy.lbls[[i]])", sep=""))
-         }
-       }
-       
-     }#end if image
 
-    if(header!="v1" &  header!="v2") header="v2"
+      # x specific hyperlinks
+      cont = TRUE
+      x.links = as.data.frame(x.links)
+      if( (dim(x.links)[1]==1) & (dim(x.links)[2]==1)){
+        if(is.na(x.links[1,1])) cont = FALSE
+      }
+    
+      # dimension check
+      if(cont){
+        if(dim(x.links)[1] != length(x)){
+          cont = FALSE
+          cat(paste("Warning: x.links does not have correct dimensions \n   number of rows should equal length(x):",length(x), "\n   Continuing with x.links = NA", sep=""))
+          x.links = NA      
+        }         
+      }
+      # if x.links is not NA
+      if(cont){
+        # for each column get links
+        for(i in 1:dim(x.links)[2]){           
+          eval.js("temp=as.vector(mapply(rep,x=x.links[,i], MoreArgs=list(times=length(y.image))))")
+          # for each points link
+          for(j in 1:length(temp)){
+            tmp = temp[j]
+            # if not NA
+            if(is.na(tmp)){
+              temp[j] = NA
+            # split multiple links...assumed seperated by a comma
+            }else{
+              links = strsplit(tmp, split=",")[[1]]
+              new.t = " "
+              for(l in 1:length(links)){
+                new.t = paste(new.t, paste("<a href=\\'", gsub(links[l], pattern=" ", replacement=""), "\\'> ", paste((names(x.links)[i]),l, sep="."), " </a>", sep=""), sep=",")          
+              }
+              new.t = gsub(new.t, pattern=" ,", replacement="")
+              temp[j] = new.t
+            }
+          }
+          # put correctly syntaxed link in matrix 
+          eval.js(paste("dat2$", names(x.links)[i], "=temp", sep=""))    
+        }  
+      }      
+      # y specific hyperlinks
+      cont = TRUE
+      y.links = as.data.frame(y.links)
+      if( (dim(y.links)[1]==1) & (dim(y.links)[2]==1)){
+        if(is.na(y.links[1,1])) cont = FALSE
+      }
+      # dimension check
+      if(cont){
+        if(dim(y.links)[1] != length(y)){
+          cont = FALSE
+          cat(paste("Warning: y.links does not have correct dimensions \n   number of rows should equal length(y):",length(y), "\n   Continuing with y.links = NA", sep=""))
+          y.links = NA      
+        }         
+      }
+      # if y.links is not NA
+      if(cont){
+        # for each column get links
+        for(i in 1:dim(y.links)[2]){
+          eval.js("temp=as.vector(rep(y.links[,i],length(x.image)))")
+          # for each points link
+          for(j in 1:length(temp)){
+            tmp = temp[j]
+            # if not NA
+            if(is.na(tmp)){
+              temp[j] = NA
+            # split multiple links...assumed seperated by a comma
+            }else{
+              links = strsplit(tmp, split=",")[[1]]
+              new.t = " "
+              for(l in 1:length(links)){
+                new.t = paste(new.t, paste("<a href=\\'", gsub(links[l], pattern=" ", replacement=""), "\\'> ", paste((names(y.links)[i]),l, sep="."), " </a>", sep=""), sep=",")          
+              }
+              new.t = gsub(new.t, pattern=" ,", replacement="")
+              temp[j] = new.t
+            }
+          }
+          # put correctly syntaxed link in matrix 
+          eval.js(paste("dat2$", names(y.links)[i], "=temp", sep=""))    
+        }  
+      }
+
+      # xy specific hyperlinks
+      cont = TRUE
+      if(is.na(xy.links[1])) cont = FALSE
+      # if xy.links is not NA
+      if(cont){
+        # for each matrix of links
+        for(i in 1:length(xy.links)){
+          eval.js("temp=xy.links[[i]]")
+          # check dimensions
+          if((dim(temp)[2] == length(x)) & (dim(temp)[1] == length(y))){
+            temp = as.vector(temp)
+            # for each points link
+            for(j in 1:length(temp)){
+              tmp = temp[j]
+              # if not NA
+              if(is.na(tmp)){
+                temp[j] = NA
+              # split multiple links...assumed seperated by a comma  
+              }else{
+                links = strsplit(tmp, split=",")[[1]]
+                new.t = " "
+                for(l in 1:length(links)){
+                  new.t = paste(new.t, paste("<a href=\\'", gsub(links[l], pattern=" ", replacement=""), "\\'> ", paste((names(xy.links)[i]),l, sep="."), " </a>", sep=""), sep=",")          
+                }
+                new.t = gsub(new.t, pattern=" ,", replacement="")
+                temp[j] = new.t
+              }
+            }
+            # put correctly syntaxed link in matrix 
+            eval.js(paste("dat2$", names(xy.links)[i], "=temp", sep=""))    
+          }else{
+            cat(paste("Warning: at least one of the xy.links matricies are not of the correct dimension. \n    All should be of the dimension ",length(x), " by ", length(y), "\n", sep="")) 
+          }          
+        }        
+      }      
+      
+      # get points as Links information 
+      contLinks = TRUE
+      # if data frame convert to matrix
+      if(class(asLinks) == "data.frame") asLinks = as.matrix(asLinks)
+      # if matrix convert to vector
+      if(class(asLinks) == "matrix") asLinks = as.vector(asLinks)
+      # repeat values if necessary
+      if(length(asLinks) == length(x)) asLinks = rep(asLinks, each=length(y))
+      if(length(asLinks) == length(y)) asLinks = rep(asLinks, length(x))
+      if((length(asLinks) == 1) & !is.na(asLinks[1])) asLinks = rep(asLinks, (length(x)*length(y)))
+      # convert to character vector for easy access
+      asLinks = as.character(asLinks)
+      # check dimension
+      if((length(asLinks) != (length(x)*length(y))) & !is.na(asLinks[1])){
+        cat("Warning: cannot create points as links \n     length must be equal to x or y or dimensions equal to x*y \n")
+        contLinks = FALSE
+      }
+          
+    }#end if image
+
+    if(header!="v1" &  header!="v2" ) header="v2"
     
     # mapfile header info
     if(header=="v2") data(v2.header)
     if(header=="v1") data(v1.header)
+    
 
     # update dat into character array to make writing more efficient
     cdat=array(" ",dim=dim(dat))
@@ -749,30 +1081,48 @@ sendplot <- function(mat, plot.calls, x,y, mai.mat=NA, mai.prc=FALSE,
       cdat[,j]=as.character(dat[,j])
       ndat[j]=names(dat)[j]
     }
+    
+    if(header == "v1"){
+      cat("Note: hyperlinks only work with header=v2 \n")
+    }else{
+      cdat2=array(" ",dim=dim(dat2))
+      ndat2=rep(" ",dim(dat2)[2])
+      for(j in 1:(dim(dat2)[2])){
+        cdat2[,j]=as.character(dat2[,j])
+        ndat2[j]=names(dat2)[j]
+      }
+      # combined information data frame and hyper link data frame
+      if(dim(cdat2)[2] > 1){
+        cdat = cbind(cdat, cdat2[,2:dim(cdat2)[2]])
+        ndat = c(ndat, ndat2[2:length(ndat2)])
+      }
+      links.st = (dim(dat)[2])+1
+    }
+
+    # begin html file
+    sink(paste(dir,fname.root,".html",sep=""))
 
     
-    # begin html file
-    sink(paste(dir,fname.root,".html",sep="")) 
     # add header information
     for(i in 1:length(sp.header)) cat(sp.header[i],fill=TRUE)
     
     # add data point info
     for(i in 1:(dim(dat)[1])){
       
-      if(header=="v1"){
-        
-        ctmp=paste("<area shape=\"circle\" coords=\"",cdat[i,1],",",cdat[i,2],
-          ",",spot.radius,"\" onmouseover=\"setData(\'",z.value,"&nbsp;&nbsp;:&nbsp;",
-          cdat[i,3],sep="")
-        
-        if(dim(dat)[2]>3){
-          for(j in 4:(dim(dat)[2])){
-            ctmp = paste(ctmp, "<br> ",ndat[j],"&amp;nbsp;&amp;nbsp;:&amp;nbsp;",
-              cdat[i,j],sep="")
+       if(header=="v1"){
+          
+          ctmp=paste("<area shape=\"circle\" coords=\"",cdat[i,1],",",cdat[i,2],
+            ",",spot.radius,"\" onmouseover=\"setData(\'",z.value,"&nbsp;&nbsp;:&nbsp;",
+            cdat[i,3],sep="")
+          
+          if(dim(dat)[2]>3){
+            for(j in 4:(dim(dat)[2])){
+              ctmp = paste(ctmp, "<br> ",ndat[j],"&amp;nbsp;&amp;nbsp;:&amp;nbsp;",
+                cdat[i,j],sep="")
+            }
           }
-        }
-        ctmp = paste(ctmp, "\')\" onMouseOut=\"clearData();\" />",sep="")          
-        
+          ctmp = paste(ctmp, "\')\" onMouseOut=\"clearData();\" />",sep="")          
+          
       }# end if header==v1
 
       
@@ -781,13 +1131,39 @@ sendplot <- function(mat, plot.calls, x,y, mai.mat=NA, mai.prc=FALSE,
         ctmp=paste("<area shape=\"circle\" coords=\"",cdat[i,1],",",cdat[i,2],
           ",",spot.radius,"\" onmouseover=\"Tip(\'",z.value,"&nbsp;&nbsp;:&nbsp;",
           cdat[i,3],sep="")
-        if(dim(dat)[2]>3){
-          for(j in 4:(dim(dat)[2])){
-            ctmp = paste(ctmp, "<br> ",ndat[j],"&amp;nbsp;&amp;nbsp;:&amp;nbsp;",
-              cdat[i,j],sep="")
+
+        if(dim(cdat)[2]>3){
+    
+          if(dim(dat)[2]>3){
+            for(j in 4:(links.st-1)){
+              ctmp = paste(ctmp, "<br> ",ndat[j],"&amp;nbsp;&amp;nbsp;:&amp;nbsp;",
+                cdat[i,j],sep="")
+            }
+          }
+          linkFlag = FALSE
+          if(dim(dat2)[2] > 1){
+            for(j in links.st:(dim(cdat)[2])){
+              if(!is.na(cdat[i,j])){
+                linkFlag = TRUE
+                ctmp = paste(ctmp, "<br> ",ndat[j],":", cdat[i,j],sep="")
+              }
+            }         
+          }  
+        }else{
+          linkFlag = FALSE
+        }
+        if(linkFlag) ctmp = paste(ctmp, "\', STICKY,true,CLICKCLOSE,true,CLOSEBTN,false)\" ",sep="")
+        if(!linkFlag) ctmp = paste(ctmp, "\')\" ",sep="")
+        if(contLinks){
+          link = asLinks[i]
+          if(!is.na(link)){
+            ctmp = paste(ctmp, " href=\" ", link, "\" target=\"blank\" ", sep="")
           }
         }
-        ctmp = paste(ctmp, "\')\"  />",sep="")   
+          
+          
+        ctmp = paste(ctmp, "  />", sep="")
+        
                 
         
       }# end if header==v2
