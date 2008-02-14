@@ -168,78 +168,18 @@ heatmap.send(x,Rowv = NULL,
   \code{\link{heatmap}} for more details on arguments and details
   concerning the creatation of plots.
 
-  This function allows the user to make a plot generated from the stat
-  pacakge's heatmap function interactive in a web browser utilizing
-  javascript.This function utilizes the R graphics layout command and the package's
-  \code{\link{eval.js}} command to make a collage of plots.  The function uses
-  information regarding x and y values to make a mapping that javascript
-  can utilize. In order to map correctly, the x and y values need to be
-  converted into pixel values. This is performed automatically, however
-  it requires the knowledge of the upper left and lower right pixel
-  coordinates of the bounding box of the heatmap image.These pixel
-  coordinates change when the postscript file is converted into a .png
-  file if the resize option is used. The .png file must be opened in
-  some image viewer that allows the user to retrieve pixel
-  coordinates. There are two possible scenerios for making a png file:
-  the png file may be made directly, or a postscript file may be made
-  first that then must be converted into a png file. We recommend the
-  later because we feel it maintains better clarity and quality. Whether
-  the ps or png file is made is controlled by source.plot. source.plot
-  may be ps, png, or NA. If ps, the postscript file is created; if
-  this option is chosen and the operating system is unix/linux there is
-  an automatic call to the convert function to convert the postscript
-  into a png file. If png, the .png file is created. If source.plot is
-  NA, the operating system is checked and the appropriate file format is
-  generated. By default, if the operating system is unix/linux, the
-  postscript is created and then converted to png. If the operating
-  system is windows or mac, the png file is created directly. If the ps
-  option is used on windows or mac, it is up to the user to correctly
-  convert the postscript to a png file format. As mentioned above, once
-  the png file is created the pixil locations of the bounding box must
-  be known. If paint is TRUE, the png file is openned with the program
-  given by img.prog. If img.prog is NA, the application used to view the
-  image is determined by the operating system. In windows,img.prog is
-  mspaint which will open the .png file in microsoft paint. In
-  linux/unix, img.prog is kolourpaint. img.prog may be any command line
-  call to a graphics program for viewing .png files. The upper left and
-  lower right corner of the heatmap image should be the locations used
-  as the up.left and low.right corners of the bounding box. When the
-  file is opened in kolourpaint or mspaint, the user need only to record
-  the pixel location when the mouse hovers over these edges(NOTE: in
-  kolourpaint and mspaint the pixel location appears on the bottom of
-  the window). If bound.pt is T, two blue points will appear in the
-  image at these edges to aid in finding these locations. When bound.pt
-  is TRUE the function assumes that the user needs to find the pixel
-  locations of the bounding box and will not make the html file. The
-  interactive html file is only created when bound.pt is FALSE. Once the
-  upper left and lower right values are recorded, the user should rerun
-  the same function call but updating the up.left and low.right with the
-  values retrieved and with bound.pt = FALSE. This results in an html
-  with embedded javascript to be created. The user may open the html
-  file in a web browser that has The information that
-  appears when a point is scrolled over is controlled by the function
-  arguments x.lbls, y.lbls, and xy.lbls. In a scatterplot x.lbls,
-  y.lbls, and xy.lbls all refer to the same points. It is, therefore
-  only necessary to specify x.lbls with information. In an image, there
-  may be a differring number of x and y values. The information
-  displayed can be from x specific information, y specific information,
-  or information that is dependent upon both x and y. x.lbls is a data
-  frame of x specific data. The number of rows should be equal to the
-  number of x data points. There may be any number of columns. The names
-  of the columns are used as the label in the display window. Likewise,
-  y.lbls is a data frame of y specific data. The number of rows should
-  be equal to the number of y data points. There may be any number of
-  columns. The names of the columns are used as the label in the display
-  window. xy.lbls however is a list of data frames. This data is
-  dependent upon both x and y location. All data frames will be of the
-  dimensions (length of y) X (length of x). There may be any number of
-  data frames in the list. The name of the data frame, or the name in
-  the list, is what is used as the label in the display window. The z
-  value used to create the image is included automatically. Its label in
-  the display window may be controlled by z.value. If this is not
-  specified the default label is value.
-    
+  %%
   
+  See \code{\link{sendplot}} for more information regarding the creation
+  of the interactive output with tool-tip content.
+
+  %%
+
+  Users are encouraged to read the package vignette which includes
+  a detailed discussion of all function arguments as well as several
+  useful examples.
+
+
 }
 
 \value{Creates a static .ps and .png file, and an interactive html file}
@@ -276,7 +216,7 @@ heatmap.send(x,Rowv = NULL,
 }
 
 \author{
-  Lori Shepherd and Dan Gaile;
+  Lori A. Shepherd and Daniel P. Gaile;
   
   Authors of heatmap code used in our code: Andy Liaw, original; R. Gentleman, M. Maechler, W. Huber,revisions}
 

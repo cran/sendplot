@@ -16,10 +16,10 @@ sendplot(mat, plot.calls,  x,y, mai.mat=NA, mai.prc=FALSE, xlim=NA, ylim=NA,
          z=NA,z.value="value", type="scatterplot", plt.extras =NA,
          x.lbls=NA, y.lbls=NA, xy.lbls=NA,
          bound.pt = TRUE,source.plot=NA,
-         resize="4000x5500", ps.paper="letter",ps.width=8,
+         resize="800x1100", ps.paper="letter",ps.width=8,
          ps.height=11,fname.root="test",dir="./",header="v2",
          paint=TRUE, img.prog = NA,
-         up.left=c(673,715),low.right=c(2874,4481),
+         up.left=c(288,203),low.right=c(620,940),
          spot.radius=10)
 }
 
@@ -111,85 +111,66 @@ sendplot(mat, plot.calls,  x,y, mai.mat=NA, mai.prc=FALSE, xlim=NA, ylim=NA,
 
 \details{
 
-  This function allows the ability to create a static image of multiple
-  plots.  It also provides the functionality to make a plot interactive
-  in a web browser utilizing javascript.
-  This function utilizes the R graphics layout command and the package's
-  \code{\link{eval.js}} command to make a collage of plots.
-  The first plot in the plot.calls argument can be interactive in a web
-  browser.  The graphs currently supported are scatterplot and image
-  which should be indicated by the argument type.  The function uses
-  information regarding x and y values to make a mapping that javascript
-  can utilize. In order to map correctly, the x and y values need to be
-  converted into pixel values. This is performed automatically, however
-  it requires the knowledge of the upper left and lower right pixel
-  coordinates of the bounding box of the first plot. These pixel
-  coordinates change when the postscript file is converted into a .png
-  file if the resize option is used. The .png file must be opened in
-  some image viewer that allows the user to retrieve pixel
-  coordinates. There are two possible scenerios for making a png file:
-  the png file may be made directly, or a postscript file may be made
-  first that then must be converted into a png file. We recommend the
-  later because we feel it maintains better clarity and quality. Whether
-  the ps or png file is made is controlled by source.plot. source.plot
-  may be ps, png, or NA. If ps, the postscript file is created; if
-  this option is chosen and the operating system is unix/linux there is
-  an automatic call to the convert function to convert the postscript
-  into a png file. If png, the .png file is created. If source.plot is
-  NA, the operating system is checked and the appropriate file format is
-  generated. By default, if the operating system is unix/linux, the
-  postscript is created and then converted to png. If the operating
-  system is windows or mac, the png file is created directly. If the ps
-  option is used on windows or mac, it is up to the user to correctly
-  convert the postscript to a png file format. As mentioned above, once
-  the png file is created the pixil locations of the bounding box must
-  be known. If paint is TRUE, the png file is openned with the program
-  given by img.prog. If img.prog is NA, the application used to view the
-  image is determined by the operating system. In windows,img.prog is
-  mspaint which will open the .png file in microsoft paint. In
-  linux/unix, img.prog is kolourpaint. img.prog may be any command line
-  call to a graphics program for viewing .png files. The general plot
-  call in R adds a buffer before the axis, for this reason we add two
-  points at the bounding box. If bound.pt is T, two red points will
-  appear in the scatterplot. When the file is opened in kolourpaint or
-  mspaint, the user need only to record the pixel location when the
-  mouse hovers over these red points (NOTE: in kolourpaint and mspaint the
-  pixel location appears on the bottom of the window). If an image is
-  desired as the main plot, the upper left and lower right corner of the
-  image should be the points used. When the file is opened in
-  kolourpaint or mspaint, the user need only to record the pixel
-  location when the mouse hovers over these edges. If bound.pt is T, two
-  blue points will appear in the image at these edges to aid in finding the
-  location. When bound.pt is TRUE the function assumes that the user
-  needs to find the pixel locations of the bounding box and will not
-  make the html file. The interactive html file is only created when
-  bound.pt is FALSE. Once the upper left and lower right values are
-  recorded, the user should rerun the same function call but updating
-  the up.left and low.right with the values retrieved and with bound.pt
-  = FALSE. This results in an html with embedded javascript to be
-  created. The user may open the html file in a web browser that has
-  javascript capabilities.  The information that
-  appears when a point is scrolled over is controlled by the function
-  arguments x.lbls, y.lbls, and xy.lbls. In a scatterplot x.lbls,
-  y.lbls, and xy.lbls all refer to the same points. It is, therefore
-  only necessary to specify x.lbls with information. In an image, there
-  may be a differring number of x and y values. The information
-  displayed can be from x specific information, y specific information,
-  or information that is dependent upon both x and y. x.lbls is a data
-  frame of x specific data. The number of rows should be equal to the
-  number of x data points. There may be any number of columns. The names
-  of the columns are used as the label in the display window. Likewise,
-  y.lbls is a data frame of y specific data. The number of rows should
-  be equal to the number of y data points. There may be any number of
-  columns. The names of the columns are used as the label in the display
-  window. xy.lbls however is a list of data frames. This data is
-  dependent upon both x and y location. All data frames will be of the
-  dimensions (length of y) X (length of x). There may be any number of
-  data frames in the list. The name of the data frame, or the name in
-  the list, is what is used as the label in the display window. The z
-  value used to create the image is included automatically. Its label in
-  the display window may be controlled by z.value. If this is not
-  specified the default label is value.
+  The functions in the sendplot library allow R users to generate
+  interactive plots with tool-tip content. A pair of files are created :
+  a Portable Network Graphics (PNG) file which is a bitmap image and an
+  HTML file which contains embedded Javascript code for dynamically
+  generating tool-tips. When opened with a supported browser, the HTML
+  file displays the PNG image and the user is able to mouse over and
+  view tool-tip windows for user specified image locations. The
+  information that appears in the tool-tip windows is user specified and
+  highly customizable. The tool-tip functionality is provided by code
+  from the  wz\_tooltip.js Javascript library (Zorn 2007) which is
+  embedded in the HTML output.
+
+  %%
+
+  The sendplot function constitutes the primary function of the sendplot library. It allows for the generation of interactive xy (i.e., scatter-plot) and image (i.e., heatmap) plots, which can contain any number of decorative (i.e., non-interactive) plots.
+
+  %%
+
+ The creation of interactive plots with tool-tip content requires the development of the following components:
+
+ %%
+ 
+ 1. The static plot image. The library supports the following: a simple
+ xy-plot (sendxy), a simple image plot (sendimage), a heatmap with
+ decorative dendrograms (heatmap.send), or a flexible layout of plots
+ which contains one interactive xy-plot or image plot (sendplot). The
+ functions in the sendplot library allow for the full complement of
+ graphical bells and whistles which are available in R (e.g., custom
+ axes, inclusion of legends, math symbols, etc.).
+
+ %%
+ 
+ 2. The plotted point to pixel mapping. The sendplot functions output an
+ HTML file and a PNG image. The HTML file contains an image map which
+ identifies the interactive regions of the PNG image (i.e., the regions
+ for which a tool-tip will appear). The image map requires a mapping of
+ the plotted point coordinates as specified in the R plotting calls that
+ generated them to the corresponding pixel location on the final PNG
+ image. The sendplot functions build this map by identifying the
+ upper-left and lower-right locations in the original plotting
+ coordinate system and in the final pixel coordinate system. The
+ functions provide a convenient mechanism to accomplish this.
+
+ %%
+
+ 3. The tool-tip content lists. The sendplot functions allow users to specify  x-specific, y-specific, and point specific (e.g., xy-specific) information to be displayed in the tool-tip. 
+
+ 
+ %%
+
+ 
+ The sendplot functions are typically run in two iterations when creating interactive plots for the first time. In the first iteration, the PNG file is created and then opened in a program such as mspaint or kolourpaint so that the upper-left and lower-right pixel coordinates are identified. In the second iteration, the function is called again using the pixel coordinates identified in the first iteration and the PNG and HTML output files are created. Note: the first iteration need not be repeated for calls that use the sample plot type and output image size as the upper-left and lower-right pixel will not change. 
+
+
+ %%
+
+  Users are encouraged to read the package vignette which includes
+  a detailed discussion of all function arguments as well as several
+  useful examples.
+
         
 }
 
@@ -221,7 +202,7 @@ sendplot(mat, plot.calls,  x,y, mai.mat=NA, mai.prc=FALSE, xlim=NA, ylim=NA,
 
 }
 
-\author{Lori Shepherd}
+\author{Daniel P. Gaile, Lori A. Shepherd}
 
 \seealso{\code{layout}, \code{postscript}, \code{\link{sendxy}},
   \code{\link{sendimage}}, \code{\link{heatmap.send}}}

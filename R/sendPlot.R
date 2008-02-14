@@ -10,10 +10,10 @@ sendplot <- function(mat, plot.calls, x,y, mai.mat=NA, mai.prc=FALSE, xlim=NA, y
                      x.lbls=NA, y.lbls=NA,
                      xy.lbls=NA,
                      bound.pt = TRUE, source.plot=NA,
-                     resize="4000x5500",
+                     resize="800x1100",
                      ps.paper="letter",ps.width=8,ps.height=11,
                      fname.root="test",dir="./", header="v2",
-                     paint=TRUE, img.prog = NA, up.left=c(673,715),low.right=c(2874,4481),
+                     paint=TRUE, img.prog = NA, up.left=c(288,203),low.right=c(620,940),
                      spot.radius=10
                      ){
 
