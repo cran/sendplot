@@ -15,12 +15,12 @@ html file with an interactive version of the image.
 sendplot(mat, plot.calls,  x,y, mai.mat=NA, mai.prc=FALSE, xlim=NA, ylim=NA,
          z=NA,z.value="value", type="scatterplot", plt.extras =NA,
          x.lbls=NA, y.lbls=NA, xy.lbls=NA,
-         bound.pt = TRUE,source.plot=NA,
+         bound.pt = FALSE,source.plot=NA,
          resize="800x1100", ps.paper="letter",ps.width=8,
          ps.height=11,fname.root="test",dir="./",header="v2",
-         paint=TRUE, img.prog = NA,
+         paint=FALSE, img.prog = NA,
          up.left=c(288,203),low.right=c(620,940),
-         spot.radius=10)
+         spot.radius=5, automap=FALSE, automap.method="mode")
 }
 
 \arguments{
@@ -107,6 +107,11 @@ sendplot(mat, plot.calls,  x,y, mai.mat=NA, mai.prc=FALSE, xlim=NA, ylim=NA,
     corner of the first plot call. see details}
   \item{spot.radius}{radius of circle in pixels indicating area that
     will be interactive around the center of graphed points}
+  \item{automap}{automatic detection of up.left and low.right bound
+    points. Fully functional on linux/unix machines only.}
+  \item{automap.method}{Method to detect upper and lower bounds. Current
+    options are mode or median}
+
 }
 
 \details{
@@ -162,7 +167,26 @@ sendplot(mat, plot.calls,  x,y, mai.mat=NA, mai.prc=FALSE, xlim=NA, ylim=NA,
  %%
 
  
- The sendplot functions are typically run in two iterations when creating interactive plots for the first time. In the first iteration, the PNG file is created and then opened in a program such as mspaint or kolourpaint so that the upper-left and lower-right pixel coordinates are identified. In the second iteration, the function is called again using the pixel coordinates identified in the first iteration and the PNG and HTML output files are created. Note: the first iteration need not be repeated for calls that use the sample plot type and output image size as the upper-left and lower-right pixel will not change. 
+ The sendplot functions on windows machines are typically run in two
+ iterations when creating interactive plots for the first time. In the
+ first iteration, the PNG file is created and then opened in a program
+ such as mspaint or kolourpaint so that the upper-left and lower-right
+ pixel coordinates are identified. In the second iteration, the function
+ is called again using the pixel coordinates identified in the first
+ iteration and the PNG and HTML output files are created. Note: the
+ first iteration need not be repeated for calls that use the sample plot
+ type and output image size as the upper-left and lower-right pixel will
+ not change.
+
+ %%
+
+ On linux machines, there is an option for automatic detection of the
+ upper-left and lower-right pixil coordinates. This utilizes ImageMagick's
+ convert program install on most linux machines, and the rtiff R library's
+ readTiff function. This eliminates the need for a second iteration. For
+ windows users, this option is viable if the user has the ability to
+ convert a PNG image to a TIF image; two iterations are still
+ needed. See vignette for details.  
 
 
  %%

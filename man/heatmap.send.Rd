@@ -34,13 +34,13 @@ heatmap.send(x,Rowv = NULL,
              mai.mat=NA, mai.prc=FALSE,
              z.value="value",
              x.lbls=NA,y.lbls=NA,xy.lbls=NA,
-             bound.pt = TRUE, source.plot=NA,
+             bound.pt = FALSE, source.plot=NA,
              resize="800x1100",
              ps.paper="letter",ps.width=8,ps.height=11,
              fname.root="test",dir="./", header="v2",
-             paint=TRUE, img.prog = NA,
+             paint=FALSE, img.prog = NA,
              up.left=c(288,203),low.right=c(620,940),
-             spot.radius=10) 
+             spot.radius=5, automap=FALSE, automap.method="mode") 
 
 }
 
@@ -158,6 +158,11 @@ heatmap.send(x,Rowv = NULL,
     corner of the first plot call. see details}
   \item{spot.radius}{radius of circle in pixels indicating area that
     will be interactive around the center of graphed points}
+  \item{automap}{automatic detection of up.left and low.right bound
+    points. Fully functional on linux/unix machines only.}
+  \item{automap.method}{Method to detect upper and lower bounds. Current
+    options are mode or median}
+
 }
 
 \details{

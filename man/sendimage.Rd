@@ -16,13 +16,13 @@ sendimage(plot.call,
           z.value="value",
           x.lbls = NA,y.lbls=NA,xy.lbls=NA,
           mai=NA, mai.prc=FALSE,plt.extras=NA,
-          bound.pt=TRUE, source.plot=NA,
-          paint=TRUE, img.prog=NA,
+          bound.pt=FALSE, source.plot=NA,
+          paint=FALSE, img.prog=NA,
           resize="800x1100",
           ps.paper="letter",ps.width=8,ps.height=11,
           fname.root="test",dir="./",header="v2",
           up.left=c(188,103),low.right=c(648,912),
-          spot.radius=10)
+          spot.radius=5, automap=FALSE, automap.method="mode")
 
 }
 
@@ -89,6 +89,10 @@ sendimage(plot.call,
     corner of the plot call.}
   \item{spot.radius}{radius of circle in pixels indicating area that
     will be interactive around the center of interactive points}
+  \item{automap}{automatic detection of up.left and low.right bound
+    points. Fully functional on linux/unix machines only.}
+  \item{automap.method}{Method to detect upper and lower bounds. Current
+    options are mode or median}
 
 }
 

@@ -29,13 +29,13 @@ heatmap.send <- function (x,
                           x.lbls=NA,
                           y.lbls=NA,
                           xy.lbls=NA,
-                          bound.pt = TRUE, source.plot=NA,
+                          bound.pt = FALSE, source.plot=NA,
                           resize="800x1100",
                           ps.paper="letter",ps.width=8,ps.height=11,
                           fname.root="test",dir="./", header="v2",
-                          paint=TRUE, img.prog = NA,
+                          paint=FALSE, img.prog = NA,
                           up.left=c(288,203),low.right=c(620,940),
-                          spot.radius=10
+                          spot.radius=5, automap=FALSE, automap.method="mode"
                           ) {
   
 
@@ -372,7 +372,7 @@ heatmap.send <- function (x,
     environment(sendplot) <- environment()
 
     # call sendplot 
-    sendplot(mat=mat, x=sendX, y=sendY,plot.calls = plt.calls, z=tempVar, type="image",mai.mat=mai.mat, mai.prc=mai.prc, plt.extras = plot.extras, x.lbls=x.lbls, y.lbls=y.lbls, xy.lbls=xy.lbls, bound.pt=bound.pt, source.plot=source.plot, z.value=z.value, resize=resize, ps.paper=ps.paper, ps.width=ps.width,ps.height=ps.height,fname.root=fname.root,dir=dir, header= header,paint=paint,img.prog=img.prog,up.left=up.left,low.right=low.right,spot.radius=spot.radius)
+    sendplot(mat=mat, x=sendX, y=sendY,plot.calls = plt.calls, z=tempVar, type="image",mai.mat=mai.mat, mai.prc=mai.prc, plt.extras = plot.extras, x.lbls=x.lbls, y.lbls=y.lbls, xy.lbls=xy.lbls, bound.pt=bound.pt, source.plot=source.plot, z.value=z.value, resize=resize, ps.paper=ps.paper, ps.width=ps.width,ps.height=ps.height,fname.root=fname.root,dir=dir, header= header,paint=paint,img.prog=img.prog,up.left=up.left,low.right=low.right,spot.radius=spot.radius, automap=automap, automap.method=automap.method)
 
        
 }

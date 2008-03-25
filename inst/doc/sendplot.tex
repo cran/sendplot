@@ -17,7 +17,7 @@
 \begin{center}
 Statistical Genetics and Genomics Research Group\\
 Department of Biostatistics, University at Buffalo\\
-New York State Center of Excellence
+New York State Center of Excellence in Bioinformatics and Life Sciences
 \end{center}
 
 \begin{center}
@@ -35,11 +35,11 @@ New York State Center of Excellence
 
 
 
-\indent The 'sendplot' function constitutes the primary function of the sendplot library. It allows for the generation of interactive xy (i.e., scatter-plot) and image (i.e., heatmap) plots, which can contain any number of decorative (i.e., non-interactive) plots. The library also contains three convenient wrapper functions: sendxy, sendimage, and heatmap.send. The wrapper functions have less functionality that the sendplot function but can be easier to use. Brief descriptions of the four functions are as follows:
+\indent The 'sendplot' function constitutes the primary function of the sendplot library. It allows for the generation of interactive xy (i.e., scatter-plot) and image (i.e., heatmap) plots, which can contain any number of decorative (i.e., non-interactive) plots. The library also contains three convenient wrapper functions: sendxy, sendimage, and heatmap.send. The wrapper functions have less functionality than the sendplot function but can be easier to use. Brief descriptions of the four functions are as follows:
 
 \begin{itemize}
 \item sendxy : this function produces an interactive xy plot without any decorative plots (i.e., just a single scatter-plot).
-\item sendimage :  this function produces an interactive image plot without any decorative plots (i.e.,m just a single image plot).
+\item sendimage :  this function produces an interactive image plot without any decorative plots (i.e., just a single image plot).
 \item heatmap.send : this function is a wrapper for the R stats package heatmap. This will
 create an interactive heatmap image. NOTE: The majority of the code for
 this function is verbatim from the R package stats heatmap
@@ -56,18 +56,19 @@ sendplot's interactive functionality.
 \item 2. The plotted point to pixel mapping. The sendplot functions output an HTML file and a PNG image. The HTML file contains an image map which identifies the interactive regions of the PNG image (i.e., the regions for which a tool-tip will appear). The image map requires a mapping of the plotted point coordinates as specified in the R plotting calls that generated them to the corresponding pixel location on the final PNG image. The sendplot functions build this map by identifying the upper-left and lower-right locations in the original plotting coordinate system and in the final pixel coordinate system. The functions provide a convenient mechanism to accomplish this.
 \item 3. The tool-tip content lists. The sendplot functions allow users to specify  x-specific, y-specific, and point specific (e.g., xy-specific) information to be displayed in the tool-tip. 
 \end{description}
-The sendplot functions are typically run in two iterations when creating interactive plots for the first time. In the first iteration, the PNG file is created and then opened in a program such as mspaint or kolourpaint so that the upper-left and lower-right pixel coordinates are identified. In the second iteration, the function is called again using the pixel coordinates identified in the first iteration and the PNG and HTML output files are created. Figure 1 provides a flowchart for this two-iteration procedure. {\bf{Note:}} the first iteration need not be repeated for calls that use the sample plot type and output image size as the upper-left and lower-right pixel will not change. 
+The sendplot functions are typically run in two iterations when creating interactive plots for the first time. In the first iteration, the PNG file is created and then opened in a program such as mspaint or kolourpaint so that the upper-left and lower-right pixel coordinates are identified. In the second iteration, the function is called again using the pixel coordinates identified in the first iteration and the PNG and HTML output files are created. Figure 1 provides a flowchart for this two-iteration procedure. {\bf{Note:}} the first iteration need not be repeated for calls that use the sample plot type and output image size as the upper-left and lower-right pixel will not change. \newline
+\indent For linux/unix users, there is an option for automatic detection of the upper-left and lower-right pixil coordinates. This utilizes ImageMagick's convert program installed on most linux machines, and the R library rtiff's readTiff function. This eliminates the need for a second interaction. For windows/mac users, this automatic detection of coordinates is viable if the user has the ability to convert a PNG image to a TIFF image; two iterations are still needed. The first iteration will create the PNG images. The user manually converts the PNG images to the TIF images using appropriate file names. The function is run again and the auto detect will function correctly.  
 
 
 \begin{center}
 \begin{figure}
 \includegraphics[angle=270]{sendplotFlowChart}
-\caption{The sendplot functions are typically run in two iterations when creating interactive plots for the first time. The first iteration involves the identification of the upper-left and lower-right pixel coordinates. The final output is generated in the second iteration.}
+\caption{The sendplot functions are typically run in two iterations when creating interactive plots for the first time. The first iteration involves the identification of the upper-left and lower-right pixel coordinates. The final output is generated in the second iteration.An option has bee implimented to eliminate this two step procedure for linux/unix machines.}
 \end{figure}
 \end{center}
 
 
-\indent This remainder of this document will provide detailed tutorials for the use of the functions: sendxy, sendimage, heatmap.send, and sendplot. All sections assume library as been loaded:
+\indent The remainder of this document will provide detailed tutorials for the use of the functions: sendxy, sendimage, heatmap.send, and sendplot. All sections assume library has been loaded:
 
 \begin{Schunk}
 \begin{Sinput}
@@ -90,13 +91,13 @@ The sendxy function creates a single interactive scatter-plot. The following is 
             xy.lbls = NA, x.lbls = NA,y.lbls=NA,
             xlim = NA, ylim = NA,
             mai=NA, mai.prc=FALSE,plt.extras=NA,
-            bound.pt=TRUE, source.plot=NA,
-            paint=TRUE,img.prog = NA,
+            bound.pt=FALSE, source.plot=NA,
+            paint=FALSE,img.prog = NA,
             resize="800x1100",
             ps.paper="letter",ps.width=8,ps.height=11,
             fname.root="test",dir="./",header="v2",
             up.left=c(205,131),low.right=c(633,883),
-            spot.radius=10)
+            spot.radius=5, automap=FALSE, automap.method="mode")
  \end{verbatim}
 
 
@@ -120,7 +121,7 @@ plot.calls = "plot(x1,y1,col='green', pch=3, cex=1.5,xlab='',ylab='');
 
 
 
-Notice how the call is a character string that contains multiple calls separated by a semicolon. Arguments of type character within these calls are specified with a single quotation rather than the double quotations used originally, or vice versa (see col arguments). Any variables used in arguments (x1,x2,y1,y2 in our example) should be in local memory before running the sendxy function call. \\ \indent NOTE: No xlim or ylim value should be specified in any of the plot.call plotting calls. For mapping purposes, xlim and ylim must be given as separate arguments to the function. If xlim and ylim are not set in the arguments, or entered as NA, the range of the x and y values will be used. \newline
+Notice how the call is a character string that will be evaluated as multiple function calls separated by a semicolon. Arguments of type character within these calls are specified with a single quotation rather than the double quotations used originally, or vice versa (see col arguments). Any variables used in arguments (x1,x2,y1,y2 in our example) should be in local memory before running the sendxy function call. \\ \indent NOTE: No xlim or ylim value should be specified in any of the plot.call plotting calls. For mapping purposes, xlim and ylim must be given as separate arguments to the function. If xlim and ylim are not set in the arguments, or entered as NA, the range of the x and y values will be used. \newline
 
 \indent mai and mai.prc control the plot margins. If mai is NA (default), the application uses default plot margins. For more information on mai, mai.prc, plt.extras, and header please refer to R help files or to the last section of this vignette (i.e., the sendplot section). \newline
 
@@ -181,7 +182,7 @@ The following arguments play a role in the generation of the final PNG image fil
   \item{fname.root:~}{Base name to use for postscript, .png, and html
     file names.}
 
-  \item{resize:~}{character indicating resize value. If source.plot is "ps", resize is passed as part of a system convert command converting the postscript to the .png. The original image is resized to this dimension expanding condensed looking images or vice versa. If source.plot is "png", the argument is parsed and the dimensions are passed into the R grDevices package function png as the width and height arguments.}
+  \item{resize:~}{character indicating resize value. If source.plot is "ps", resize is passed as part of a system convert command converting the postscript to the .png. The original image is resized to this dimension expanding condensed images or vice versa. If source.plot is "png", the argument is parsed and the dimensions are passed into the R grDevices package function png as the width and height arguments.}
   \item{ps.paper:~}{postscript paper argument}
   \item{ps.width:~}{postscript width argument (only used if ps.paper=''special'')}
   \item{ps.height:~}{postscript height argument (only used if ps.paper=''special'')}
@@ -204,6 +205,37 @@ As mentioned previously, the sendplot functions output an HTML file and a PNG im
   \item{low.right:~}{The x and y value in pixels of the lower right hand
     corner of the plot call.}
 \end{description}
+
+\indent The sendplot functions provide convenient options for identifing the upper-left and lower-right pixil coordinates. There is an automatic detection of bounding points, in most cases eliminating the two step procedure. There are also options for manual detection of bound points. These options will be discussed further in the following sections.  
+
+\subsubsection{automatic dectection of bounding points}
+
+\indent As mentioned previously, there is an option for automatic detection of the upper-left and lower-right pixil coordinates. This option eliminates the two iteration procedure for linux and unix users. The functions utilizes ImageMagick's convert program installed on most linux machines, and the R library rtiff's readTiff function. The function arguments implementing this option are:
+\begin{description}
+ \item{automap:~}{logical indicating if application should
+    attempt to automatically detect upper-left and lower-right 
+    coordinates.}
+
+  \item{automap.method:~ }{if automap is TRUE, the method that will be
+    used to find bound points. The current options are median and mode}
+
+ \end{description}
+
+\indent For windows and mac users, this automatic detection of coordinates is viable if the user has the ability to convert a PNG image to a TIFF image. The current implemenation still requires two iterations. The first iteration will create the PNG images. The user then must manually convert the PNG images to the TIF images using appropriate file names. The function is run again and the auto detect will function correctly.  
+
+\indent Continuing the current example, the following code is executed:
+\begin{verbatim}
+sendxy(plot.call=plot.calls, 
+              x=x, y=y,
+              x.lbls=x.lbls, 
+              source.plot=NA, 
+              automap=TRUE, automap.method="mode",
+              fname.root="testXY",resize="800x1100",
+              up.left=c(205,131),low.right=c(633,883))
+\end{verbatim}
+
+
+\subsubsection{manual detection of bounding points}
 
 \indent As mentioned previously, the sendplot functions are typically run in two iterations when creating interactive plots for the first time. In the first iteration, the PNG file is created and then opened in a program such as mspaint or kolourpaint so that the upper-left and lower-right pixel coordinates are identified. In the second iteration, the function is called again using the pixel coordinates identified in the first iteration and the PNG and HTML output files are created.  Refer back to Figure 1 for a flowchart for this two-iteration procedure. 
 
@@ -228,7 +260,7 @@ As mentioned previously, the sendplot functions output an HTML file and a PNG im
     attempt the task of writing the .html file as that step can be time consuming.}
 
  \end{description}
-The simplest way to identify the up.left and low.right values in the first iteration of sendplot construction is to execute the function with: bound.pt=TRUE, paint=TRUE, and img.prog=NA. With this combination of arguments, the function will create the PNG output, add red points to the upper-left and lower-right corners, and then open the PNG in the default viewer so that the user can readily identify the up.left and low.right pixel coordinates. 
+One way to identify the up.left and low.right values in the first iteration of sendplot construction is to execute the function with: bound.pt=TRUE, paint=TRUE, and img.prog=NA. With this combination of arguments, the function will create the PNG output, add red points to the upper-left and lower-right corners, and then open the PNG in the default viewer so that the user can readily identify the up.left and low.right pixel coordinates. 
 
 \indent Continuing the current example, the following code is executed:
 \begin{verbatim}
@@ -262,14 +294,27 @@ NOTE: As mentioned earlier, the sendxy function does not always need to be run i
 
 \subsection{creating the sendxy example output}
 
-\indent As mentioned above, after the correct bounding points are known, the sendxy function call should be run again, changing only the up.left, up.right, paint, and bound.pt arguments. up.left and low.right should be updated accordingly. paint and bound.pt should be tripped to FALSE. (NOTE: these are the correct up.left and low.right boundaries when the .png is created from the postscript in linux/unix environment. If the .png file was generated directly the up.left and low.right values of this example may be slightly different).  The following will make the correct interactive plot:
+\indent If automap is used to detect bounding points the function automatically continues making the HTML file and sendxy final example output. 
+
+\indent If bounding points are detected manually, after the correct bounding points are known, the sendxy function call should be run again, changing only the up.left, up.right, paint, and bound.pt arguments. up.left and low.right should be updated accordingly. paint and bound.pt should be tripped to FALSE. (NOTE: these are the correct up.left and low.right boundaries when the .png is created from the postscript in linux/unix environment. If the .png file was generated directly the up.left and low.right values of this example may be slightly different).  The following will make the correct interactive plot:
 \begin{verbatim}
+# manual detection of points  
 sendxy(plot.call = plot.calls, 
        x=x, y=y,
        x.lbls=x.lbls,  
        bound.pt=FALSE, 
        source.plot=NA, paint=FALSE,
        img.prog=NA,fname.root="testXY",resize="800x1100", 
+       up.left=c(124,130),low.right=c(713,885), spot.radius=5)
+
+# or 
+# automatic detection of points
+sendxy(plot.call = plot.calls, 
+       x=x, y=y,
+       x.lbls=x.lbls,  
+       source.plot=NA, 
+       automap=TRUE, automap.method="mode"
+       fname.root="testXY",resize="800x1100", 
        up.left=c(124,130),low.right=c(713,885), spot.radius=5)
 \end{verbatim}
 
@@ -308,6 +353,20 @@ The resulting HTML file may be opened in any web browser that is capable of runn
                 title(xlab='x values', ylab='y values')"
    
 
+#automatic detection of bound points
+
+sendxy(plot.call = plot.calls, 
+       x=x, y=y,
+       x.lbls=x.lbls,  
+       source.plot=NA, 
+       automap=TRUE, automap.method="mode"
+       fname.root="testXY",resize="800x1100", 
+       up.left=c(124,130),low.right=c(713,885), spot.radius=5)
+
+# or 
+
+# manual detection bound points
+
   sendxy(plot.call = plot.calls, 
          x=x, y=y,
          x.lbls=xy.lbls, 
@@ -316,6 +375,8 @@ The resulting HTML file may be opened in any web browser that is capable of runn
          source.plot=NA, paint=TRUE,
          img.prog=NA,fname.root="testXY",resize="800x1100",
          up.left=c(205,131),low.right=c(633,883))
+
+# correct bounding found (124,130), (713,885)
 
   sendxy(plot.call = plot.calls, 
          x=x, y=y,
@@ -345,19 +406,19 @@ The sendimage function creates a single interactive image. The following is an e
                z.value="value",
                x.lbls = NA,y.lbls=NA,xy.lbls=NA,
                mai=NA, mai.prc=FALSE,plt.extras=NA,
-               bound.pt=TRUE, source.plot=NA,
-               paint=TRUE, img.prog=NA,
+               bound.pt=FALSE, source.plot=NA,
+               paint=FALSE, img.prog=NA,
                resize="800x1100",
                ps.paper="letter",ps.width=8,ps.height=11,
                fname.root="test",dir="./",header="v2",
                up.left=c(188,103),low.right=c(648,912),
-               spot.radius=10)
+               spot.radius=5, automap=FALSE, automap.method="mode")
 \end{verbatim}
 
 For the most part the arguments for sendimage are consistent with those for sendxy. 
 
 \subsection{specifying the plot call}
-As with the sendxy function, the plot.call argument is a character string containing the call for the desired image plot. Consider the following example data corresponding to a 4 x 8 image:
+As with the sendxy function, the plot.call argument is a character string containing the call for the desired image plot. Consider the following example data corresponding to a 4 x 5 image:
 \begin{verbatim}
 x = 1:4
 y = 1:5
@@ -373,7 +434,7 @@ plot.calls = "image(x=x, y=y, z=z);title(main='sendimage example')"
 \end{verbatim}
 
 
-Notice how the call is a character string that contains multiple calls separated by a semicolon.  Arguments of type character within these calls are specified with a single quotation rather than the double quotations used originally, or vice versa (see main argument). Any variables used in arguments (x,y,z in our example) should be in local memory before running the sendimage function call. \newline
+Notice how the call is a character string that will be evaluated as multiple function calls separated by a semicolon.  Arguments of type character within these calls are specified with a single quotation rather than the double quotations used originally, or vice versa (see main argument). Any variables used in arguments (x,y,z in our example) should be in local memory before running the sendimage function call. \newline
 
 
 \indent mai and mai.prc control the plot margins. If mai is NA (default), the application uses default plot margins. For more information on mai, mai.prc, plt.extras, and header please refer to R help files or to the last section of this vignette (i.e., the sendplot section). \newline
@@ -383,7 +444,7 @@ Notice how the call is a character string that contains multiple calls separated
 
 \indent The x, y, and z arguments are the x, y, and z used in the image call. x and y are the locations of the grid lines at which the values of z correspond. z is a matrix of values (length of x  by length of y). The function argument z.value describes what z holds (examples pvalues, logRatios, percentAccepted); this identifier is used in the interactive display. These three arguments have already been defined in the previous section. \\
 
-\indent {\bf{Note:}} z.value should not contain any spaces or characters; numbers and letters only.
+\indent {\bf{Note:}} z.value should not contain any spaces or punctuation characters; numbers and letters only.
 
 \indent As with the sendxy function, the arguments x.lbls, y.lbls, and xy.lbls control what is displayed in the interactive window when the user hovers the mouse over plot points. The arguments x.lbls and y.lbls refer to data that is specific to the x and y values respectively. x.lbls and y.lbls are data.frames of the dimension n by m, where n is equal to the length of x or y respectively. Each row is specific to a certain x or y value and each column is a unique variable or characteristic of x or y respectively.  The first row of the data frames should contain column headers; these names will be used as display names in the interactive window that appears. The xy.lbls argument is a little different because it governs data specific to both x and y locations. The function argument xy.lbls is a list of matrices; each matrix is of the dimension n by m, where n is equal to the length of y and m is equal to the length of x.\\ 
 
@@ -428,6 +489,36 @@ As mentioned previously, the sendplot functions output an HTML file and a PNG im
     corner of the plot call.}
 \end{description}
 
+\indent The sendplot functions provide convenient options for identifing the upper-left and lower-right pixil coordinates. There is an automatic detection of bounding points, in most cases eliminating the two step procedure. There are also options for manual detection of bound points. These options will be discussed further in the following sections.  
+
+\subsubsection{automatic dectection of bounding points}
+
+\indent As mentioned previously, there is an option for automatic detection of the upper-left and lower-right pixil coordinates. This option eliminates the two iteration procedure for linux and unix users. The functions utilizes ImageMagick's convert program installed on most linux machines, and the R library rtiff's readTiff function. The function arguments implementing this option are:
+\begin{description}
+ \item{automap:~}{logical indicating if application should
+    attempt to automatically detect upper-left and lower-right 
+    coordinates.}
+
+  \item{automap.method:~ }{if automap is TRUE, the method that will be
+    used to find bound points. The current options are median and mode}
+
+ \end{description}
+
+\indent For windows and mac users, this automatic detection of coordinates is viable if the user has the ability to convert a PNG image to a TIFF image. The current implemenation still requires two iterations. The first iteration will create the PNG images. The user then must manually convert the PNG images to the TIF images using appropriate file names. The function is run again and the auto detect will function correctly.  
+
+\indent Continuing the current example, the following code is executed:
+\begin{verbatim}
+ sendimage(plot.call = plot.calls, x=x, y=y, z=z,z.value='value',
+            x.lbls = x.lbls, y.lbls=y.lbls, xy.lbls=xy.lbls,
+            up.left=c(89,100),low.right=c(800,900),
+            source.plot=NA,
+            fname.root="testImg",resize="800x1100",
+            automap=TRUE, automap.method="mode")
+\end{verbatim}
+
+
+\subsubsection{manual detection of bounding points}
+
 \indent As mentioned previously, the sendplot functions are typically run in two iterations when creating interactive plots for the first time. In the first iteration, the PNG file is created and then opened in a program such as mspaint or kolourpaint so that the upper-left and lower-right pixel coordinates are identified. In the second iteration, the function is called again using the pixel coordinates identified in the first iteration and the PNG and HTML output files are created.  Refer back to Figure 1 for a flowchart for this two-iteration procedure. 
 
 
@@ -451,7 +542,7 @@ As mentioned previously, the sendplot functions output an HTML file and a PNG im
     attempt the task of writing the .html file as that step can be time consuming.}
 
  \end{description}
-The simplest way to identify the up.left and low.right values in the first iteration of sendplot construction is to execute the function with: bound.pt=TRUE, paint=TRUE, and img.prog=NA. With this combination of arguments, the function will create the PNG output, add blue points to the upper-left and lower-right corners, and then open the PNG in the default viewer so that the user can readily identify the up.left and low.right pixel coordinates. \\
+One way to identify the up.left and low.right values in the first iteration of sendplot construction is to execute the function with: bound.pt=TRUE, paint=TRUE, and img.prog=NA. With this combination of arguments, the function will create the PNG output, add blue points to the upper-left and lower-right corners, and then open the PNG in the default viewer so that the user can readily identify the up.left and low.right pixel coordinates. \\
 
 \indent {\bf{Note:}} The upper-left and lower-right corners of an image, are the corners of the image itself, respectively.\newline
 
@@ -464,7 +555,7 @@ The simplest way to identify the up.left and low.right values in the first itera
             img.prog=NA,fname.root="testImg",resize="800x1100")
 \end{verbatim}
 
-We have entered dummy values for the up.left and low.right coordinates. Figure4 contains a screenshot of the example PNG file opened in kolourpaint. According to the information in kolourpaint, the up.left location should be 101,99. Notice the mouse is over the upper left blue point for the up.left bounding box. The pixel location is shown on the bottom of the window in the second box from the left. It shows a location of 101,99. If we had checked the low.right coordinate it would read 735,914. To complete the process of generating the sendimage output, the sendimage function used to created this figure should be rerun with bound.pt=FALSE, paint=FALSE,up.left=c(101,99) and low.right=c(735,914). \newline
+We have entered dummy values for the up.left and low.right coordinates. Figure 4 contains a screenshot of the example PNG file opened in kolourpaint. According to the information in kolourpaint, the up.left location should be 101,99. Notice the mouse is over the upper left blue point for the up.left bounding box. The pixel location is shown on the bottom of the window in the second box from the left. It shows a location of 101,99. If we had checked the low.right coordinate it would read 735,914. To complete the process of generating the sendimage output, the sendimage function used to created this figure should be rerun with bound.pt=FALSE, paint=FALSE,up.left=c(101,99) and low.right=c(735,914). \newline
 
 \begin{center}
 \begin{figure}
@@ -482,13 +573,27 @@ NOTE: As mentioned earlier, the sendimage function does not always need to be ru
 
 \subsection{creating the sendimage example output}
 
-\indent As mentioned above, after the correct bounding points are known, the sendimage function call should be run again, changing only the up.left, up.right, paint, and bound.pt arguments. up.left and low.right should be updated accordingly. paint and bound.pt should be tripped to FALSE. (NOTE: these are the correct up.left and low.right boundaries when the .png is created from the postscript in linux/unix environment. If the .png file was generated directly the up.left and low.right values of this example may be slightly different).  The following will make the correct interactive plot:
+\indent If automap is used to detect bounding points the function automatically continues making the HTML file and sendxy final example output. 
+
+\indent If bounding points are detected manually, after the correct bounding points are known, the sendimage function call should be run again, changing only the up.left, up.right, paint, and bound.pt arguments. up.left and low.right should be updated accordingly. paint and bound.pt should be tripped to FALSE. (NOTE: these are the correct up.left and low.right boundaries when the .png is created from the postscript in linux/unix environment. If the .png file was generated directly the up.left and low.right values of this example may be slightly different).  The following will make the correct interactive plot:
+
 \begin{verbatim}
+# manual detection of points
 sendimage(plot.call = plot.calls, x=x, y=y, z=z,z.value='value',
           x.lbls = x.lbls, y.lbls=y.lbls, xy.lbls=xy.lbls,
           up.left=c(101,99),low.right=c(735,914),
           bound.pt=FALSE, source.plot=NA, paint=FALSE,
           img.prog=NA,fname.root="testImg", spot.radius=10)
+
+# or 
+# automatic detection of points
+sendimage(plot.call = plot.calls, x=x, y=y, z=z,z.value='value',
+          x.lbls = x.lbls, y.lbls=y.lbls, xy.lbls=xy.lbls,
+          up.left=c(101,99),low.right=c(735,914),
+          source.plot=NA,
+          fname.root="testImg", spot.radius=10, 
+	  automap=TRUE, automap.method="mode")
+
 
 \end{verbatim}
 
@@ -524,16 +629,33 @@ The resulting HTML file may be opened in any web browser that is capable of runn
   y.lbls$location = c(92526, 486844000,2984248632,1387071184,3048286585)
   
   xy.lbls = list()
-  intensity = matrix(c(-.3,1.0,.3,-.07,-.4,1.2,.4,.3,1.0,-.5,-.06,1.1,.04,.5,.03,-.09,-.04,.06,.01,.03),nrow=5)
+  intensity = matrix(c(-.3,1.0,.3,-.07,-.4,1.2,.4,.3,1.0,-.5,-.06,1.1,
+                       .04,.5,.03,-.09,-.04,.06,.01,.03),nrow=5)
   xy.lbls$intensity = intensity
   QC = matrix(c(T,T,T,T,T,F,T,T,T,F,T,T,T,T,T,F,T,F,T,T), nrow=5)
   xy.lbls$QC = QC
+
+  # automatic detection bound points
+
+  sendimage(plot.call = plot.calls, x=x, y=y, z=z,z.value='value',
+            x.lbls = x.lbls, y.lbls=y.lbls, xy.lbls=xy.lbls,
+            up.left=c(89,100),low.right=c(800,900),
+            source.plot=NA, 
+            fname.root="testImg",
+            automap=TRUE, automap.method="mode" )
+
+  # or 
+
+  # manual detection bound points
+
 
   sendimage(plot.call = plot.calls, x=x, y=y, z=z,z.value='value',
             x.lbls = x.lbls, y.lbls=y.lbls, xy.lbls=xy.lbls,
             up.left=c(89,100),low.right=c(800,900),
             bound.pt=TRUE, source.plot=NA, paint=TRUE,
             img.prog=NA,fname.root="testImg"  )
+
+  # correct bounding points found (101,99), (735,914)
 
   sendimage(plot.call = plot.calls, x=x, y=y, z=z,z.value='value',
             x.lbls = x.lbls, y.lbls=y.lbls, xy.lbls=xy.lbls,
@@ -582,13 +704,13 @@ The sendimage function creates a single interactive image. This is a wrapper con
                   mai.mat=NA, mai.prc=FALSE,
                   z.value="value",
                   x.lbls=NA,y.lbls=NA,xy.lbls=NA,
-                  bound.pt = TRUE, source.plot=NA,
+                  bound.pt = FALSE, source.plot=NA,
                   resize="800x1100",
                   ps.paper="letter",ps.width=8,ps.height=11,
                   fname.root="test",dir="./", header="v2",
-                  paint=TRUE, img.prog = NA,
+                  paint=FALSE, img.prog = NA,
                   up.left=c(288,203),low.right=c(620,940),
-                  spot.radius=10) 
+                  spot.radius=5, automap=FALSE, automap.method="mode") 
 \end{verbatim}
 
 \indent {\bf{Note:}} Most of the arguments in this function are arguments for the stats package function heatmap. We will not go through these arguments. Please refer to heatmap documentation for more information. \newline
@@ -610,9 +732,9 @@ x =  matrix(rnorm(15), nrow=5, ncol=3)
 
 \subsection{specifying the interactive points and tool-tip content}
 
-As with the sendimage function, the argument z.value is a character descriptor which will be used as the descriptor name in the interactive display. Unlike the sendimage function, this does not correspond to an argument z; for the heatmap.send function z.value describes what the argument x holds. \\
+As with the sendimage function, the argument z.value is text which will be used as the descriptor name in the interactive display. Unlike the sendimage function, this does not correspond to an argument z; for the heatmap.send function z.value describes what the argument x holds. \\
 
-\indent {\bf{Note:}} z.value should not contain any spaces or characters; numbers and letters only.
+\indent {\bf{Note:}} z.value should not contain any spaces or characters; numbers and letters only.\\
 
 \indent As with the sendxy function, the arguments x.lbls, y.lbls, and xy.lbls control what is displayed in the interactive window when the user hovers the mouse over plot points. The arguments x.lbls and y.lbls refer to data that is specific to the x and y values respectively. x.lbls and y.lbls are data.frames. x.lbls is of the dimension n by m where n is equal to the width of the argument x (Our example 3). y.lbls is of the dimension n by m where n is equal to the length of the argument x (Our example 5). Each row is specific to a certain x or y value and each column is a unique variable or characteristic of x or y respectively.  The first row of the data frames should contain column headers; these names will be used as display names in the interactive window that appears. xy.lbls refers to data that is specific to both x and y location. The function argument xy.lbls is a list of matrices; each matrix should be of the same dimensions as x (Our example 5 x 3).
 
@@ -659,16 +781,32 @@ We have entered dummy values for the up.left and low.right coordinates. Figure 6
 \end{center}
 
 
-NOTE: Just as the sendxy and sendimage functions, the heatmap.send function does not always need to be run iteratively. If the user is using the same machine (therefore consistent point size and operating system), the plot's xlim, ylim, and margins are the same, and the resize value is the same, the bounding points will also be the same. Helpful hint: setting mai=NA, therefore using the default margins, will keep margins consistent. This process of retrieving bound.pt needs to be performed once for a certain group of settings.\newline
+NOTE: Like the sendxy and sendimage functions, the heatmap.send function does not always need to be run iteratively. If the user is using the same machine (therefore consistent point size and operating system), the plot's xlim, ylim, and margins are the same, and the resize value is the same, the bounding points will also be the same. Helpful hint: setting mai=NA, therefore using the default margins, will keep margins consistent. This process of retrieving bound.pt needs to be performed once for a certain group of settings.\newline
+
+\indent If the automatic detection of bounding points is used, the following code is executed:
+\begin{verbatim}
+  heatmap.send(x, RowSideColors=rcol, ColSideColors=ccol,
+               z.value="value",
+               source.plot=NA,
+               fname.root="heatmapSendPlot",resize="800x1100",
+               up.left=c(89,100),low.right=c(800,900),
+	       spot.radius=10, automap=TRUE, automap.method="mode")
+\end{verbatim}
+
+
 
 \subsection{specifying the spot radius}
 
 \indent The spot.radius argument for heatmap.send is the same as in sendxy. Please refer to section 2.5 for details. 
 
-\subsection{creating the sendimage example output}
+\subsection{creating the heatmap.send example output}
 
-\indent As mentioned above, after the correct bounding points are known, the heatmap.send function call should be run again, changing only the up.left, up.right, paint, and bound.pt arguments. up.left and low.right should be updated accordingly. paint and bound.pt should be tripped to FALSE. (NOTE: these are the correct up.left and low.right boundaries when the .png is created from the postscript in linux/unix environment. If the .png file was generated directly the up.left and low.right values of this example may be slightly different).  The following will make the correct interactive plot:
+\indent If automap is used to detect bounding points the function automatically continues making the HTML file and sendxy final example output. 
+
+\indent If bounding points are detected manually, after the correct bounding points are known, the heatmap.send function call should be run again, changing only the up.left, up.right, paint, and bound.pt arguments. up.left and low.right should be updated accordingly. paint and bound.pt should be tripped to FALSE. (NOTE: these are the correct up.left and low.right boundaries when the .png is created from the postscript in linux/unix environment. If the .png file was generated directly the up.left and low.right values of this example may be slightly different).  The following will make the correct interactive plot:
 \begin{verbatim}
+# manual detection of points
+
 heatmap.send(x, RowSideColors=rcol, ColSideColors=ccol,
              z.value="value",
              bound.pt=FALSE, paint=FALSE,source.plot=NA,
@@ -676,7 +814,19 @@ heatmap.send(x, RowSideColors=rcol, ColSideColors=ccol,
              up.left=c(288,203),low.right=c(620,940),
 	     spot.radius=10)
 
+
+# or 
+# automatic detection of points
+
+heatmap.send(x, RowSideColors=rcol, ColSideColors=ccol,
+             z.value="value",
+             source.plot=NA,
+             fname.root="heatmapSendPlot",resize="800x1100",
+             up.left=c(288,203),low.right=c(620,940),
+	     spot.radius=10, automap=TRUE,automap.method="mode")
+
 \end{verbatim}
+
 
 The resulting HTML file may be opened in any web browser that is capable of running Javascript. Figure 7 shows a snapshot of the final graph opened in Mozilla Firefox. Notice how the appropriate information for the region located under the black arrow is displayed in the information box.
 \begin{center}
@@ -686,7 +836,7 @@ The resulting HTML file may be opened in any web browser that is capable of runn
 \end{figure}
 \end{center}
 
-\subsection{summary of code used to generate the sendimage example}
+\subsection{summary of code used to generate the heatmap.send example}
 
 The following is a summary of all code run to make the above example:
 
@@ -696,12 +846,26 @@ x = matrix(rnorm(15), nrow=5, ncol=3)
 rcol = c("red", "blue", "yellow", "purple", "blue")
 ccol = c("black", "green", "black")
 
+
+# automatic detection of bound points
+heatmap.send(x, RowSideColors=rcol, ColSideColors=ccol,
+              z.value="value",
+              source.plot=NA,
+              fname.root="heatmapSendPlot",resize="800x1100",
+              up.left=c(89,100),low.right=c(800,900),
+	      spot.radius=10,automap=TRUE,automap.method="mode")
+
+# or 
+
+# manual detection bound points
 heatmap.send(x, RowSideColors=rcol, ColSideColors=ccol,
               z.value="value",
               bound.pt=TRUE, paint=TRUE,source.plot=NA,
               fname.root="heatmapSendPlot",resize="800x1100",
               up.left=c(89,100),low.right=c(800,900),
 	      spot.radius=10)
+
+# correct bounding points found (288,203), (620,940)
 
 heatmap.send(x, RowSideColors=rcol, ColSideColors=ccol,
              z.value="value",
@@ -746,12 +910,12 @@ And there you have it, an interactive heatmap!
 sendplot <- function(mat, plot.calls, x,y, mai.mat, mai.prc=FALSE,xlim=NA, ylim=NA,
                      z=NA, z.value="value",type="scatterplot", plt.extras = NA,
                      x.lbls=NA, y.lbls=NA, xy.lbls=NA,
-                     bound.pt = TRUE,source.plot=NA,resize="4000x5500", 
+                     bound.pt = FALSE,source.plot=NA,resize="4000x5500", 
                      ps.paper="letter", ps.width=8,ps.height=11,
                      fname.root="test",dir="./",header="v2",
-                     paint=TRUE,  img.prog = NA,
+                     paint=FALSE,  img.prog = NA,
                      up.left=c(673,715),low.right=c(2874,4481),
-                     spot.radius=10
+                     spot.radius=5,automap=FALSE, automap.method="mode"
                      )
 \end{verbatim}
 
@@ -822,7 +986,7 @@ mat=matrix(c(rep(c(rep(2,8),rep(0,2)),1),
 \end{Soutput}
 \end{Schunk}
 
-\indent {\bf{Note:}} In layout, zero acts as a region that no graph is displayed, a buffer. Notice the use of zero to allow the first and fourth plot to line up in the example.
+\indent {\bf{Note:}} In layout, zero acts as a region in which no graph is displayed, a buffer. Notice the use of zero to allow the first and fourth plot to line up in the example.
 
 \indent Figure 9 displays a box version of the above layout.
 \begin{center}
@@ -910,7 +1074,7 @@ creates a blank image.
 
 \indent {\bf{Note:}} Notice axis and additional plotting such as vertical line breaks have not yet been plotted. Additional expressions, such as these, can be evaluated on the plots through the sendplot argument plt.extras, which will be discussed in detail later in this section. \newline
 
-\indent Arguments of type character within any of the character strings are specified with a single quotation rather than the double quotations used originally, or vice versa (see second string's leaflab argument). Any variables used in plot calls should be in local memory before running the sendplot function. The following code initiates variables needed for above plot calls:
+\indent Arguments of type character within any of the character strings are specified with a single quotation rather than the double quotations used originally, or vice versa (see second string's leaflab argument). Any variables used in plot calls should be in local memory before running the sendplot function. The following code initializes variables needed for above plot calls:
 \begin{verbatim}
 # index of genome - we want to look at region 4q13 
 # the aCGHplus object has already been subset for this region for 10 samples
@@ -965,10 +1129,10 @@ mai.prc = FALSE
 
 
 
-\indent {\bf{Note:}} If figure margins are too large, an error will occur when plotting.  If the user gets an Error figure margins too large, try decreasing the values in mai.mat.
+\indent {\bf{Note:}} If figure margins are too large, an error will occur when plotting.  If the user gets an error message like 'Error figure margins too large', try decreasing the values in mai.mat.
 
 
-\indent plt.extras contains additional expressions or plot calls for each displayed plot. plt.extras is a list which contains sub-lists corresponding to each plot in plot.calls. Each of these sub-lists is a character vector. Before examining the plt.extra calls for Figure 8, consider the following smaller example: The desired display has two plots. The first plot requires the additional plotting of a vertical line at y=0 and a title while the second requires no additional plotting.
+\indent plt.extras contains additional expressions or plot calls for each displayed plot. plt.extras is a list which contains sub-lists corresponding to each plot in plot.calls. Each of these sub-lists is a list of character strings to be evaluated as R functions. Before examining the plt.extra calls for Figure 8, consider the following smaller example: The desired display has two plots. The first plot requires the additional plotting of a vertical line at y=0 and a title while the second requires no additional plotting.
 
 \begin{verbatim}
 plt.extras = list()
@@ -1161,22 +1325,22 @@ The plt.extras calls for this image are:
 \subsection{specifying the interactive points and tool-tip content}
 
 
-\indent The currently support graph types for the interactive plot are scatterplot and image. The arguments x, y, z, z.value, xlim, ylim, x.lbls, y.lbls, xy.lbls and type are defined different depending on which interactive plot is used. \\
+\indent The currently supported graph types for the interactive plot are scatterplot and image. The arguments x, y, z, z.value, xlim, ylim, x.lbls, y.lbls, xy.lbls and type are defined differently depending on which interactive plot is used. \\
 \indent The sendplot argument type refers to which supported graph type is the interactive plot. type should either be 'scatterplot' or 'image'.
 
 \subsubsection{scatterplot}
 
 \indent The x and y arguments are the x and y coordinates of desired interactive points. z and z.value are not utilized and should be left as default values (NA). 
 
-\indent If the first plot is a scatterplot, no xlim or ylim value should be specified in the first plot.call. For mapping purposes, xlim and ylim must be given as separate arguments to the function. If xlim and ylim are not set in the arguments, or entered as NA, the range of the x and y values will be used.
+\indent If the first plot is a scatterplot, no xlim or ylim value should be specified in the first plot.call. For mapping purposes, xlim and ylim must be given as separate arguments to the sendplot function. If xlim and ylim are not set in the arguments, or entered as NA, the range of the x and y values will be used.
 
-quad The arguments x.lbls, y.lbls, and xy.lbls control what is displayed in the interactive window when the user hovers the mouse over plot points. The arguments x.lbls and y.lbls refer to data that is specific to the x and y values respectively. The argument xy.lbls governs data specific to both x and y location. In the case of a scatter-plot, x.lbls, y.lbls, and xy.lbls refer to the same position; it is only necessary to use either x.lbls or y.lbls. x.lbls and y.lbls are data.frames with the number of rows equal to the number of interactive data points. The first row of the data frame should contain column headers; these names will be used as display names in the interactive window that appears. \newline
+\indent The arguments x.lbls, y.lbls, and xy.lbls control what is displayed in the interactive window when the user hovers the mouse over plot points. The arguments x.lbls and y.lbls refer to data that is specific to the x and y values respectively. The argument xy.lbls governs data specific to both x and y location. In the case of a scatter-plot, x.lbls, y.lbls, and xy.lbls refer to the same position; it is only necessary to use either x.lbls or y.lbls. x.lbls and y.lbls are data.frames with the number of rows equal to the number of interactive data points. The first row of the data frame should contain column headers; these names will be used as display names in the interactive window that appears. \newline
 
 \indent {\bf{Note:}} Please refer to section 2.2 for more details. 
 
 \subsubsection{image}
 
-\indent The x, y, and z arguments are the x, y, and z used in the image call. x and y are the locations of the grid lines at which the values of z correspond. z is a matrix of values (length of x  by length of y). The function argument z.value describes what z holds (examples pvalues, logRatios, percentAccepted); this identifier is used in the interactive display. These three arguments have already been defined for the example in the previous section. The function argument z.value describes what z holds (examples pvalues, logRatios, percentAccepted); this identifier is used in the interactive display. The data being used as z values for Figure 8 are log2 ratios that have been fitted by circular binary segmentation. We will call our z.value log2ratios.fitted.
+\indent The x, y, and z arguments are the x, y, and z used in the image call. x and y are the locations of the grid lines at which the values of z correspond. z is a matrix of values (length of x  by length of y).  These three arguments have already been defined for the example in the previous section. The function argument z.value describes what z holds (examples pvalues, logRatios, percentAccepted); this identifier is used in the interactive display. The data being used as z values for Figure 8 are log2 ratios that have been fitted by circular binary segmentation. We will call our z.value log2ratios.fitted.
 
 \begin{verbatim}
 z.value = "log2ratios.fitted"
@@ -1187,7 +1351,7 @@ type = "image"
 
 
 
-\indent {\bf{Note:}} z.value should not contain any spaces or characters; numbers and letters only. \newline
+\indent {\bf{Note:}} z.value should not contain any spaces or punctuation characters; numbers and letters only. \newline
 
 \indent Notice in the above code we have set xlim and ylim as NA. When the interactive plot is an image, these values are generated from the image call. 
 
@@ -1243,6 +1407,36 @@ As mentioned previously, the sendplot functions output an HTML file and a PNG im
     corner of the plot call.}
 \end{description}
 
+\indent The sendplot functions provide convenient options for identifing the upper-left and lower-right pixil coordinates. There is an automatic detection of bounding points, in most cases eliminating the two step procedure. There are also options for manual detection of bound points. These options will be discussed further in the following sections.  
+
+\subsubsection{automatic dectection of bounding points}
+
+\indent As mentioned previously, there is an option for automatic detection of the upper-left and lower-right pixil coordinates. This option eliminates the two iteration procedure for linux and unix users. The functions utilizes ImageMagick's convert program installed on most linux machines, and the R library rtiff's readTiff function. The function arguments implementing this option are:
+\begin{description}
+ \item{automap:~}{logical indicating if application should
+    attempt to automatically detect upper-left and lower-right 
+    coordinates.}
+
+  \item{automap.method:~ }{if automap is TRUE, the method that will be
+    used to find bound points. The current options are median and mode}
+
+ \end{description}
+
+\indent For windows and mac users, this automatic detection of coordinates is viable if the user has the ability to convert a PNG image to a TIFF image. The current implemenation still requires two iterations. The first iteration will create the PNG images. The user then must manually convert the PNG images to the TIF images using appropriate file names. The function is run again and the auto detect will function correctly.  
+
+\indent Continuing the current example, the following code is executed:
+\begin{verbatim}
+sendplot(mat=mat, plot.calls=plot.calls, mai.mat=mai.mat,
+         x=x,y=y,z=z,xlim=NA,ylim=NA, z.value=z.value, type="image",
+         plt.extras=plt.extras, x.lbls=x.lbls, y.lbls=y.lbls,xy.lbls=xy.lbls, 
+         spot.radius=3,up.left=c(673,715),low.right=c(2874,4481),
+         source.plot=NA, resize=resize,
+         automap=TRUE, automap.method="mode")
+\end{verbatim}
+
+
+\subsubsection{manual detection of bounding points}
+
 \indent As mentioned previously, the sendplot functions are typically run in two iterations when creating interactive plots for the first time. In the first iteration, the PNG file is created and then opened in a program such as mspaint or kolourpaint so that the upper-left and lower-right pixel coordinates are identified. In the second iteration, the function is called again using the pixel coordinates identified in the first iteration and the PNG and HTML output files are created.  Refer back to Figure 1 for a flowchart for this two-iteration procedure. 
 
 
@@ -1266,7 +1460,7 @@ As mentioned previously, the sendplot functions output an HTML file and a PNG im
     attempt the task of writing the .html file as that step can be time consuming.}
 
  \end{description}
-The simplest way to identify the up.left and low.right values in the first iteration of sendplot construction is to execute the function with: bound.pt=TRUE, paint=TRUE, and img.prog=NA. With these combination of arguments, the function will create the PNG output, add red points to the upper-left and lower-right corners, and then open the PNG in the default viewer so that the user can readily identify the up.left and low.right pixel coordinates. 
+One way to identify the up.left and low.right values in the first iteration of sendplot construction is to execute the function with: bound.pt=TRUE, paint=TRUE, and img.prog=NA. With these combination of arguments, the function will create the PNG output, add red points to the upper-left and lower-right corners, and then open the PNG in the default viewer so that the user can readily identify the up.left and low.right pixel coordinates. 
 
 \indent {\bf{Note:}} additional points added to upper-left and lower-right corners are red for scatter-plots and blue for 
 images. \newline
@@ -1309,17 +1503,33 @@ NOTE: As mentioned earlier, the sendxy function does not always need to be run i
 \indent The spot.radius argument controls how large an area will be active when the mouse is scrolled over. If the user selects a larger region, some spot locations may overlap and be lost. The interactive application is very sensitive if the user selects a low region. The users' discretion is best used here given that the plot scale and number of data points will also play a role in determining a good spot.radius.  \\
 
 
-\subsection{creating the sendxy example output}
+\subsection{creating the sendplot example output}
 
-\indent As mentioned above, after the correct bounding points are known, the sendplot function call should be run again, changing only the up.left, up.right, paint, and bound.pt arguments. up.left and low.right should be updated accordingly. paint and bound.pt should be tripped to FALSE. (NOTE: these are the correct up.left and low.right boundaries when the .png is created from the postscript in linux/unix environment. If the .png file was generated directly the up.left and low.right values of this example may be slightly different).  The following will make the correct interactive plot:
+\indent If automap is used to detect bounding points the function automatically continues making the HTML file and sendxy final example output. 
+
+\indent If bounding points are detected manually, after the correct bounding points are known, the sendplot function call should be run again, changing only the up.left, up.right, paint, and bound.pt arguments. up.left and low.right should be updated accordingly. paint and bound.pt should be tripped to FALSE. (NOTE: these are the correct up.left and low.right boundaries when the .png is created from the postscript in linux/unix environment. If the .png file was generated directly the up.left and low.right values of this example may be slightly different).  The following will make the correct interactive plot:
 
 \begin{verbatim}
+
+# manual detection of points
+
 sendplot(mat=mat, plot.calls=plot.calls, mai.mat=mai.mat,
          x=x,y=y,z=z,xlim=NA,ylim=NA, z.value=z.value, type="image",
          plt.extras=plt.extras, x.lbls=x.lbls, y.lbls=y.lbls,xy.lbls=xy.lbls, 
          spot.radius=3,up.left=c(83,97),low.right=c(430,635),
          source.plot=NA, img.prog=TRUE,
          resize=resize, bound.pt=FALSE, paint=FALSE)
+
+# or 
+# automatic detection of points
+sendplot(mat=mat, plot.calls=plot.calls, mai.mat=mai.mat,
+         x=x,y=y,z=z,xlim=NA,ylim=NA, z.value=z.value, type="image",
+         plt.extras=plt.extras, x.lbls=x.lbls, y.lbls=y.lbls,xy.lbls=xy.lbls, 
+         spot.radius=3,up.left=c(83,97),low.right=c(430,635),
+         source.plot=NA,resize=resize,
+	 automap=TRUE, automap.method="mode")
+
+
 
 \end{verbatim}
 
