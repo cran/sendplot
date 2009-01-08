@@ -1200,7 +1200,7 @@ makeImap(Splot, x.pos, y.pos,
          x.labels=NA,y.labels=NA,xy.labels=NA,
          x.links=NA, y.links=NA,xy.links=NA,
          asLinks=NA, x.images=NA,
-         y.images=NA,xy.images=NA,
+         y.images=NA,xy.images=NA,sep.chr=":",
          font.type="Helvetica",font.color="black", 
          font.size="12",bg.color='#D6E3F6',  
          fname.root="Splot",dir="./",
@@ -1266,6 +1266,7 @@ This section will define the following makeImap arguments:
 \item{font.color:~}{character giving the name or in the format of '\#------' of the desired font color}
 \item{font.size:~}{numeric indicating the size of the font }
 \item{bg.color:~}{character indicating the name or in the format of '\#------' of the desired background color}
+\item{sep.chr:~}{character or character vector indicating the separation character in tool tip that distinguishes value title from value. }  
 \end{description}
 
 These options are given so the user has more control over how information is displayed. The tool-tip window size will automatically readjust to fit the data desired with the given size.

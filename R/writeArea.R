@@ -1,11 +1,14 @@
 
 writeCircle.1 <-function(DFs, cdat, ndat, obj){
 
+  sep.chr = DFs$sep.chr
+
   # if nothing is specified besides coordinates
   # make mock black vector
   if(length(ndat) == 2){
     cdat = cbind(cdat, rep("NA", dim(cdat)[1]))
     ndat = c(ndat, "value")
+    sep.chr=c(sep.chr, " ")
   }
 
   # dat dataframe dimensions (because hyperlinks not active in header = v1
@@ -13,12 +16,12 @@ writeCircle.1 <-function(DFs, cdat, ndat, obj){
   for(i in 1:(DFs$orgDatDim[1]) ){
     
     ctmp=paste("<area shape=\"circle\" coords=\"",cdat[i,1],",",cdat[i,2],
-      ",",obj$spot.radius[i],"\" onmouseover=\"setData(\'",ndat[3],"&nbsp;&nbsp;:&nbsp;",
+      ",",obj$spot.radius[i],"\" onmouseover=\"setData(\'",ndat[3],"&nbsp;&nbsp;",sep.chr[3],"&nbsp;",
       cdat[i,3],sep="")
     
     if(DFs$orgDatDim[2]>3){
       for(j in 4:(DFs$orgDatDim[2])){
-        ctmp = paste(ctmp, "<br> ",ndat[j],"&amp;nbsp;&amp;nbsp;:&amp;nbsp;",
+        ctmp = paste(ctmp, "<br> ",ndat[j],"&amp;nbsp;&amp;nbsp;",sep.chr[j],"&amp;nbsp;",
           cdat[i,j],sep="")
       }
     }
@@ -34,11 +37,14 @@ writeCircle.1 <-function(DFs, cdat, ndat, obj){
 
 writeRect.1 <- function(DFs, cdat, ndat){
   
+  sep.chr = DFs$sep.chr
+  
   # if nothing is specified besides coordinates
   # make mock black vector
   if(length(ndat) == 4){
     cdat = cbind(cdat, rep("NA", dim(cdat)[1]))
     ndat = c(ndat, "value")
+    sep.chr=c(sep.chr, " ")
   }
 
   # dat dataframe dimensions (because hyperlinks not active in header = v1
@@ -46,12 +52,12 @@ writeRect.1 <- function(DFs, cdat, ndat){
   for(i in 1:(DFs$orgDatDim[1]) ){
     
     ctmp=paste("<area shape=\"rect\" coords=\"",cdat[i,1],",",cdat[i,2],",",cdat[i,3],",",cdat[i,4],
-      " \" onmouseover=\"setData(\'",ndat[5],"&nbsp;&nbsp;:&nbsp;",
+      " \" onmouseover=\"setData(\'",ndat[5],"&nbsp;&nbsp;",sep.chr[5],"&nbsp;",
       cdat[i,5],sep="")
     
     if(DFs$orgDatDim[2]>5){
       for(j in 6:(DFs$orgDatDim[2])){
-        ctmp = paste(ctmp, "<br> ",ndat[j],"&amp;nbsp;&amp;nbsp;:&amp;nbsp;",
+        ctmp = paste(ctmp, "<br> ",ndat[j],"&amp;nbsp;&amp;nbsp;",sep.chr[j],"&amp;nbsp;",
           cdat[i,j],sep="")
       }
     }
@@ -67,13 +73,15 @@ writeRect.1 <- function(DFs, cdat, ndat){
 writePoly.1 <- function(DFs, cdat, ndat, obj){
 
   nv = obj$nCoords
+  sep.chr = DFs$sep.chr
     
   # if nothing is specified besides coordinates
   # make mock black vector
   if(length(ndat) == nv){
     cdat = cbind(cdat, rep("NA", dim(cdat)[1]))
     ndat = c(ndat, "value")
-  }
+    sep.chr=c(sep.chr, " ")
+ }
 
   # dat dataframe dimensions (because hyperlinks not active in header = v1
   # loop over each pt.  coordinate  
@@ -87,12 +95,12 @@ writePoly.1 <- function(DFs, cdat, ndat, obj){
     }
     ctmp = paste(ctmp, cdat[i,nv], sep="")
     
-    ctmp = paste(ctmp, " \" onmouseover=\"setData(\'",ndat[(nv+1)],"&nbsp;&nbsp;:&nbsp;",
+    ctmp = paste(ctmp, " \" onmouseover=\"setData(\'",ndat[(nv+1)],"&nbsp;&nbsp;",sep.chr[(nv+1)],"&nbsp;",
       cdat[i,(nv+1)],sep="")
     
     if(DFs$orgDatDim[2]>(nv+1)){
       for(j in (nv+2):(DFs$orgDatDim[2])){
-        ctmp = paste(ctmp, "<br> ",ndat[j],"&amp;nbsp;&amp;nbsp;:&amp;nbsp;",
+        ctmp = paste(ctmp, "<br> ",ndat[j],"&amp;nbsp;&amp;nbsp;",sep.chr[j],"&amp;nbsp;",
           cdat[i,j],sep="")
       }
     }
@@ -109,26 +117,31 @@ writePoly.1 <- function(DFs, cdat, ndat, obj){
 
 writeCircle.2 <-function(DFs, cdat, ndat, obj){
 
+  sep.chr = DFs$sep.chr
   
   # if nothing is specified besides coordinates
   # make mock black vector
   if(length(ndat) == 2){
     cdat = cbind(cdat, rep("NA", dim(cdat)[1]))
     ndat = c(ndat, "value")
+    sep.chr=c(sep.chr, " ")
   }
   # if nothing static only hyperlinks
   # make mock blank vector
   if(DFs$links.st == 3){
     cdat = cbind(cdat[,1:2], rep("NA", dim(cdat)[1]), cdat[,3:dim(cdat)[2]])
     ndat = c(ndat[1:2], "value", ndat[3:length(ndat)])
+    sep.chr=c(sep.chr[1:2]," ", sep.chr[3:length(sep.chr)])
   }
+  
 
+  
   # dat dataframe dimensions (because hyperlinks not active in header = v1
   # loop over each pt.  coordinate  
   for(i in 1:(DFs$orgDatDim[1]) ){    
   
     ctmp=paste("<area shape=\"circle\" coords=\"",cdat[i,1],",",cdat[i,2],
-      ",",obj$spot.radius[i],"\" onmouseover=\"Tip(\'",ndat[3],"&nbsp;&nbsp;:&nbsp;",
+      ",",obj$spot.radius[i],"\" onmouseover=\"Tip(\'",ndat[3],"&nbsp;&nbsp;",sep.chr[3],"&nbsp;",
       cdat[i,3],sep="")
 
    
@@ -138,7 +151,7 @@ writeCircle.2 <-function(DFs, cdat, ndat, obj){
       if(DFs$orgDatDim[2]>3){
         #for(j in 4:(DFs$links.st-1)){
         for(j in 4:(DFs$image.st-1)){
-          ctmp = paste(ctmp, "<br> ",ndat[j],"&amp;nbsp;&amp;nbsp;:&amp;nbsp;",
+          ctmp = paste(ctmp, "<br> ",ndat[j],"&amp;nbsp;&amp;nbsp;",sep.chr[j]," &amp;nbsp;",
             cdat[i,j],sep="")
         }
       }
@@ -150,7 +163,7 @@ writeCircle.2 <-function(DFs, cdat, ndat, obj){
         for(j in DFs$links.st:(dim(cdat)[2])){
           if(!is.na(cdat[i,j])){
             linkFlag = TRUE
-            ctmp = paste(ctmp, "<br> ",ndat[j],":", cdat[i,j],sep="")
+            ctmp = paste(ctmp, "<br> ",ndat[j],sep.chr[j], cdat[i,j],sep="")
           }
         }         
       }
@@ -165,7 +178,7 @@ writeCircle.2 <-function(DFs, cdat, ndat, obj){
         for(j in DFs$image.st:end.num){
           if(!is.na(cdat[i,j])){
             linkFlag = TRUE
-            ctmp = paste(ctmp, "<br> ",ndat[j],":", cdat[i,j],sep="")
+            ctmp = paste(ctmp, "<br> ",ndat[j],sep.chr[j], cdat[i,j],sep="")
           }
         }  
         
@@ -195,19 +208,23 @@ writeCircle.2 <-function(DFs, cdat, ndat, obj){
 
 
 writeRect.2 <-function(DFs, cdat, ndat, obj){
-
+  
+  sep.chr = DFs$sep.chr
   
   # if nothing is specified besides coordinates
   # make mock black vector
   if(length(ndat) == 4){
     cdat = cbind(cdat, rep("NA", dim(cdat)[1]))
     ndat = c(ndat, "value")
+    sep.chr=c(sep.chr, " ")
   }
   # if nothing static only hyperlinks
   # make mock blank vector
   if(DFs$links.st == 5){
     cdat = cbind(cdat[,1:4], rep("NA", dim(cdat)[1]), cdat[,5:dim(cdat)[2]])
     ndat = c(ndat[1:4], "value", ndat[5:length(ndat)])
+    sep.chr=c(sep.chr[1:4]," ", sep.chr[5:length(sep.chr)])
+   
   }
 
   # dat dataframe dimensions (because hyperlinks not active in header = v1
@@ -215,7 +232,7 @@ writeRect.2 <-function(DFs, cdat, ndat, obj){
   for(i in 1:(DFs$orgDatDim[1]) ){    
   
     ctmp=paste("<area shape=\"rect\" coords=\"",cdat[i,1],",",cdat[i,2],",",cdat[i,3],",",cdat[i,4],
-      " \" onmouseover=\"Tip(\'",ndat[5],"&nbsp;&nbsp;:&nbsp;",
+      " \" onmouseover=\"Tip(\'",ndat[5],"&nbsp;&nbsp;",sep.chr[5],"&nbsp;",
       cdat[i,5],sep="")
  
     if(dim(cdat)[2]>5){
@@ -223,7 +240,7 @@ writeRect.2 <-function(DFs, cdat, ndat, obj){
       # static values
       if(DFs$orgDatDim[2]>5){
         for(j in 6:(DFs$image.st-1)){
-          ctmp = paste(ctmp, "<br> ",ndat[j],"&amp;nbsp;&amp;nbsp;:&amp;nbsp;",
+          ctmp = paste(ctmp, "<br> ",ndat[j],"&amp;nbsp;&amp;nbsp;",sep.chr[j],"&amp;nbsp;",
             cdat[i,j],sep="")
         }
       }
@@ -233,7 +250,7 @@ writeRect.2 <-function(DFs, cdat, ndat, obj){
         for(j in DFs$links.st:(dim(cdat)[2])){
           if(!is.na(cdat[i,j])){
             linkFlag = TRUE
-            ctmp = paste(ctmp, "<br> ",ndat[j],":", cdat[i,j],sep="")
+            ctmp = paste(ctmp, "<br> ",ndat[j],sep.chr[j], cdat[i,j],sep="")
           }
         }         
       }
@@ -249,7 +266,7 @@ writeRect.2 <-function(DFs, cdat, ndat, obj){
         for(j in DFs$image.st:end.num){
           if(!is.na(cdat[i,j])){
             linkFlag = TRUE
-            ctmp = paste(ctmp, "<br> ",ndat[j],":", cdat[i,j],sep="")
+            ctmp = paste(ctmp, "<br> ",ndat[j],sep.chr[j], cdat[i,j],sep="")
           }
         }  
         
@@ -283,6 +300,7 @@ writeRect.2 <-function(DFs, cdat, ndat, obj){
 writePoly.2 <- function(DFs, cdat, ndat, obj){
 
   nv = obj$nCoords
+  sep.chr = DFs$sep.chr
 
   
   # if nothing is specified besides coordinates
@@ -290,12 +308,15 @@ writePoly.2 <- function(DFs, cdat, ndat, obj){
   if(length(ndat) == nv){
     cdat = cbind(cdat, rep("NA", dim(cdat)[1]))
     ndat = c(ndat, "value")
+    sep.chr=c(sep.chr, " ")    
   }
   # if nothing static only hyperlinks
   # make mock blank vector
   if(DFs$links.st == (nv+1)){
     cdat = cbind(cdat[,1:nv], rep("NA", dim(cdat)[1]), cdat[,(nv+1):dim(cdat)[2]])
     ndat = c(ndat[1:nv], "value", ndat[(nv+1):length(ndat)])
+    sep.chr = c(sep.chr[1:nv], " ", sep.chr[(nv+1):length(sep.chr)])
+    
   }
 
   # dat dataframe dimensions (because hyperlinks not active in header = v1
@@ -311,7 +332,7 @@ writePoly.2 <- function(DFs, cdat, ndat, obj){
     }
     ctmp = paste(ctmp, cdat[i,nv], sep="")
     
-    ctmp = paste(ctmp, " \" onmouseover=\"Tip(\'",ndat[(nv+1)],"&nbsp;&nbsp;:&nbsp;",
+    ctmp = paste(ctmp, " \" onmouseover=\"Tip(\'",ndat[(nv+1)],"&nbsp;&nbsp;",sep.chr[(nv+1)],"&nbsp;",
       cdat[i,(nv+1)],sep="")
 
     if(dim(cdat)[2]>(nv+1)){
@@ -319,7 +340,7 @@ writePoly.2 <- function(DFs, cdat, ndat, obj){
       # static values
       if(DFs$orgDatDim[2]>(nv+1)){
         for(j in (nv+2):(DFs$image.st-1)){
-          ctmp = paste(ctmp, "<br> ",ndat[j],"&amp;nbsp;&amp;nbsp;:&amp;nbsp;",
+          ctmp = paste(ctmp, "<br> ",ndat[j],"&amp;nbsp;&amp;nbsp;",sep.chr[j],"&amp;nbsp;",
             cdat[i,j],sep="")
         }
       }
@@ -329,7 +350,7 @@ writePoly.2 <- function(DFs, cdat, ndat, obj){
         for(j in DFs$links.st:(dim(cdat)[2])){
           if(!is.na(cdat[i,j])){
             linkFlag = TRUE
-            ctmp = paste(ctmp, "<br> ",ndat[j],":", cdat[i,j],sep="")
+            ctmp = paste(ctmp, "<br> ",ndat[j],sep.chr[j], cdat[i,j],sep="")
           }
         }         
       }
@@ -344,7 +365,7 @@ writePoly.2 <- function(DFs, cdat, ndat, obj){
         for(j in DFs$image.st:end.num){
           if(!is.na(cdat[i,j])){
             linkFlag = TRUE
-            ctmp = paste(ctmp, "<br> ",ndat[j],":", cdat[i,j],sep="")
+            ctmp = paste(ctmp, "<br> ",ndat[j],sep.chr[j], cdat[i,j],sep="")
           }
         }  
         

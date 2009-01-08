@@ -30,7 +30,7 @@ makeImap <- function(Splot,
                      y.images=NA,
                      xy.images=NA,
 
-                     
+                     sep.chr=":",
 
                      font.type="Helvetica", # 'Arial, Helvetica, sans-serif'   
                      font.color="black",  # name, or #------
@@ -161,6 +161,91 @@ makeImap <- function(Splot,
 
     if( xy.type=="polygon" )  MapObj = makePolyDF(Splot=Splot, xlim= xlim, ylim=ylim, x.pos=x.pos, y.pos=y.pos,boundingPt=boundingPt, x.labels=x.labels, y.labels=y.labels, xy.labels=xy.labels, x.links=x.links, y.links=y.links, xy.links=xy.links, asLinks=asLinks, x.images=x.images, y.images=y.images, xy.images=xy.images)
 
+
+
+    # format sep.chr
+    if(class(sep.chr)=="character"){
+      if(length(sep.chr) == 1) sep.chr = rep(sep.chr,9)
+      if(length(sep.chr) < 9) sep.chr = c(sep.chr, rep(sep.chr[length(sep.chr)],9-length(sep.chr)))
+      if(length(sep.chr) > 9) sep.chr = sep.chr[1:9]
+
+      temp = list(x.lbl.sep=NA, y.lbl.sep=NA,  xy.lbl.sep=NA, x.lnk.sep=NA, y.lnk.sep=NA, xy.lnk.sep=NA, x.img.sep=NA ,y.img.sep=NA,  xy.img.sep=NA)
+      temp.vec = c("x.labels","y.labels","xy.labels","x.links","y.links","xy.links", "x.images","y.images","xy.images")
+      for(i in 1:9){
+        temp.vl=NA
+        eval.js(paste("temp.vl=", temp.vec[i]))
+        if(class(temp.vl)!="data.frame"){
+          if(length(temp.vl) > 1){
+            eval.js(paste("temp$",names(temp)[i]," = '", sep.chr[i], "'", sep=""))
+          }else{
+            if(class(temp.vl)=="logical") temp[i] = NA
+            else eval.js(paste("temp$",names(temp)[i]," = '", sep.chr[i], "'",sep=""))
+          }
+        }else{
+          eval.js(paste("temp$",names(temp)[i]," = rep(sep.chr[i], dim(temp.vl)[2])",sep=""))        
+        }
+      }
+      sep.chr = temp
+    }
+    if(class(sep.chr) == "list"){
+      temp.vec = c("x.lbl.sep","y.lbl.sep","xy.lbl.sep","x.lnk.sep","y.lnk.sep","xy.lnk.sep", "x.img.sep","y.img.sep","xy.img.sep")
+      nm = names(sep.chr)
+      mis = setdiff(temp.vec, nm)
+      if(length(mis) != 0){
+        for(m in mis){
+          eval.js(paste("sep.chr$", m ,"=NA",sep=""))
+        }
+      }
+      temp.vec2 = c("x.labels","y.labels","xy.labels","x.links","y.links","xy.links", "x.images","y.images","xy.images")
+      log.vec = rep(NA,9)
+      for(i in 1:9){
+        if(eval.js(paste("class(", temp.vec2[i], ")=='data.frame'",sep=""))){
+          log.vec[i] = eval.js(paste("class(", temp.vec2[i], ")=='data.frame'",sep=""))
+        }else{
+          if(eval.js(paste("length(", temp.vec2[i], ") > 1",sep=""))){
+            log.vec[i] = TRUE
+          }else{
+            log.vec[i] = eval.js(paste("!is.na(", temp.vec2[i], ")",sep=""))
+          }          
+        }
+      }
+      idx = which(log.vec)
+      if(length(idx) != 0){
+        for(j in idx){
+
+
+          if(eval.js(paste("class(", temp.vec2[j],")=='list'", sep=""))) eval.js(paste( temp.vec2[j], "= as.data.frame(", temp.vec2[j], ")", sep=""))
+          
+          if(eval.js(paste("class(", temp.vec2[j],")=='data.frame'", sep=""))){
+            dm.df = eval.js(paste("dim(", temp.vec2[j],")[2]", sep=""))
+            ln.sep = eval.js(paste("length(sep.chr$",temp.vec[j],")", sep=""))
+            if(dm.df > ln.sep){
+              eval.js(paste("sep.chr$",temp.vec[j],"= c(sep.chr$", temp.vec[j], ",", "rep(","sep.chr$",temp.vec[j],"[length(","sep.chr$",temp.vec[j] ,")],",dm.df-ln.sep,"))", sep=""))
+            }
+            if(dm.df < ln.sep){
+              eval.js(paste("sep.chr$",temp.vec[j],"= sep.chr$", temp.vec[j], "[1:",dm.df,"]", sep=""))
+              
+            }
+            cng = eval.js(paste("which(is.na(sep.chr$",temp.vec[j], "))", sep=""))
+            eval.js(paste("sep.chr$",temp.vec[j],"[cng] = ':'", sep=""))
+
+          }else{
+       
+            if(eval.js(paste("length(", temp.vec2[j],") > 1", sep=""))){
+              eval.js(paste("sep.chr$",temp.vec[j],"= sep.chr$", temp.vec[j], sep=""))              
+            }else{
+              if(eval.js(paste("!is.na(", temp.vec2[j], ")",sep=""))) eval.js(paste("sep.chr$",temp.vec[j],"=sep.chr$", temp.vec[j], "[1]",sep=""))
+            }
+          }          
+        }        
+      }      
+    }
+    
+    # add to mapobj
+
+     MapObj$sep.chr = sep.chr
+
+    
     
     if(length(MapObj) != 1){
 

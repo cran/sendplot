@@ -339,6 +339,62 @@ makeSplot <- function(Splot,
       }
 
     }else{
+
+      # load header information for html file
+      if(header!="v1" &  header!="v2" & header!="v3") header="v3"
+      # mapfile header info
+      if(header=="v2") data(v2.header)
+      if(header=="v1") data(v1.header)
+        
+      # begin html file
+      sink(fname.html)
+      # add header information
+      if(header=="v3"){
+        w.wi = strsplit(window.size, "x")[[1]][1]
+        w.hi = strsplit(window.size, "x")[[1]][2]
+
+        cat(paste("<html>\n<head>\n    <title>sendplot</title>\n    <style type=\"text/css\">\n        /* CSS GOES HERE */\n        .plot {border:1px solid #CCCCCC;display:block;overflow:auto;padding:5px;\n               max-width:",w.wi,"px; max-height:",w.hi,"px;}\n    </style>\n</head>\n", sep=""))
+
+        data(v3.header)
+          
+      }
+
+      sp.header=sp.header
+        
+      for(i in 1:length(sp.header)) cat(sp.header[i],fill=TRUE)
+
+      if(!is.null(Splot$Default)){
+        if(Default){
+          if(header=="v1") writeDefault1(Splot)
+          if(header=="v2" | header=="v3") writeDefault2(Splot)
+        }
+      }
+      
+      cat("</map>",fill=TRUE)
+      cat("<div class=\"plot\">",fill=TRUE)
+      if(!pngF){
+        
+        image.name.jpeg=paste(fname.root,".jpeg",sep="")
+        
+        if(header=="v1")cat("<img border=\"0\" src=\"",image.name.jpeg,"\" usemap=\"img-map\" />",sep="",fill=TRUE)
+        if(header=="v2" | header=="v3")cat("<img border=\"0\" src=\"",image.name.jpeg,"\" usemap=\"#img-map\" />",sep="",fill=TRUE)          
+      }else{
+        
+        image.name.png=paste(fname.root,".png",sep="")
+        
+        if(header=="v1")cat("<img border=\"0\" src=\"",image.name.png,"\" usemap=\"img-map\" />",sep="",fill=TRUE)
+        if(header=="v2" | header=="v3")cat("<img border=\"0\" src=\"",image.name.png,"\" usemap=\"#img-map\" />",sep="",fill=TRUE)
+      }
+      cat("</div>",fill=TRUE)
+      cat("</body>",fill=TRUE)
+      cat("</html>",fill=TRUE)
+      
+      sink()
+      
+      if(header=="v1") cat("Note: hyperlinks currenly only work with header=v2 \n")
+
+
+      
       cat("Note:  No plots are designated interactive \n       Please set using makeImap \n")
     }
     

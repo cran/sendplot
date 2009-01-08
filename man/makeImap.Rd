@@ -27,6 +27,7 @@ makeImap(Splot,
          x.images=NA,
          y.images=NA,
          xy.images=NA,
+         sep.chr=":",
          font.type="Helvetica",
          font.color="black", 
          font.size="12",     
@@ -102,6 +103,9 @@ makeImap(Splot,
     "image.boundaries" or "image.box". This information is displayed in
     the interactive plot window as images. The values in these
     matricies should be complete paths to images}
+  \item{sep.chr}{seperation character in tool tip that distinguishes
+    value from indicator. If a single value, duplicated for all. It may
+    be a vector of values corresponding to each tooltip entry.}
   \item{font.type}{font type for tool-tip. Currently support fonts are
     Arial, Helvetica,and sans-serif}
   \item{font.color}{font color for tool-tip}

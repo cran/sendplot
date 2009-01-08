@@ -100,7 +100,21 @@ makePolyDF <-function(Splot,
     }
   }
   # if x.labels is not NA continue
-  if(contx){     
+  if(contx){
+    lev = levels(factor(names(x.labels)))
+    num = length(lev)
+    for(i in 1:num){
+      idx = which(names(x.labels) == lev[i])
+      if(length(idx) > 1){
+        for(j in 2:length(idx)){
+          vch=""
+          for(k in 1:(j-1)){
+            vch = paste(vch, ".", sep="")
+          }
+          names(x.labels)[idx[j]] = paste(names(x.labels)[idx[j]], vch, sep="")
+        }        
+      }
+    }    
     for(i in 1:dim(x.labels)[2]){
       if(i == 1) z.value = names(x.labels)[i]
       eval.js(paste("dat$",names(x.labels)[i], "=as.vector(x.labels[,i])", sep=""))
@@ -124,7 +138,21 @@ makePolyDF <-function(Splot,
     y.labels = NA
   }      
   # if y.labels is not NA continue
-  if(conty){     
+  if(conty){
+    lev = levels(factor(names(y.labels)))
+    num = length(lev)
+    for(i in 1:num){
+      idx = which(names(y.labels) == lev[i])
+      if(length(idx) > 1){
+        for(j in 2:length(idx)){
+          vch=""
+          for(k in 1:(j-1)){
+            vch = paste(vch, ".", sep="")
+          }
+          names(y.labels)[idx[j]] = paste(names(y.labels)[idx[j]], vch, sep="")
+        }        
+      }
+    }          
     for(i in 1:dim(y.labels)[2]){
       if((i == 1) & !contx) z.value = names(y.labels)[i]
       eval.js(paste("dat$",names(y.labels)[i], "=as.vector(y.labels[,i])", sep=""))
@@ -148,7 +176,21 @@ makePolyDF <-function(Splot,
     xy.labels = NA
   }         
   # if xy.labels is not NA continue
-  if(contxy){     
+  if(contxy){
+    lev = levels(factor(names(xy.labels)))
+    num = length(lev)
+    for(i in 1:num){
+      idx = which(names(xy.labels) == lev[i])
+      if(length(idx) > 1){
+        for(j in 2:length(idx)){
+          vch=""
+          for(k in 1:(j-1)){
+            vch = paste(vch, ".", sep="")
+          }
+          names(xy.labels)[idx[j]] = paste(names(xy.labels)[idx[j]], vch, sep="")
+        }        
+      }
+    }  
     for(i in 1:dim(xy.labels)[2]){
       if((i == 1) & !contx & !conty) z.value = names(xy.labels)[i]
       eval.js(paste("dat$",names(xy.labels)[i], "=as.vector(xy.labels[,i])", sep=""))
@@ -189,6 +231,22 @@ makePolyDF <-function(Splot,
   }
   # if x.links is not NA
   if(cont){
+
+   lev = levels(factor(names(x.links)))
+    num = length(lev)
+    for(i in 1:num){
+      idx = which(names(x.links) == lev[i])
+      if(length(idx) > 1){
+        for(j in 2:length(idx)){
+          vch=""
+          for(k in 1:(j-1)){
+            vch = paste(vch, ".", sep="")
+          }
+          names(x.links)[idx[j]] = paste(names(x.links)[idx[j]], vch, sep="")
+        }        
+      }
+    }    
+    
     # for each column get links
     for(i in 1:dim(x.links)[2]){
       eval.js("temp=as.vector(x.links[,i])")
@@ -235,6 +293,21 @@ makePolyDF <-function(Splot,
   }
   # if y.links is not NA
   if(cont){
+    lev = levels(factor(names(y.links)))
+    num = length(lev)
+    for(i in 1:num){
+      idx = which(names(y.links) == lev[i])
+      if(length(idx) > 1){
+        for(j in 2:length(idx)){
+          vch=""
+          for(k in 1:(j-1)){
+            vch = paste(vch, ".", sep="")
+          }
+          names(y.links)[idx[j]] = paste(names(y.links)[idx[j]], vch, sep="")
+        }        
+      }
+    }    
+   
     # for each column get links
     for(i in 1:dim(y.links)[2]){
       eval.js("temp=as.vector(y.links[,i])")
@@ -279,6 +352,21 @@ makePolyDF <-function(Splot,
   }
   # if xy.links is not NA
   if(cont){
+    lev = levels(factor(names(xy.links)))
+    num = length(lev)
+    for(i in 1:num){
+      idx = which(names(xy.links) == lev[i])
+      if(length(idx) > 1){
+        for(j in 2:length(idx)){
+          vch=""
+          for(k in 1:(j-1)){
+            vch = paste(vch, ".", sep="")
+          }
+          names(xy.links)[idx[j]] = paste(names(xy.links)[idx[j]], vch, sep="")
+        }        
+      }
+    }    
+   
     # for each column get links
     for(i in 1:length(xy.links)){
       eval.js("temp=as.vector(xy.links[,i])")
@@ -363,7 +451,23 @@ makePolyDF <-function(Splot,
     }
   }
   # if x.images is not NA continue
-  if(contxi){     
+  if(contxi){
+
+    lev = levels(factor(names(x.images)))
+    num = length(lev)
+    for(i in 1:num){
+      idx = which(names(x.images) == lev[i])
+      if(length(idx) > 1){
+        for(j in 2:length(idx)){
+          vch=""
+          for(k in 1:(j-1)){
+            vch = paste(vch, ".", sep="")
+          }
+          names(x.images)[idx[j]] = paste(names(x.images)[idx[j]], vch, sep="")
+        }        
+      }
+    }    
+   
     for(i in 1:dim(x.images)[2]){
       eval.js("temp=as.vector(x.images[,i])")
       # for each points link
@@ -401,7 +505,22 @@ makePolyDF <-function(Splot,
      y.images = NA
   }      
   # if y.images is not NA continue
-  if(contyi){     
+  if(contyi){
+   lev = levels(factor(names(y.images)))
+    num = length(lev)
+    for(i in 1:num){
+      idx = which(names(y.images) == lev[i])
+      if(length(idx) > 1){
+        for(j in 2:length(idx)){
+          vch=""
+          for(k in 1:(j-1)){
+            vch = paste(vch, ".", sep="")
+          }
+          names(y.images)[idx[j]] = paste(names(y.images)[idx[j]], vch, sep="")
+        }        
+      }
+    }    
+    
     for(i in 1:dim(y.images)[2]){
       eval.js("temp=as.vector(y.images[,i])")
       # for each points link
@@ -440,7 +559,23 @@ makePolyDF <-function(Splot,
     xy.images = NA
   }         
   # if xy.images is not NA continue
-  if(contxyi){     
+  if(contxyi){
+
+    lev = levels(factor(names(xy.images)))
+    num = length(lev)
+    for(i in 1:num){
+      idx = which(names(xy.images) == lev[i])
+      if(length(idx) > 1){
+        for(j in 2:length(idx)){
+          vch=""
+          for(k in 1:(j-1)){
+            vch = paste(vch, ".", sep="")
+          }
+          names(xy.images)[idx[j]] = paste(names(xy.images)[idx[j]], vch, sep="")
+        }        
+      }
+    }    
+   
     for(i in 1:dim(xy.images)[2]){
       eval.js("temp=as.vector(xy.images[,i])")
       # for each points link

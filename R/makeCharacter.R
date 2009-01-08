@@ -14,20 +14,23 @@ makeCharacter <- function(DF){
     cdat[,j]=as.character(dat[,j])
     ndat[j]=names(dat)[j]
   }
-  
+  ndat = gsub(pattern=".", replacement=" ",ndat, fixed=TRUE)
+   
   cdat2=array(" ",dim=dim(dat2))
   ndat2=rep(" ",dim(dat2)[2])
   for(j in 1:(dim(dat2)[2])){
     cdat2[,j]=as.character(dat2[,j])
     ndat2[j]=names(dat2)[j]
   }
-
+  ndat2 = gsub(pattern=".", replacement=" ",ndat2, fixed=TRUE)
+   
   cdat3=array(" ",dim=dim(dat3))
   ndat3=rep(" ",dim(dat3)[2])
   for(j in 1:(dim(dat3)[2])){
     cdat3[,j]=as.character(dat3[,j])
     ndat3[j]=names(dat3)[j]
   }
+  ndat3 = gsub(pattern=".", replacement=" ",ndat3, fixed=TRUE)
 
   imageIn=FALSE
   # combined information data frame and image data frame
@@ -70,6 +73,21 @@ makeCharacter <- function(DF){
   }else{
     links.st = (dim(dat)[2]) + 1
   }
+
+
+  # combine sep.chr
+  sep.chr = DF$sep.chr
+  xy.type = DF$xy.type
+  if((xy.type=="points") | (xy.type=="circle")) new.sep = c(NA,NA)
+  if( (xy.type=="image.midpoints") | (xy.type=="image.boundaries") |  (xy.type=="image.box"))new.sep = c(NA,NA)
+  if( xy.type=="rect")new.sep = c(NA,NA, NA, NA)
+  if( xy.type=="poly" ) new.sep = rep(NA,DF$nCoords)
+  for(i in 1:9){
+    vec = sep.chr[i]
+    if(class(vec[[1]]) != "logical") new.sep = c(new.sep, vec[[1]])
+    
+  }
+
   
   cDF = list()
   cDF$cdat = cdat
@@ -81,6 +99,7 @@ makeCharacter <- function(DF){
   cDF$image.st = image.st
   cDF$imageIn = imageIn
   cDF$hyperIn = hypIn
+  cDF$sep.chr = new.sep
   
   return(cDF)
   

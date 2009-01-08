@@ -218,7 +218,22 @@ makeImageDF <- function(Splot,xy.type,
     }         
   }       
   # if x.labels is not NA continue
-  if(cont){     
+  if(cont){
+    lev = levels(factor(names(x.labels)))
+    num = length(lev)
+    for(i in 1:num){
+      idx = which(names(x.labels) == lev[i])
+      if(length(idx) > 1){
+        for(j in 2:length(idx)){
+          vch=""
+          for(k in 1:(j-1)){
+            vch = paste(vch, ".", sep="")
+          }
+          names(x.labels)[idx[j]] = paste(names(x.labels)[idx[j]], vch, sep="")
+        }        
+      }
+    }    
+  
     for(i in 1:dim(x.labels)[2]){
       eval.js(paste("dat$",names(x.labels)[i], "=as.vector(mapply(rep,x=x.labels[,i], MoreArgs=list(times=length(y.image))))", sep=""))
     }
@@ -241,7 +256,22 @@ makeImageDF <- function(Splot,xy.type,
     }         
   }    
   # if y.labels is not NA continue
-  if(cont){     
+  if(cont){
+    lev = levels(factor(names(y.labels)))
+    num = length(lev)
+    for(i in 1:num){
+      idx = which(names(y.labels) == lev[i])
+      if(length(idx) > 1){
+        for(j in 2:length(idx)){
+          vch=""
+          for(k in 1:(j-1)){
+            vch = paste(vch, ".", sep="")
+          }
+          names(y.labels)[idx[j]] = paste(names(y.labels)[idx[j]], vch, sep="")
+        }        
+      }
+    }        
+   
     for(i in 1:dim(y.labels)[2]){
       eval.js(paste("dat$",names(y.labels)[i], "=rep(y.labels[,i],length(x.image))", sep=""))
     }
@@ -250,6 +280,21 @@ makeImageDF <- function(Splot,xy.type,
   if(is.na(xy.labels[1])) cont = FALSE
   # if xy.labels is not NA continue
   if(cont){
+    lev = levels(factor(names(xy.labels)))
+    num = length(lev)
+    for(i in 1:num){
+      idx = which(names(xy.labels) == lev[i])
+      if(length(idx) > 1){
+        for(j in 2:length(idx)){
+          vch=""
+          for(k in 1:(j-1)){
+            vch = paste(vch, ".", sep="")
+          }
+          names(xy.labels)[idx[j]] = paste(names(xy.labels)[idx[j]], vch, sep="")
+        }        
+      }
+    }  
+    
     for(i in 1:length(xy.labels)){
       # check dimension
       if((dim(xy.labels[[i]])[2] == length(x.image)) & (dim(xy.labels[[i]])[1] == length(y.image))){                  
@@ -286,6 +331,21 @@ makeImageDF <- function(Splot,xy.type,
   }
   # if x.links is not NA
   if(cont){
+    lev = levels(factor(names(x.links)))
+    num = length(lev)
+    for(i in 1:num){
+      idx = which(names(x.links) == lev[i])
+      if(length(idx) > 1){
+        for(j in 2:length(idx)){
+          vch=""
+          for(k in 1:(j-1)){
+            vch = paste(vch, ".", sep="")
+          }
+          names(x.links)[idx[j]] = paste(names(x.links)[idx[j]], vch, sep="")
+        }        
+      }
+    }    
+    
     # for each column get links
     for(i in 1:dim(x.links)[2]){           
       eval.js("temp=as.vector(mapply(rep,x=x.links[,i], MoreArgs=list(times=length(y.image))))")
@@ -329,6 +389,22 @@ makeImageDF <- function(Splot,xy.type,
   }
   # if y.links is not NA
   if(cont){
+
+    lev = levels(factor(names(y.links)))
+    num = length(lev)
+    for(i in 1:num){
+      idx = which(names(y.links) == lev[i])
+      if(length(idx) > 1){
+        for(j in 2:length(idx)){
+          vch=""
+          for(k in 1:(j-1)){
+            vch = paste(vch, ".", sep="")
+          }
+          names(y.links)[idx[j]] = paste(names(y.links)[idx[j]], vch, sep="")
+        }        
+      }
+    }    
+    
     # for each column get links
     for(i in 1:dim(y.links)[2]){
       eval.js("temp=as.vector(rep(y.links[,i],length(x.image)))")
@@ -358,6 +434,21 @@ makeImageDF <- function(Splot,xy.type,
   if(is.na(xy.links[1])) cont = FALSE
   # if xy.links is not NA
   if(cont){
+    lev = levels(factor(names(xy.links)))
+    num = length(lev)
+    for(i in 1:num){
+      idx = which(names(xy.links) == lev[i])
+      if(length(idx) > 1){
+        for(j in 2:length(idx)){
+          vch=""
+          for(k in 1:(j-1)){
+            vch = paste(vch, ".", sep="")
+          }
+          names(xy.links)[idx[j]] = paste(names(xy.links)[idx[j]], vch, sep="")
+        }        
+      }
+    }    
+  
     # for each matrix of links
     for(i in 1:length(xy.links)){
       eval.js("temp=xy.links[[i]]")
@@ -436,7 +527,22 @@ makeImageDF <- function(Splot,xy.type,
     }
   }
   # if x.images is not NA continue
-  if(contxi){     
+  if(contxi){
+    lev = levels(factor(names(x.images)))
+    num = length(lev)
+    for(i in 1:num){
+      idx = which(names(x.images) == lev[i])
+      if(length(idx) > 1){
+        for(j in 2:length(idx)){
+          vch=""
+          for(k in 1:(j-1)){
+            vch = paste(vch, ".", sep="")
+          }
+          names(x.images)[idx[j]] = paste(names(x.images)[idx[j]], vch, sep="")
+        }        
+      }
+    }    
+   
     for(i in 1:dim(x.images)[2]){
       eval.js("temp=as.vector(mapply(rep,x=x.images[,i], MoreArgs=list(times=length(y.image))))")
       # for each points link
@@ -477,7 +583,23 @@ makeImageDF <- function(Splot,xy.type,
     y.images = NA
   }      
   # if y.images is not NA continue
-  if(contyi){     
+  if(contyi){
+
+   lev = levels(factor(names(y.images)))
+    num = length(lev)
+    for(i in 1:num){
+      idx = which(names(y.images) == lev[i])
+      if(length(idx) > 1){
+        for(j in 2:length(idx)){
+          vch=""
+          for(k in 1:(j-1)){
+            vch = paste(vch, ".", sep="")
+          }
+          names(y.images)[idx[j]] = paste(names(y.images)[idx[j]], vch, sep="")
+        }        
+      }
+    }    
+    
     for(i in 1:dim(y.images)[2]){
       eval.js("temp=as.vector(rep(y.images[,i],length(x.image)))")
       # for each points link
@@ -505,7 +627,24 @@ makeImageDF <- function(Splot,xy.type,
   contxyi = TRUE
   if(is.na(xy.images[1])) contxyi = FALSE
   # if xy.images is not NA continue
-  if(contxyi){     
+  if(contxyi){
+
+  lev = levels(factor(names(xy.images)))
+    num = length(lev)
+    for(i in 1:num){
+      idx = which(names(xy.images) == lev[i])
+      if(length(idx) > 1){
+        for(j in 2:length(idx)){
+          vch=""
+          for(k in 1:(j-1)){
+            vch = paste(vch, ".", sep="")
+          }
+          names(xy.images)[idx[j]] = paste(names(xy.images)[idx[j]], vch, sep="")
+        }        
+      }
+    }    
+
+    
     for(i in 1:length(xy.images)){
       eval.js("temp=xy.images[[i]]")
       if((dim(temp)[2] == length(x.image)) & (dim(temp)[1] == length(y.image))){
