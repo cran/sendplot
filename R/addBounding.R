@@ -39,7 +39,7 @@ addBounding <- function(Splot,
   # if figure already has multiple calls        
   }else{
     # check that figure object is a list and add new plt.call
-    if(class(Splot$plot.extras[[figure]]) != list) class(Splot$plot.extras[[figure]]) = "list"      
+    if(class(Splot$plot.extras[[figure]]) != "list") class(Splot$plot.extras[[figure]]) = "list"      
     Splot$plot.extras[[figure]][(pel+1)] = addPts
   }
 

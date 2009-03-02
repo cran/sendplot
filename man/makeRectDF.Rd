@@ -28,8 +28,8 @@ makeRectDF(Splot,
 \arguments{
   
   \item{Splot}{An Object of the class Splot}
-  \item{xlim}{x limit of figure as determined by \code{getPlotsBounds}}
-  \item{ylim}{y limit of figure as determined by \code{getPlotsBounds}}
+  \item{xlim}{x limit of figure}
+  \item{ylim}{y limit of figure}
   \item{x.left}{numeric vector of left x values for interactive rectangles}
   \item{y.top}{numeric vector of top y values for interactive rectangles}
   \item{x.right}{numeric vector of right x values for interactive rectangles}
@@ -99,7 +99,7 @@ makeRectDF(Splot,
 
 \author{Lori A. Shepherd, Daniel P. Gaile}
 
-\seealso{\code{\link{makeImap}}, \code{\link{getPlotsBounds}}, \code{\link{automapPts}}}
+\seealso{\code{\link{makeImap}}, \code{\link{automapPts}}}
 
 \examples{
 # not called by user

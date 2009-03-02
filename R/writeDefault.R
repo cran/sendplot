@@ -7,9 +7,9 @@ writeDefault1 <- function(Splot){
   asLink = Splot$Default$asLink
 
   ctmp = "<area shape=\"default\" onmouseover=\"setData(\'"
-  cont = T
+  cont = TRUE
   if(length(data) == 1){
-    if(is.na(data[1])) cont=F
+    if(is.na(data[1])) cont=FALSE
   }
   if(cont){
 
@@ -40,9 +40,9 @@ writeDefault2 <- function(Splot){
 
   ctmp = "<area shape=\"default\" onmouseover=\"Tip(\'"
   
-  cont = T
+  cont = TRUE
   if(length(data) == 1){
-    if(is.na(data[1])) cont=F
+    if(is.na(data[1])) cont=FALSE
   }
   if(cont){
 
@@ -55,10 +55,10 @@ writeDefault2 <- function(Splot){
     }
   }
 
-  cont = T
+  cont = TRUE
   linkFlag = FALSE
   if(length(links) == 1){
-    if(is.na(links[1])) cont=F
+    if(is.na(links[1])) cont=FALSE
   }
   if(cont){
     for(i in 1:length(links)){

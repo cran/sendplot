@@ -501,7 +501,7 @@ heatmap.send <- function (x,
     environment(addDefault) <- environment()
     environment(automapPts) <- environment()
     environment(getBounds) <- environment()
-    environment(getPlotsBounds) <- environment()
+    #environment(getPlotsBounds) <- environment()
     environment(initSplot) <- environment()
     environment(makeCharacter) <- environment()
     environment(makeImageDF) <- environment()

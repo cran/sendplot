@@ -73,8 +73,6 @@ sendplot's interactive functionality.
 
 
 \vskip5mm
-\indent{\bf{Important Note:}} The older version of sendplot, which is still available, requires possibly two iterations for creating plots. In the first iteration, the PNG file is created and then opened in a program such as mspaint or kolourpaint so that the upper-left and lower-right pixel coordinates are identified. In the second iteration, the function is called again using the pixel coordinates identified in the first iteration and the PNG and HTML output files are created. The newer version of sendplot eliminates the need for two iterations and allows for multiple interactive plots. Currently the new version of sendplot is functional on linux/unix operating systems. A windows/mac compatible version is in progress for a future release. The following vignette assumes a linux/unix operating system; windows/mac users should temporarily refer to the old manual: vignette(Oldsendplot). \newline
-
 
 %\begin{center}
 %\begin{figure}
@@ -82,6 +80,9 @@ sendplot's interactive functionality.
 %\caption{The sendplot functions are typically run in two iterations when creating interactive plots for the first time. The first iteration involves the identification of the upper-left and lower-right pixel coordinates. The final output is generated in the second iteration.An option has bee implemented to eliminate this two step procedure for linux/unix machines.}
 %\end{figure}
 %\end{center}
+
+\indent{\bf{Important Note:}} The sendplot library requires two system requirements: libtiff and ImageMagick.  The libtiff application is utilized by the required dependent package rtiff. This is used for comparing tiff images. The libtiff application is free for download at www.libtiff.org. The application ImagicMagick is utilized by sendplot to convert between file types. It is freely available for download at www.imagemagick.org. Users may need system administrative privledges to install new applications on their computer; If this is the case, see your own IT department for assistance in installing. 
+
 
 
 \indent The remainder of this document will provide detailed tutorials for the use of the functions: xy.send, imagesend, heatmap.send, and the other main sendplot functions. All sections assume library has been loaded:

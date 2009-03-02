@@ -30,8 +30,8 @@ makeImageDF(Splot,
   \item{xy.type}{Indication of how the xpos and ypos values should be
     treated.Current options are "image.midpoint","image.boundaries", or
     "image.box".See details or vignette.}
-  \item{xlim}{x limit of figure as determined by \code{getPlotsBounds}}
-  \item{ylim}{y limit of figure as determined by \code{getPlotsBounds}}
+  \item{xlim}{x limit of figure}
+  \item{ylim}{y limit of figure}
   \item{x.pos}{numeric vector of x values for interactive points}
   \item{y.pos}{numeric vector of y values for interactive points}
   \item{boundingPt}{List with up.left and low.right pixil coordinates of
@@ -115,7 +115,7 @@ makeImageDF(Splot,
 
 \author{Lori A. Shepherd, Daniel P. Gaile}
 
-\seealso{\code{\link{makeImap}}, \code{\link{getPlotsBounds}}, \code{\link{automapPts}}}
+\seealso{\code{\link{makeImap}}, \code{\link{automapPts}}}
 
 \examples{
 # not called by user

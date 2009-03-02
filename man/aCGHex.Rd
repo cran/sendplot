@@ -24,9 +24,9 @@
   needed for running the vignette example.. 
 }
 
-\source{\url{http://sphhp.buffalo.edu/biostat/research/software/acghplus/index.php}}
+\source{http://sphhp.buffalo.edu/biostat/research/software/acghplus/index.php}
 
-\references{\url{http://sphhp.buffalo.edu/biostat/research/software/acghplus/index.php}}
+\references{http://sphhp.buffalo.edu/biostat/research/software/acghplus/index.php}
 
 \note{This is included for running vignette example}
 

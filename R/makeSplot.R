@@ -66,6 +66,18 @@ makeSplot <- function(Splot,
   # initiate layout
   if(max(as.vector(Splot$mat),na.rm=TRUE)>1) nf = layout(Splot$mat, respect=TRUE)
   if(Splot$mai.prc) mai.def=par("mai")
+
+
+  # initialize getLims 
+  if(is.null(Splot$plot.lims)){
+    plot.lims = list()
+    plot.lims$xmins = rep(NA, length(Splot$plot.calls))
+    plot.lims$xmaxs = rep(NA, length(Splot$plot.calls))
+    plot.lims$ymins = rep(NA, length(Splot$plot.calls))
+    plot.lims$ymaxs = rep(NA, length(Splot$plot.calls))
+    Splot$plot.lims = plot.lims    
+  }
+ 
   
   # loop over plot calls to place plots in order or 1:n in layout
   for(i in 1:length(Splot$plot.calls)){
@@ -89,14 +101,35 @@ makeSplot <- function(Splot,
     for(sp in 1:sub.np){
       if(!is.na(Splot$plot.extras[[i]][[sp]]))
         eval.js(Splot$plot.extras[[i]][[sp]])
-    }     
+    }
+
+    
+    Splot$plot.lims$xmins[i] = par()$usr[1]
+    Splot$plot.lims$xmaxs[i] = par()$usr[2]
+    Splot$plot.lims$ymins[i] = par()$usr[3]
+    Splot$plot.lims$ymaxs[i] = par()$usr[4]
+    
+    
+       
   }# end for loop over plot calls
+
+
+
+
+
+  
   
   # retrieve xlim/ylim information to add bounding points 
-  if(getLims){
-    Splot = getPlotsBounds(Splot)   
-  }
-    
+  #if(getLims){
+    #Splot = getPlotsBounds(Splot)   
+  #}
+
+
+
+
+
+
+  
 
   # end device 
   dev.off()
@@ -188,7 +221,10 @@ makeSplot <- function(Splot,
 
           data(v3.header)
           
-        }        
+        }
+
+        sp.header=sp.header
+        
         for(i in 1:length(sp.header)) cat(sp.header[i],fill=TRUE)
    
         

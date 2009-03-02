@@ -62,7 +62,7 @@ initSplot <- function(mat,
   }else{
     Splot$plot.calls = plot.calls
   }
-    
+ 
   #
   # track which of layout figures are interactive
   #

@@ -84,11 +84,11 @@ of thos figures interactive in a html webpage utilizing java tool-tip.
 
 \references{
 
-  \url{http://www.R-project.org}
+  http://www.R-project.org
   
-  \url{http://www.onlamp.com/pub/a/onlamp/2007/07/05/writing-advanced-javascript.html}
+  http://www.onlamp.com/pub/a/onlamp/2007/07/05/writing-advanced-javascript.html
 
-  \url{http://www.walterzorn.com/tooltip/tooltip_e.htm}
+  http://www.walterzorn.com/tooltip/tooltip\_e.htm
 
 }
 

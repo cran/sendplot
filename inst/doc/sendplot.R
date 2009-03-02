@@ -98,7 +98,7 @@ x.labels=data.frame(label=colnames(carsX),
 ### chunk number 11: 
 ###################################################
 
-  image.send(plot.call=plot.call,
+  imagesend(plot.call=plot.call,
        y.pos=y,x.pos=x,
        mai.mat=mai.mat, mai.prc=mai.prc,
        xy.type="image.midpoints",

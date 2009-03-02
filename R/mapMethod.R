@@ -8,7 +8,7 @@ mapMethod <- function(automap.method, temp){
 
 
   # determin column locations of where tifs differ
-  row.count = rowSums(temp, na.rm=T)
+  row.count = rowSums(temp, na.rm=TRUE)
   col.loc = which(row.count>0)
 
     

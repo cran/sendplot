@@ -28,8 +28,8 @@ makeScatterDF(Splot,
 
 \arguments{
   \item{Splot}{An Object of the class Splot}
-  \item{xlim}{x limit of figure as determined by \code{getPlotsBounds}}
-  \item{ylim}{y limit of figure as determined by \code{getPlotsBounds}}
+  \item{xlim}{x limit of figure}
+  \item{ylim}{y limit of figure}
   \item{x.pos}{numeric vector of x values for interactive points}
   \item{y.pos}{numeric vector of y values for interactive points}
   \item{boundingPt}{List with up.left and low.right pixil coordinates of
@@ -87,7 +87,7 @@ makeScatterDF(Splot,
 
 \author{Lori A. Shepherd, Daniel P. Gaile}
 
-\seealso{\code{\link{makeImap}}, \code{\link{getPlotsBounds}}, \code{\link{automapPts}}}
+\seealso{\code{\link{makeImap}},  \code{\link{automapPts}}}
 
 \examples{
 # not called by user

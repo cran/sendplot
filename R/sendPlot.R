@@ -405,7 +405,7 @@ sendplot <- function(mat, plot.calls, x,y, mai.mat=NA, mai.prc=FALSE,
     temp[which(tif.dot@blue != tif.fin@blue)] = 1
 
     # determin column locations of where tifs differ
-    row.count = rowSums(temp, na.rm=T)
+    row.count = rowSums(temp, na.rm=TRUE)
     col.loc = which(row.count>0)
     
     # store largest break between locations to seperate lower and upper bound
@@ -1073,7 +1073,8 @@ sendplot <- function(mat, plot.calls, x,y, mai.mat=NA, mai.prc=FALSE,
     if(header=="v2") data(v2.header)
     if(header=="v1") data(v1.header)
     
-
+    sp.header=sp.header
+    
     # update dat into character array to make writing more efficient
     cdat=array(" ",dim=dim(dat))
     ndat=rep(" ",dim(dat)[2])

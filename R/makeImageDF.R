@@ -131,7 +131,7 @@ makeImageDF <- function(Splot,xy.type,
 #######################################################  
 #######################################################  
  
-  if(F){
+  if(FALSE){
   # legacy code
     # this code essential finds boundaries but does nothing
     # because assumes want midpoints (which is given)
