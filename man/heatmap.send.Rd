@@ -241,12 +241,18 @@ x.labels=data.frame(label=colnames(x),
   )
 
 
+#set up temporary directory
+direct = paste(tempdir(),"/",sep="")
+direct
+
+
 heatmap.send(x,scale="column", xy.labels = xy.labels,
                  x.labels=x.labels,
                  RowSideColors = rc, ColSideColors = cc, margin=c(5,10),
                  xlab = "specification variables", ylab= "Car Models",
                  main = "mtcars data",
-                 fname.root="exHeat", font.size=18,image.size="600x900")
+                 fname.root="exHeat",dir=direct,
+                 font.size=18,image.size="600x900")
 
 
 

@@ -174,6 +174,11 @@ sendimage(plot.call,
   plot.calls = "image(x=x, y=y, z=z)"
 
 
+#set up temporary directory
+direct = paste(tempdir(),"/",sep="")
+direct
+
+
 # run sendImage
 # note: we have already figured out appropriate up.left and low.right
 #      values. if these were not known, the function should be run
@@ -183,7 +188,7 @@ sendimage(plot.call,
  sendimage(plot.call = plot.calls, x=x, y=y, z=z,
            up.left=c(100,99),low.right=c(738,917),
            bound.pt=FALSE, source.plot=NA, paint=FALSE,
-           img.prog=NA,fname.root="testImg"  )
+           img.prog=NA,fname.root="testImg",dir=direct )
 
 
 

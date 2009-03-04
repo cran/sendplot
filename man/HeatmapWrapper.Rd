@@ -282,19 +282,24 @@ loc.inv$bv = 5:1
 loc.inv = as.data.frame(loc.inv)
 
 
+#set up temporary directory
+direct = paste(tempdir(),"/",sep="")
+direct
+
+
 heatmap.send.legacy(temp, RowSideColors=rcol, ColSideColors=ccol,
 x.lbls=temp.inv, y.lbls=loc.inv, bound.pt=FALSE, paint=FALSE,
-spot.radius=20)
+spot.radius=20, dir=direct)
 
 
 # or display heatmap without color bands 
 heatmap.send.legacy(temp, x.lbls=temp.inv, y.lbls=loc.inv, bound.pt=FALSE,
-paint=FALSE, spot.radius=20)
+paint=FALSE, spot.radius=20,dir=direct)
 
 
 # or without cluster
 heatmap.send.legacy(temp, Rowv=NA, Colv=NA, x.lbls=temp.inv, y.lbls=loc.inv, bound.pt=FALSE,
-paint=FALSE, spot.radius=20)
+paint=FALSE, spot.radius=20,dir=direct)
 
 
 }

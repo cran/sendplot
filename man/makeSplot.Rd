@@ -132,6 +132,9 @@ figure4="title(main='D', cex=3)"
 )
 
 
+#set up temporary directory
+direct = paste(tempdir(),"/",sep="")
+direct
 
 #
 #
@@ -146,7 +149,7 @@ Splot = initSplot(mat, plot.calls, mai.mat=mai.mat,
 
 # first look/get plot output  -- makes static image 
 Splot = makeSplot(Splot, fname.root="exToy", makeInteractive=FALSE,
-                  getLims=TRUE)
+                  getLims=TRUE, dir=direct)
 
 
 
@@ -169,12 +172,12 @@ Splot = makeImap(Splot, figure=1, xy.type="rect",
                                 info=c("im a link", "im a link"))),
                  asLinks = "http://www.buffalo.edu", 
                  y.labels = c("d1",NA),
-                 fname.root="exToy", spot.radius=10,
+                 fname.root="exToy", dir=direct, spot.radius=10,
                  font.size=20, font.color="cyan", bg.color="black")
 # makes one of the outlier points interactive in the figure 1
 Splot = makeImap(Splot, figure=1, xy.type="circle", x.pos=3, y.pos=7,
                  x.labels = list(label="point", info="im a link"),
-                 asLinks = "http://www.buffalo.edu", 
+                 asLinks = "http://www.buffalo.edu", dir=direct,
                  y.labels = "7", fname.root="exToy", spot.radius=20,
                  font.type="arial", font.size="20",
                  font.color="hotpink", bg.color="blue")
@@ -187,7 +190,7 @@ Splot = makeImap(Splot, figure=2, xy.type="polygon",
                  asLinks="http://www.bioinformatics.buffalo.edu",
                  y.labels = as.data.frame(list(value="data1",
                                                info="Im alink")),
-                 fname.root="exToy", bb.cex=5, font.size=30,
+                 fname.root="exToy", dir=direct, bb.cex=5, font.size=30,
                  font.type="sans-serif", font.color="purple")
 # make data set of three points interactive in figure 2 
 x.lbls = as.data.frame(list(labels=c("point1", "point2", "points3"),
@@ -204,7 +207,7 @@ asLinks=c("http://www.buffalo.edu",
           "http://www.bioinformatics.buffalo.edu","http://www.buffalo.edu")
 Splot = makeImap(Splot, figure=2, xy.type="points", x.pos=1:3, y.pos=1:3,
            x.labels = x.lbls,  y.links=y.links,asLinks=asLinks,
-           fname.root="exToy",bb.cex=5, spot.radius=20,
+           fname.root="exToy",bb.cex=5, spot.radius=20,dir=direct,
            font.color="green",bg.color="", font.size="14")
 
 
@@ -229,7 +232,7 @@ Splot = makeImap(Splot, figure=3, xy.type="image.box",
                  x.pos= c(.5,1.5,2.5), y.pos=c(.5,1.5,2.5,3.5),
                  x.labels=x.lbls, y.labels = y.lbls, xy.labels=xy.lbls,
                  x.links=x.links, y.links=y.links, xy.links=xy.links,
-                 fname.root="exToy", bb.cex=5, spot.radius=10)
+                 fname.root="exToy", bb.cex=5, spot.radius=10,dir=direct)
 
 
 
@@ -255,7 +258,7 @@ Splot = addDefault(
 #    make interactive html 
 #
 #
-Splot = makeSplot(Splot, fname.root="exToy", returnObj=TRUE)
+Splot = makeSplot(Splot, fname.root="exToy", dir=direct, returnObj=TRUE)
 
 
 

@@ -7,6 +7,13 @@ library(sendplot)
 ###################################################
 ### chunk number 2: 
 ###################################################
+direct=paste(tempdir(),"/",sep="")
+direct
+
+
+###################################################
+### chunk number 3: 
+###################################################
 plot.call=c("plot(x.pos,y.pos,xlab='gross horsepower',
                    ylab='miles per gallon',axes=F,pch=mtcars$cyl,
                    col=mtcars$am+1,cex=0.875,
@@ -14,7 +21,7 @@ plot.call=c("plot(x.pos,y.pos,xlab='gross horsepower',
 
 
 ###################################################
-### chunk number 3: 
+### chunk number 4: 
 ###################################################
 plot.extras=c("axis(2);
               legend(200,25,pch=rep(c(4,6,8),2),col=c(rep(1,3),rep(2,3)),
@@ -23,32 +30,32 @@ plot.extras=c("axis(2);
 
 
 ###################################################
-### chunk number 4: 
+### chunk number 5: 
 ###################################################
 y.pos=mtcars$mpg
 x.pos=mtcars$hp
 
 
 ###################################################
-### chunk number 5: 
+### chunk number 6: 
 ###################################################
 xy.labels = data.frame(name=rownames(mtcars),mtcars=mtcars)
 
 
 ###################################################
-### chunk number 6: 
+### chunk number 7: 
 ###################################################
 
   xy.send(plot.call=plot.call,
        y.pos=y.pos,x.pos=x.pos,
        xy.labels = xy.labels, 
        plot.extras=plot.extras,
-       image.size="800x600",
+       image.size="800x600",dir=direct,
        fname.root="exPlotXY", font.size=18)
 
 
 ###################################################
-### chunk number 7: 
+### chunk number 8: 
 ###################################################
 
 carsX  = as.matrix(mtcars)
@@ -63,20 +70,20 @@ z = t(carsX)
 
 
 ###################################################
-### chunk number 8: 
+### chunk number 9: 
 ###################################################
 plot.call = "image(x=1:dim(carsX)[2],y=1:dim(carsX)[1], z=t(carsX),axes = FALSE, xlab = '', ylab = '');axis(1,1:dim(carsX)[2], labels=colnames(carsX),las = 2, line = -0.5, tick = 0,cex.axis =1); axis(4,1:dim(carsX)[1], labels=rownames(carsX),las = 2, line = -0.5, tick = 0,cex.axis =.8)"
 
 
 ###################################################
-### chunk number 9: 
+### chunk number 10: 
 ###################################################
 mai.mat = matrix(c(1,.2,.2,1.5), ncol=4)
 mai.prc = FALSE
 
 
 ###################################################
-### chunk number 10: 
+### chunk number 11: 
 ###################################################
 xy.labels=list(value=round(carsX,3))
 
@@ -95,7 +102,7 @@ x.labels=data.frame(label=colnames(carsX),
 
 
 ###################################################
-### chunk number 11: 
+### chunk number 12: 
 ###################################################
 
   imagesend(plot.call=plot.call,
@@ -104,18 +111,18 @@ x.labels=data.frame(label=colnames(carsX),
        xy.type="image.midpoints",
        x.labels=x.labels,
        xy.labels = xy.labels, 
-       image.size="800x600",
+       image.size="800x600",dir=direct,
        fname.root="exPlotImage", font.size=18)
 
 
 ###################################################
-### chunk number 12: 
+### chunk number 13: 
 ###################################################
 x  = as.matrix(mtcars)
 
 
 ###################################################
-### chunk number 13: 
+### chunk number 14: 
 ###################################################
 xy.labels=list(value=x)
 
@@ -134,27 +141,27 @@ x.labels=data.frame(label=colnames(x),
 
 
 ###################################################
-### chunk number 14: 
+### chunk number 15: 
 ###################################################
 rc = rainbow(nrow(x), start=0, end=.3)
 cc = rainbow(ncol(x), start=0, end=.3)
 
 
 ###################################################
-### chunk number 15: 
+### chunk number 16: 
 ###################################################
 
  heatmap.send(x,scale="column", xy.labels = xy.labels,
                  x.labels=x.labels,
                  RowSideColors = rc, ColSideColors = cc, margin=c(5,10),
                  xlab = "specification variables", ylab= "Car Models",
-                 main = "mtcars data",
+                 main = "mtcars data", dir=direct,
                  fname.root="exHeat", font.size=18,image.size="600x900")
 
 
 
 ###################################################
-### chunk number 16: 
+### chunk number 17: 
 ###################################################
 mat = matrix(c(rep(c(rep(4,8),rep(0,5)),2),
                rep(c(rep(1,8),rep(3,5)),6),
@@ -164,27 +171,16 @@ mat
 
 
 ###################################################
-### chunk number 17: 
+### chunk number 18: 
 ###################################################
 
 plot.calls = c("boxplot(count ~ spray, data = InsectSprays, col = 'lightgray')", "plot(1:3,1:3, col='blue', xlab='', ylab=''); points(1:2, 2:3, col='red')", "image(1:2,1:3, z=matrix(myX,ncol=3,nrow=2), xlab='', ylab='')","plot(cos, xlim = c(-pi,3*pi), n = 1001, col = 'blue', xlab='', ylab='')" )
 
 
 ###################################################
-### chunk number 18: 
-###################################################
-myX = c(-1,-10,1,10,-5,0)
-
-
-###################################################
 ### chunk number 19: 
 ###################################################
-
-postscript(file="image.ps", horizontal=FALSE, width=8, height=6, paper="special")
-image(1:2,1:3, z=matrix(myX,ncol=3,nrow=2), xlab='', ylab='')
-dev.off()
-system("convert image.ps image.png")
-
+myX = c(-1,-10,1,10,-5,0)
 
 
 ###################################################
@@ -219,7 +215,7 @@ Splot = initSplot(mat, plot.calls, mai.mat = mai.mat,plot.extras=plot.extras)
 ###################################################
 ### chunk number 24: 
 ###################################################
-Splot = makeSplot(Splot, fname.root="FirstLookEx", 
+Splot = makeSplot(Splot, fname.root="FirstLookEx", dir=direct,
                   makeInteractive=FALSE, getLims=TRUE)
 
 
@@ -258,7 +254,7 @@ asLinks = c(NA, NA, "http://sphhp.buffalo.edu/biostat/", "http://sphhp.buffalo.e
 Splot = makeImap(Splot, figure=1, xy.type="points", 
                  x.pos=xvec, y.pos=yvec,
                  x.labels = x.lbls, asLinks = asLinks, x.links=x.links, 
-                 fname.root="sendPlotEx", spot.radius=25)
+                 fname.root="sendPlotEx", dir=direct, spot.radius=25)
 
 
 ###################################################
@@ -268,7 +264,7 @@ Splot = makeImap(Splot, figure=1, xy.type="circle", x.pos=Splot$plot.output[[1]]
                  x.labels = list(Xlabel1.xyType="point", Xlabel2.asLinks="im a link"),
                  y.labels = list(ylabel1.yValue="7", tooltip.font="arial",tooltip.size="20",  tooltip.fontcolor="hotpink",tooltip.background="blue"),
                  asLinks = "http://www.buffalo.edu", 
-                 fname.root="sendPlotEx", spot.radius=20,
+                 fname.root="sendPlotEx", spot.radius=20, dir=direct,
                  font.type="arial", font.size="20", font.color="hotpink", bg.color="blue")
 
 
@@ -283,7 +279,7 @@ x.links[2,3] = "http://sphhp.buffalo.edu/biostat/"
 names(x.links) = c("UB", "buildings", "stats")
 
 
-Splot = makeImap(Splot, figure=1, xy.type="rect", x.pos=c(3,1), y.pos=c(25,5),x.right.pos=c(4,2),  y.bottom.pos=c(20,0),  x.labels = as.data.frame(list(Xlabel.1=c("rect.1","rect.2"), Xlabel.2.coordinates=c("3,20-3,25-4,25-4,20","1,0-1,5-2,5-2,0"),asLinks=c("im a link", "im a link"))),y.labels = list(tooltip.size=c("15","15"), tooltip.fontcolor=c("cyan","cyan"), tooltip.background=c("black","black")),  asLinks = "http://sphhp.buffalo.edu/biostat/", fname.root="sendPlotEx",  x.links=x.links, font.size=15, font.color="cyan", bg.color="black")
+Splot = makeImap(Splot, figure=1, xy.type="rect", x.pos=c(3,1), y.pos=c(25,5),x.right.pos=c(4,2),  y.bottom.pos=c(20,0),  x.labels = as.data.frame(list(Xlabel.1=c("rect.1","rect.2"), Xlabel.2.coordinates=c("3,20-3,25-4,25-4,20","1,0-1,5-2,5-2,0"),asLinks=c("im a link", "im a link"))),y.labels = list(tooltip.size=c("15","15"), tooltip.fontcolor=c("cyan","cyan"), tooltip.background=c("black","black")),  asLinks = "http://sphhp.buffalo.edu/biostat/", fname.root="sendPlotEx", dir=direct, x.links=x.links, font.size=15, font.color="cyan", bg.color="black")
 
 
 
@@ -300,7 +296,7 @@ names(y.links) = c("UB", "building", "department")
 asLinks=c("http://www.buffalo.edu","http://www.bioinformatics.buffalo.edu/","http://sphhp.buffalo.edu/biostat/")
 
 Splot = makeImap(Splot, figure=2, xy.type="circle", x.pos=1:3, y.pos=1:3, y.labels = list(tooltip.fontcolor=c("green", "green", "green"),tooltip.size=c("14", "14", "14"),  tooltip.background=c("transparent", "transparent", "transparent")), asLinks = asLinks, x.labels = x.lbls,
-                 fname.root="sendPlotEx", y.links=y.links,
+                 fname.root="sendPlotEx", y.links=y.links,dir=direct,
                  bb.cex=5, spot.radius=20, font.color="green",bg.color="", font.size="14" )
 
 
@@ -310,7 +306,7 @@ Splot = makeImap(Splot, figure=2, xy.type="circle", x.pos=1:3, y.pos=1:3, y.labe
 ###################################################
 
 y.lbls = as.data.frame(list(xLabel1.xyType=c("point1", "point2"), xLabel2.asLinks=c("im not a link", "im not a link")))
-Splot = makeImap(Splot, figure=2, xy.type="circle", x.pos=1:2, y.pos=2:3, x.labels = list(tooltip=c("default settings", "default settings")), y.labels = y.lbls,fname.root="sendPlotEx", bb.cex=5,spot.radius=15)
+Splot = makeImap(Splot, figure=2, xy.type="circle", x.pos=1:2, y.pos=2:3, x.labels = list(tooltip=c("default settings", "default settings")), y.labels = y.lbls,fname.root="sendPlotEx", bb.cex=5,spot.radius=15, dir=direct)
 
 
 
@@ -334,7 +330,7 @@ Splot = makeImap(Splot, figure=2, xy.type="polygon",
                                           tooltip.fonttype="san-serif",
                                           tooltip.fontsize="30",
                                           tooltip.fontcolor="purple" )), 
-                 font.size=30, font.type="sans-serif", font.color="purple")
+                 font.size=30, font.type="sans-serif", font.color="purple", dir=direct)
 
 
 
@@ -374,14 +370,14 @@ y.links=as.data.frame(list(Y.links.1 = c(NA,
 Splot = makeImap(Splot, figure=3, xy.type="image.box", 
                  x.pos= c(.5,1.5,2.5), y.pos=c(.5,1.5,2.5,3.5),
                  x.labels = x.lbls, y.labels = y.lbls, xy.labels=xy.lbls,
-                 x.links=x.links, y.links=y.links, 
+                 x.links=x.links, y.links=y.links, dir=direct,
                  fname.root="sendPlotEx", bb.cex=5, spot.radius=10)
 
 
 ###################################################
 ### chunk number 40: 
 ###################################################
-Splot = makeSplot(Splot, fname.root="sendPlotEx", returnObj=TRUE)
+Splot = makeSplot(Splot, fname.root="sendPlotEx", dir=direct, returnObj=TRUE)
 
 
 ###################################################
@@ -404,7 +400,7 @@ Splot = addDefault(Splot,
 ###################################################
 ### chunk number 42: 
 ###################################################
-Splot = makeSplot(Splot, fname.root="sendPlotEx", returnObj=TRUE, Default=TRUE)
+Splot = makeSplot(Splot, fname.root="sendPlotEx",dir=direct, returnObj=TRUE, Default=TRUE)
 
 
 ###################################################

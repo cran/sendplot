@@ -117,12 +117,17 @@ plot.extras=c("axis(1);axis(2);
                               c('automatic','manual')[c(rep(1,3),rep(2,3))]),cex=0.875)")
 
 
+#set up temporary directory
+direct = paste(tempdir(),"/",sep="")
+direct
+
+
 xy.send(plot.call=plot.call,
        y.pos=mtcars$mpg,x.pos=mtcars$hp,
        xy.labels = data.frame(name=rownames(mtcars),mtcars=mtcars), 
        plot.extras=plot.extras,
        image.size="800x600",
-       fname.root="exPlotXY", font.size=18)
+       fname.root="exPlotXY", dir = direct, font.size=18)
 
 
 

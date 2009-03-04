@@ -196,6 +196,11 @@ pch=4, cex=1.5, col='purple')"
 #        plt.extras$plot1 = "points(x2,y2,pch=4, cex=1.5, col='purple')"
 
 
+#set up temporary directory
+direct = paste(tempdir(),"/",sep="")
+direct
+
+
 
 # run sendxy
 # note: we have already figured out appropriate up.left and low.right
@@ -210,7 +215,7 @@ pch=4, cex=1.5, col='purple')"
   sendxy(plot.call = plot.calls, x=x, y=y,
          xy.lbls=xy.lbls, plt.extras=NA,
          bound.pt=FALSE, source.plot=NA, paint=FALSE,
-         img.prog=NA,fname.root="testXY",
+         img.prog=NA,fname.root="testXY",dir=direct,
          up.left=c(124,130),low.right=c(713,883))
 
 

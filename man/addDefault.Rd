@@ -107,8 +107,15 @@ Splot = initSplot(mat, plot.calls, mai.mat = mai.mat,plot.extras =plt.extras)
 # add default
 Splot = addDefault(Splot, data=c("This is default", "data2"), data.labels=c("label", "d2"), links=c("http://www.buffalo.edu, http://www.bioinformatics.buffalo.edu", "http://www.bioinformatics.buffalo.edu"), links.labels=c("hyp1", "hyp2"),font.size=10, font.type="arial", bg.color="gray", font.color="yellow")
 
+
+
+#set up temporary directory
+direct = paste(tempdir(),"/",sep="")
+direct
+
+
 # make plot that has interactive default 
-Splot = makeSplot(Splot, fname.root="exToy", returnObj=TRUE)
+Splot = makeSplot(Splot, fname.root="exToy",dir=direct, returnObj=TRUE)
 
 }
 

@@ -318,12 +318,17 @@ x.lbls = as.data.frame(x.lbls)
 
 
 
+#set up temporary directory
+direct = paste(tempdir(),"/",sep="")
+direct
+
+
 
 sendplot(mat, plot.calls, mai.mat,
          xlim=xlim, ylim=ylim,type="scatterplot",
          x=x,y=y,z=NA,
          x.lbls=x.lbls, y.lbls=NA, xy.lbls=NA, source.plot=NA,
-         resize="1200x1700", fname.root="testScatterplot",dir="",
+         resize="1200x1700", fname.root="testScatterplot",dir=direct,
          paint=FALSE, bound.pt=FALSE,img.prog = NA,
          spot.radius=5, up.left=c(186,199),low.right=c(767,1264))
 
@@ -401,7 +406,7 @@ sendplot(mat, plot.calls, mai.mat,
          x=x,y=y,z=z, z.value="value",
          x.lbls=x.lbls, y.lbls = y.lbls, xy.lbls=xy.lbls,
          resize="1200x1700", fname.root="testimage",source.plot=NA,
-         dir="", paint=FALSE,img.prog = NA, bound.pt=FALSE, spot.radius=8,
+         dir=direct, paint=FALSE,img.prog = NA, bound.pt=FALSE, spot.radius=8,
          up.left=c(163,156),low.right=c(790,1310))
 
 

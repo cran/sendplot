@@ -130,13 +130,19 @@ x.labels=data.frame(label=colnames(carsX),
     "Number of carburetors")
   )
 
+
+#set up temporary directory
+direct =paste(tempdir(),"/",sep="")
+direct
+
+
 imagesend(plot.call=plot.call, 
            x.pos= 1:dim(carsX)[2],
            y.pos= 1:dim(carsX)[1],
            xy.type = "image.midpoints",
            xy.labels=xy.labels,
            spot.radius = 5,
-           fname.root="manImage",
+           fname.root="manImage", dir=direct,
            window.size = "800x1100", 
            x.labels=x.labels, mai.mat=mai.mat)  
 
