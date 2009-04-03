@@ -19,10 +19,17 @@ makeImap <- function(Splot,
                      x.labels=NA,
                      y.labels=NA,
                      xy.labels=NA,
+                     
                      x.links=NA,
                      y.links=NA,
                      xy.links=NA,
+
                      asLinks=NA,
+
+                     x.images=NA,
+                     y.images=NA,
+                     xy.images=NA,
+
                      
 
                      font.type="Helvetica", # 'Arial, Helvetica, sans-serif'   
@@ -34,7 +41,6 @@ makeImap <- function(Splot,
                      fname.root="Splot",
                      dir="./",
 
-                     automap=TRUE,
                      automap.method="mode",
                      
                      bb.clr=NA,
@@ -42,7 +48,9 @@ makeImap <- function(Splot,
               
                      returnVl=TRUE,
                      saveFlag=FALSE,
-                     saveName="Splot.RData"
+                     saveName="Splot.RData",
+
+                     cleanDir = TRUE
 
                       ){
 
@@ -52,9 +60,9 @@ makeImap <- function(Splot,
   #  if necessary, retrieving xlim/ylims for all plots
   #                stores for future reference b/c limits are static
   if(is.null(Splot$plot.lims)){
-    Splot = makeSplot(Splot, fname.root=fname.root, dir=dir, makeInteractive=FALSE, getLims=TRUE, overwriteSourcePlot="png")
+    Splot = makeSplot(Splot, fname.root=fname.root, dir=dir, makeInteractive=FALSE, overwriteSourcePlot=c("png", "tiff"), returnObj=TRUE)
   }else{
-    makeSplot(Splot, fname.root=fname.root, dir=dir, makeInteractive=FALSE, overwriteSourcePlot="png")
+    Splot = makeSplot(Splot, fname.root=fname.root, dir=dir, makeInteractive=FALSE, overwriteSourcePlot=c("png", "tiff"))
   }
 
   # make separate file with bound points
@@ -71,7 +79,7 @@ makeImap <- function(Splot,
   ###############################
   ###############################
 
-  if(automap){
+ # if(automap){
   
     detected = FALSE
 
@@ -106,33 +114,9 @@ makeImap <- function(Splot,
         cat("ERROR: Could not map correctly \n")
       }
     }
-  }
+#  }
 
 
-
-  ###############################
-  ###############################
-  #
-  #  Now NOT automap 
-  #
-  ###############################
-  ###############################
- 
-  if(!automap){
-
-           ##############################################################
-           ##############################################################
-           #
-           #   add in manual detection of points
-           #     in case of unknown mapping errors
-           #     and for windows
-           #     (windows cannot use automap because auto conversion
-           #       of png to tif for rtiff image comparison)
-           #   
-           ##############################################################
-           ##############################################################
-    
-  }
 
   
   ###############################
@@ -169,13 +153,13 @@ makeImap <- function(Splot,
     
     # send to makeDF function for creation and alteration of data matrix entries 
 
-    if( (xy.type=="points") | (xy.type=="circle") )  MapObj = makeScatterDF(Splot=Splot, xlim= xlim, ylim=ylim, x.pos=x.pos, y.pos=y.pos,boundingPt=boundingPt, x.labels=x.labels, y.labels=y.labels, xy.labels=xy.labels, x.links=x.links, y.links=y.links, xy.links=xy.links, asLinks=asLinks)
+    if( (xy.type=="points") | (xy.type=="circle") )  MapObj = makeScatterDF(Splot=Splot, xlim= xlim, ylim=ylim, x.pos=x.pos, y.pos=y.pos,boundingPt=boundingPt, x.labels=x.labels, y.labels=y.labels, xy.labels=xy.labels, x.links=x.links, y.links=y.links, xy.links=xy.links, asLinks=asLinks, x.images=x.images, y.images=y.images, xy.images=xy.images)
 
-    if( (xy.type=="image.midpoints") | (xy.type=="image.boundaries") |  (xy.type=="image.box"))  MapObj = makeImageDF(Splot=Splot, xy.type=xy.type, xlim= xlim, ylim=ylim,x.pos=x.pos, y.pos=y.pos,boundingPt=boundingPt, x.labels=x.labels, y.labels=y.labels, xy.labels=xy.labels, x.links=x.links, y.links=y.links, xy.links=xy.links, asLinks=asLinks)
+    if( (xy.type=="image.midpoints") | (xy.type=="image.boundaries") |  (xy.type=="image.box"))  MapObj = makeImageDF(Splot=Splot, xy.type=xy.type, xlim= xlim, ylim=ylim,x.pos=x.pos, y.pos=y.pos,boundingPt=boundingPt, x.labels=x.labels, y.labels=y.labels, xy.labels=xy.labels, x.links=x.links, y.links=y.links, xy.links=xy.links, asLinks=asLinks, x.images=x.images, y.images=y.images, xy.images=xy.images)
 
-    if( xy.type=="rect")  MapObj = makeRectDF(Splot=Splot, xlim= xlim, ylim=ylim,x.left=x.pos, y.top=y.pos, x.right=x.right.pos, y.bottom=y.bottom.pos,  boundingPt=boundingPt, x.labels=x.labels, y.labels=y.labels, xy.labels=xy.labels, x.links=x.links, y.links=y.links, xy.links=xy.links, asLinks=asLinks)
+    if( xy.type=="rect")  MapObj = makeRectDF(Splot=Splot, xlim= xlim, ylim=ylim,x.left=x.pos, y.top=y.pos, x.right=x.right.pos, y.bottom=y.bottom.pos,  boundingPt=boundingPt, x.labels=x.labels, y.labels=y.labels, xy.labels=xy.labels, x.links=x.links, y.links=y.links, xy.links=xy.links, asLinks=asLinks, x.images=x.images, y.images=y.images, xy.images=xy.images)
 
-    if( xy.type=="polygon" )  MapObj = makePolyDF(Splot=Splot, xlim= xlim, ylim=ylim, x.pos=x.pos, y.pos=y.pos,boundingPt=boundingPt, x.labels=x.labels, y.labels=y.labels, xy.labels=xy.labels, x.links=x.links, y.links=y.links, xy.links=xy.links, asLinks=asLinks)
+    if( xy.type=="polygon" )  MapObj = makePolyDF(Splot=Splot, xlim= xlim, ylim=ylim, x.pos=x.pos, y.pos=y.pos,boundingPt=boundingPt, x.labels=x.labels, y.labels=y.labels, xy.labels=xy.labels, x.links=x.links, y.links=y.links, xy.links=xy.links, asLinks=asLinks, x.images=x.images, y.images=y.images, xy.images=xy.images)
 
     
     if(length(MapObj) != 1){
@@ -241,8 +225,30 @@ makeImap <- function(Splot,
   }
 
   
-  
+  if(cleanDir){
     
+    if(Splot$platform == "unix"){
+
+      system("mkdir makeImapTempDir", ignore.stderr =TRUE)
+      system(paste("mv ",dir,"*Dot* makeImapTempDir/",sep=""), ignore.stderr =TRUE)
+      system(paste("mv ",dir,fname.root,".tif makeImapTempDir/", sep=""), ignore.stderr =TRUE)
+      system("rm -r makeImapTempDir", ignore.stderr =TRUE)
+      
+      
+    }else{
+      
+      shell("mkdir makeImapTempDir", mustWork=NA,ignore.stderr =TRUE)
+      shell(paste("mv ",dir,"*Dot* makeImapTempDir/",sep=""), mustWork=NA,ignore.stderr =TRUE)
+      shell(paste("mv ",dir,fname.root,".tif makeImapTempDir/", sep=""), mustWork=NA,ignore.stderr =TRUE)
+      shell("rm -r makeImapTempDir", mustWork=NA,ignore.stderr =TRUE)
+
+    }
+
+    
+  }
+
+
+  
   #########################################
   #########################################
   #

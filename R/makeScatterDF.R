@@ -14,7 +14,10 @@ makeScatterDF <- function(Splot,
                           x.links=NA,
                           y.links=NA,
                           xy.links=NA,
-                          asLinks=NA
+                          asLinks=NA,
+                          x.images=NA,
+                          y.images=NA,
+                          xy.images=NA
                           ){
 
   up.left = boundingPt$up.left
@@ -60,6 +63,10 @@ makeScatterDF <- function(Splot,
   # initiate data frame for links 
   dat2 = data.frame(rep(NA, (dim(dat)[1])))
   names(dat2) = "tempNA"
+  
+  # initiate data frame for images 
+  dat3 = data.frame(rep(NA, (dim(dat)[1])))
+  names(dat3) = "tempNA"
 
   #######################
   #######################
@@ -324,8 +331,134 @@ makeScatterDF <- function(Splot,
     if(is.na(asLinks[1])) contLinks=FALSE
   }
 
-  
 
+  ###########################
+  ###########################
+  #
+  # check images to display
+  #
+  ###########################
+  ###########################
+
+  #
+  # x specific data
+  #
+  contxi = TRUE
+  x.images = as.data.frame(x.images)
+  cngName =  grep("if ", names(x.images))
+  names(x.images)[cngName] = paste("Value", cngName, sep="")
+  names(x.images) = gsub(pattern=" ", replacement=".",names(x.images))
+  if( (dim(x.images)[1]==1) & (dim(x.images)[2]==1)){
+    if(is.na(x.images[1,1])) contxi = FALSE
+  }
+  # dimension check
+  if(contxi){
+    if((dim(x.images)[1] != length(x.pos)) & contxi){
+      contxi = FALSE
+      cat(paste("Warning: x.images does not have correct dimensions \n   number of rows should equal length(x.pos):",length(x.pos), "\n   Continuing with x.images = NA \n", sep=""))
+      x.images = NA
+    }
+  }
+  # if x.images is not NA continue
+  if(contxi){     
+    for(i in 1:dim(x.images)[2]){
+      eval.js("temp=as.vector(x.images[,i])")
+      # for each points link
+      for(j in 1:length(temp)){
+        tmp = temp[j]
+        # if not NA
+        if(is.na(tmp)){
+          temp[j] = NA
+        }else{
+          new.ti= paste("<img src=\\'",tmp,"\\'>", sep="")          
+          temp[j] = new.ti
+        
+        }
+      }
+     # put link in correct syntax into character matrix
+      eval.js(paste("dat3$", names(x.images)[i], "=temp", sep=""))    
+    }
+  }
+ 
+  #
+  # y specific data
+  #
+  contyi = TRUE
+  y.images = as.data.frame(y.images)
+  cngName =  grep("if ", names(y.images))
+  names(y.images)[cngName] = paste("Value", cngName, sep="")
+  names(y.images) = gsub(pattern=" ", replacement=".",names(y.images))
+  if( (dim(y.images)[1]==1) & (dim(y.images)[2]==1)){
+    if(is.na(y.images[1,1])) contyi = FALSE
+  }
+  # dimension check
+  if((dim(y.images)[1] != length(y.pos)) & contyi){
+    contyi = FALSE
+    cat(paste("Warning: y.images does not have correct dimensions \n   number of rows should equal length(y.pos):",length(y.pos), "\n   Continuing with y.images = NA \n", sep=""))
+    y.images = NA
+  }      
+  # if y.images is not NA continue
+  if(contyi){     
+    for(i in 1:dim(y.images)[2]){
+      eval.js("temp=as.vector(y.images[,i])")
+      # for each points link
+      for(j in 1:length(temp)){
+        tmp = temp[j]
+        # if not NA
+        if(is.na(tmp)){
+          temp[j] = NA
+        }else{
+          new.ti= paste("<img src=\\'",tmp,"\\'>", sep="")          
+          temp[j] = new.ti
+        
+        }
+      }
+     # put link in correct syntax into character matrix
+      eval.js(paste("dat3$", names(y.images)[i], "=temp", sep=""))    
+    }
+  }
+       
+  
+  #
+  # xy -- assumes in this case that columns are different data vectors of row == nsmpls
+  #
+  contxyi = TRUE
+  xy.images = as.data.frame(xy.images)
+  cngName =  grep("if ", names(xy.images))
+  names(xy.images)[cngName] = paste("Value", cngName, sep="")
+  names(xy.images) = gsub(pattern=" ", replacement=".",names(xy.images))
+  if( (dim(xy.images)[1]==1) & (dim(xy.images)[2]==1)){
+    if(is.na(xy.images[1,1])) contxyi = FALSE
+  }
+  # dimension check
+  if(((dim(xy.images)[1] != length(y.pos)) | (dim(xy.images)[1] != length(x.pos))) & contxyi){
+    contxyi = FALSE
+    cat(paste("Warning: xy.images does not have correct dimensions \n   number of rows should equal length(y.pos):",length(y.pos), " or length(x.pos):", length(x.pos), "\n   Continuing with xy.images = NA \n", sep=""))
+    xy.images = NA
+  }         
+  # if xy.images is not NA continue
+  if(contxyi){     
+    for(i in 1:dim(xy.images)[2]){
+      eval.js("temp=as.vector(xy.images[,i])")
+      # for each points link
+      for(j in 1:length(temp)){
+        tmp = temp[j]
+        # if not NA
+        if(is.na(tmp)){
+          temp[j] = NA
+        }else{
+  
+         new.ti= paste("<img src=\\'",tmp,"\\'>", sep="")          
+          temp[j] = new.ti
+        
+        }
+      }
+     # put link in correct syntax into character matrix
+      eval.js(paste("dat3$", names(xy.images)[i], "=temp", sep=""))    
+    }
+  }
+       
+  
   
   # create object to return
   MapObj = list()
@@ -333,6 +466,7 @@ makeScatterDF <- function(Splot,
   MapObj$Pixcoord = paste(as.character(x.new), as.character(y.new), sep=",")
   MapObj$dat = dat
   MapObj$dat2 = dat2
+  MapObj$dat3 = dat3
   MapObj$contLinks = contLinks
   MapObj$asLinks = asLinks
 

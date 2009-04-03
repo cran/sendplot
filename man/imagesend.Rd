@@ -132,9 +132,8 @@ x.labels=data.frame(label=colnames(carsX),
 
 
 #set up temporary directory
-direct =paste(tempdir(),"/",sep="")
+direct = paste(tempdir(),"/",sep="")
 direct
-
 
 imagesend(plot.call=plot.call, 
            x.pos= 1:dim(carsX)[2],

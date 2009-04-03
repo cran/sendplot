@@ -216,7 +216,7 @@ Splot = initSplot(mat, plot.calls, mai.mat = mai.mat,plot.extras=plot.extras)
 ### chunk number 24: 
 ###################################################
 Splot = makeSplot(Splot, fname.root="FirstLookEx", dir=direct,
-                  makeInteractive=FALSE, getLims=TRUE)
+                  makeInteractive=FALSE, returnObj=TRUE)
 
 
 ###################################################

@@ -15,7 +15,10 @@ makeImageDF <- function(Splot,xy.type,
                         x.links=NA,
                         y.links=NA,
                         xy.links=NA,
-                        asLinks=NA
+                        asLinks=NA,
+                        x.images=NA,
+                        y.images=NA,
+                        xy.images=NA
                         ){
 
 
@@ -65,6 +68,12 @@ makeImageDF <- function(Splot,xy.type,
     dat2 = data.frame(rep(NA, (length(y.image)*length(x.image))))
     names(dat2) = "tempNA"
 
+   # initiate data frame for images 
+    dat3 = data.frame(rep(NA, (length(y.image)*length(x.image))))
+    names(dat3) = "tempNA"
+
+
+    
     MapObj$xy.type = "circle"
   }
   
@@ -84,7 +93,12 @@ makeImageDF <- function(Splot,xy.type,
       )
     dat2 = data.frame(rep(NA, (length(y.image)*length(x.image))))
     names(dat2) = "tempNA"
+    dat3 = data.frame(rep(NA, (length(y.image)*length(x.image))))
+    names(dat3) = "tempNA"
 
+
+
+    
     MapObj$xy.type = "circle"
   }
 
@@ -118,7 +132,9 @@ makeImageDF <- function(Splot,xy.type,
       )
     dat2 = data.frame(rep(NA, (length(y.image)*length(x.image))))
     names(dat2) = "tempNA"
-   
+    dat3 = data.frame(rep(NA, (length(y.image)*length(x.image))))
+    names(dat3) = "tempNA"
+
 
     MapObj$xy.type = "rect"
   }
@@ -243,6 +259,12 @@ makeImageDF <- function(Splot,xy.type,
       }                  
     }
   }
+
+  #################
+  #
+  # hyperlinks
+  #
+  #################
 
   
   # x specific hyperlinks
@@ -389,11 +411,138 @@ makeImageDF <- function(Splot,xy.type,
   }
 
  
+  #
+  # images
+  #
+
+
+  #
+  # x specific data
+  #
+  contxi = TRUE
+  x.images = as.data.frame(x.images)
+  cngName =  grep("if ", names(x.images))
+  names(x.images)[cngName] = paste("Value", cngName, sep="")
+  names(x.images) = gsub(pattern=" ", replacement=".",names(x.images))
+  if( (dim(x.images)[1]==1) & (dim(x.images)[2]==1)){
+    if(is.na(x.images[1,1])) contxi = FALSE
+  }
+  # dimension check
+  if(contxi){
+    if((dim(x.images)[1] != length(x.image))){
+      contxi = FALSE
+      cat(paste("Warning: x.images does not have correct dimensions \n   number of rows should equal length(x.image):",length(x.image), "\n   Continuing with x.images = NA \n", sep=""))
+      x.images = NA
+    }
+  }
+  # if x.images is not NA continue
+  if(contxi){     
+    for(i in 1:dim(x.images)[2]){
+      eval.js("temp=as.vector(mapply(rep,x=x.images[,i], MoreArgs=list(times=length(y.image))))")
+      # for each points link
+      for(j in 1:length(temp)){
+        tmp = temp[j]
+        # if not NA
+        if(is.na(tmp)){
+          temp[j] = NA
+        }else{
+          new.ti= paste("<img src=\\'",tmp,"\\'>", sep="")          
+          temp[j] = new.ti
+        
+        }
+      }
+     # put link in correct syntax into character matrix
+      eval.js(paste("dat3$", names(x.images)[i], "=temp", sep=""))    
+    }
+  }
+
+
+  
+
+  #
+  # y specific data
+  #
+  contyi = TRUE
+  y.images = as.data.frame(y.images)
+  cngName =  grep("if ", names(y.images))
+  names(y.images)[cngName] = paste("Value", cngName, sep="")
+  names(y.images) = gsub(pattern=" ", replacement=".",names(y.images))
+  if( (dim(y.images)[1]==1) & (dim(y.images)[2]==1)){
+    if(is.na(y.images[1,1])) contyi = FALSE
+  }
+  # dimension check
+  if((dim(y.images)[1] != length(y.image)) & contyi){
+    contyi = FALSE
+    cat(paste("Warning: y.images does not have correct dimensions \n   number of rows should equal length(y.image):",length(y.image), "\n   Continuing with y.images = NA \n", sep=""))
+    y.images = NA
+  }      
+  # if y.images is not NA continue
+  if(contyi){     
+    for(i in 1:dim(y.images)[2]){
+      eval.js("temp=as.vector(rep(y.images[,i],length(x.image)))")
+      # for each points link
+      for(j in 1:length(temp)){
+        tmp = temp[j]
+        # if not NA
+        if(is.na(tmp)){
+          temp[j] = NA
+        }else{
+          new.ti= paste("<img src=\\'",tmp,"\\'>", sep="")          
+          temp[j] = new.ti
+        
+        }
+      }
+     # put link in correct syntax into character matrix
+      eval.js(paste("dat3$", names(y.images)[i], "=temp", sep=""))    
+    }
+  }
+
+
+  
+  #
+  # xy -- assumes in this case that columns are different data vectors of row == nsmpls
+  #
+  contxyi = TRUE
+  if(is.na(xy.images[1])) contxyi = FALSE
+  # if xy.images is not NA continue
+  if(contxyi){     
+    for(i in 1:length(xy.images)){
+      eval.js("temp=xy.images[[i]]")
+      if((dim(temp)[2] == length(x.image)) & (dim(temp)[1] == length(y.image))){
+        # for each points link
+        temp = as.vector(temp)
+        for(j in 1:length(temp)){
+          tmp = temp[j]
+        # if not NA
+          if(is.na(tmp)){
+            temp[j] = NA
+          }else{
+  
+            new.ti= paste("<img src=\\'",tmp,"\\'>", sep="")          
+            temp[j] = new.ti
+            
+          }
+        }
+     # put link in correct syntax into character matrix
+        eval.js(paste("dat3$", names(xy.images)[i], "=temp", sep=""))    
+      }else{
+   cat(paste("Warning: at least one of the xy.images matricies are not of the correct dimension. \n    All should be of the dimension ",length(x.image), " by ", length(y.image), "\n", sep="")) 
+    
+      }
+    }   
+  }
+       
+
+
+
+  
+
   
   # add to object to return
   if(xy.type != "image.box") MapObj$Pixcoord = paste(as.character(x.image), as.character(y.image), sep=",")
   MapObj$dat = dat
   MapObj$dat2 = dat2
+  MapObj$dat3 = dat3
   MapObj$contLinks = contLinks
   MapObj$asLinks = asLinks
 

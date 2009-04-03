@@ -11,19 +11,8 @@ automapPts <- function(Splot,
                     automap.method="mode"
                     ){
  
-  #system(paste("kuickshow ",dir,fname.root, ".png &",sep=""))
-  #system(paste("kuickshow ",dir,boundFileName, ".png &",sep=""))
 
-
-  if(Splot$platform == "unix"){
-    # convert png images to tif for comparison with rtiff function readTiff
-    system(paste("convert ", dir,fname.root, ".png ", dir, fname.root, ".tif", sep=""))
-    system(paste("convert ", dir,boundFileName, ".png ", dir, boundFileName, ".tif", sep=""))
-  }else{
-    shell(paste("convert ", dir,fname.root, ".png ", dir, fname.root, ".tif", sep=""))
-    shell(paste("convert ", dir,boundFileName, ".png ", dir, boundFileName, ".tif", sep=""))
-  }
-    
+   
   # check if tif files where created
   if(dir == ""){
     d = dir("./")

@@ -131,17 +131,21 @@ writeCircle.2 <-function(DFs, cdat, ndat, obj){
       ",",obj$spot.radius[i],"\" onmouseover=\"Tip(\'",ndat[3],"&nbsp;&nbsp;:&nbsp;",
       cdat[i,3],sep="")
 
+   
     if(dim(cdat)[2]>3){
-
+       
       # static values
       if(DFs$orgDatDim[2]>3){
-        for(j in 4:(DFs$links.st-1)){
+        #for(j in 4:(DFs$links.st-1)){
+        for(j in 4:(DFs$image.st-1)){
           ctmp = paste(ctmp, "<br> ",ndat[j],"&amp;nbsp;&amp;nbsp;:&amp;nbsp;",
             cdat[i,j],sep="")
         }
       }
+
       # hyperlinks 
       linkFlag = FALSE
+
       if(DFs$orgDat2Dim[2] > 1){
         for(j in DFs$links.st:(dim(cdat)[2])){
           if(!is.na(cdat[i,j])){
@@ -149,10 +153,28 @@ writeCircle.2 <-function(DFs, cdat, ndat, obj){
             ctmp = paste(ctmp, "<br> ",ndat[j],":", cdat[i,j],sep="")
           }
         }         
-      }  
+      }
+
+      # images
+      if(DFs$orgDat3Dim[2] > 1){
+        if(DFs$orgDat2Dim[2] > 1){
+          end.num = DFs$links.st - 1
+        }else{
+          end.num = (dim(cdat)[2])
+        }
+        for(j in DFs$image.st:end.num){
+          if(!is.na(cdat[i,j])){
+            linkFlag = TRUE
+            ctmp = paste(ctmp, "<br> ",ndat[j],":", cdat[i,j],sep="")
+          }
+        }  
+        
+      }
+      
     }else{
       linkFlag = FALSE
     }
+
     if(linkFlag) ctmp = paste(ctmp, "\', STICKY,true,CLICKCLOSE,true,CLOSEBTN,false, FONTFACE,\'",obj$font.type,"\', FONTCOLOR, \'",obj$font.color,"\', FONTSIZE, \'",obj$font.size,"\', BGCOLOR, \'",obj$bg.color,"\')\" ",sep="")
     if(!linkFlag) ctmp = paste(ctmp, "\', FONTFACE,\'",obj$font.type,"\', FONTCOLOR, \'",obj$font.color,"\', FONTSIZE, \'",obj$font.size,"\', BGCOLOR, \'",obj$bg.color,"\')\" ",sep="")
     # points as links
@@ -195,12 +217,12 @@ writeRect.2 <-function(DFs, cdat, ndat, obj){
     ctmp=paste("<area shape=\"rect\" coords=\"",cdat[i,1],",",cdat[i,2],",",cdat[i,3],",",cdat[i,4],
       " \" onmouseover=\"Tip(\'",ndat[5],"&nbsp;&nbsp;:&nbsp;",
       cdat[i,5],sep="")
-
+ 
     if(dim(cdat)[2]>5){
 
       # static values
       if(DFs$orgDatDim[2]>5){
-        for(j in 6:(DFs$links.st-1)){
+        for(j in 6:(DFs$image.st-1)){
           ctmp = paste(ctmp, "<br> ",ndat[j],"&amp;nbsp;&amp;nbsp;:&amp;nbsp;",
             cdat[i,j],sep="")
         }
@@ -214,10 +236,33 @@ writeRect.2 <-function(DFs, cdat, ndat, obj){
             ctmp = paste(ctmp, "<br> ",ndat[j],":", cdat[i,j],sep="")
           }
         }         
-      }  
+      }
+
+
+      # images
+      if(DFs$orgDat3Dim[2] > 1){
+        if(DFs$orgDat2Dim[2] > 1){
+          end.num = DFs$links.st - 1
+        }else{
+          end.num = (dim(cdat)[2])
+        }
+        for(j in DFs$image.st:end.num){
+          if(!is.na(cdat[i,j])){
+            linkFlag = TRUE
+            ctmp = paste(ctmp, "<br> ",ndat[j],":", cdat[i,j],sep="")
+          }
+        }  
+        
+      }
+      
     }else{
       linkFlag = FALSE
     }
+
+
+
+
+    
     if(linkFlag) ctmp = paste(ctmp, "\', STICKY,true,CLICKCLOSE,true,CLOSEBTN,false, FONTFACE,\'",obj$font.type,"\', FONTCOLOR, \'",obj$font.color,"\', FONTSIZE, \'",obj$font.size,"\', BGCOLOR, \'",obj$bg.color,"\')\" ",sep="")
     if(!linkFlag) ctmp = paste(ctmp, "\', FONTFACE,\'",obj$font.type,"\', FONTCOLOR, \'",obj$font.color,"\', FONTSIZE, \'",obj$font.size,"\', BGCOLOR, \'",obj$bg.color,"\')\" ",sep="")
     # points as links
@@ -273,7 +318,7 @@ writePoly.2 <- function(DFs, cdat, ndat, obj){
 
       # static values
       if(DFs$orgDatDim[2]>(nv+1)){
-        for(j in (nv+2):(DFs$links.st-1)){
+        for(j in (nv+2):(DFs$image.st-1)){
           ctmp = paste(ctmp, "<br> ",ndat[j],"&amp;nbsp;&amp;nbsp;:&amp;nbsp;",
             cdat[i,j],sep="")
         }
@@ -287,7 +332,25 @@ writePoly.2 <- function(DFs, cdat, ndat, obj){
             ctmp = paste(ctmp, "<br> ",ndat[j],":", cdat[i,j],sep="")
           }
         }         
-      }  
+      }
+
+      # images
+      if(DFs$orgDat3Dim[2] > 1){
+        if(DFs$orgDat2Dim[2] > 1){
+          end.num = DFs$links.st - 1
+        }else{
+          end.num = (dim(cdat)[2])
+        }
+        for(j in DFs$image.st:end.num){
+          if(!is.na(cdat[i,j])){
+            linkFlag = TRUE
+            ctmp = paste(ctmp, "<br> ",ndat[j],":", cdat[i,j],sep="")
+          }
+        }  
+        
+      }
+  
+
     }else{
       linkFlag = FALSE
     }

@@ -52,10 +52,9 @@ initSplot(mat,
     additional plotting calls that should be executed for the plot. Each
     entry must be a character vector. If no additional plotting is
     required, an NA should be used}
-  \item{source.plot}{Indicates whether application should make a
-    postscript file and then convert to png file, or if a png or jpeg
-    file should be made directly. This value is either ps, png, jpeg, or
-    NA. If NA, the default will make a png file}
+  \item{source.plot}{Indicates what image output the application should  produce
+    postscript, tiff, png, or jpeg. It can be a character vector of any
+    combination of ps, png, jpeg, or tiff. If NA, the default will make a png file}
   \item{image.size}{character indicating resize value of image,'width'x'height'}
   \item{pointsize}{pointsize of image. passed into device call}
   \item{res}{resolution of image, passed into device call if png or jpeg}  

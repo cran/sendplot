@@ -21,8 +21,7 @@ makeSplot(Splot,
           Default=TRUE,
           header="v3",
           window.size = "800x1100", 
-          returnObj = FALSE,
-          getLims=FALSE)
+          returnObj = TRUE)
 
 
 }
@@ -31,9 +30,9 @@ makeSplot(Splot,
   \item{Splot}{An Object of the class Splot}
   \item{fname.root}{Base name to use for all file created}
   \item{dir}{directory path to where files should be created}
-  \item{overwriteSourcePlot}{character, should static image generated be
-    a postscript, png or jpeg. If this is NA, it uses what is specified
-    in Splot object.}
+  \item{overwriteSourcePlot}{character or character vector, should
+  static image generated be postscript, png, jpeg, or tiff. If this is
+  NA, it uses what is specified in Splot object.}
   \item{makeInteractive}{logical, should interactive html file be
     created. If FALSE, only static (ps, png, or jpeg) files is generated}
   \item{overrideInteractive}{logical of length equal to
@@ -47,9 +46,7 @@ makeSplot(Splot,
     for details.}
   \item{window.size}{size of the html window. Only effective when header=v3}
   \item{returnObj}{Should Splot object be returned}
-  \item{getLims}{Used internally to get x and y limits of all
-    figures. User does not need this argument.}
-}
+ }
 
 \details{
   
@@ -149,7 +146,7 @@ Splot = initSplot(mat, plot.calls, mai.mat=mai.mat,
 
 # first look/get plot output  -- makes static image 
 Splot = makeSplot(Splot, fname.root="exToy", makeInteractive=FALSE,
-                  getLims=TRUE, dir=direct)
+                  dir=direct, returnObj=TRUE)
 
 
 
@@ -174,6 +171,7 @@ Splot = makeImap(Splot, figure=1, xy.type="rect",
                  y.labels = c("d1",NA),
                  fname.root="exToy", dir=direct, spot.radius=10,
                  font.size=20, font.color="cyan", bg.color="black")
+
 # makes one of the outlier points interactive in the figure 1
 Splot = makeImap(Splot, figure=1, xy.type="circle", x.pos=3, y.pos=7,
                  x.labels = list(label="point", info="im a link"),

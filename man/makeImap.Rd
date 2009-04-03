@@ -24,19 +24,22 @@ makeImap(Splot,
          y.links=NA,
          xy.links=NA,
          asLinks=NA,
+         x.images=NA,
+         y.images=NA,
+         xy.images=NA,
          font.type="Helvetica",
          font.color="black", 
          font.size="12",     
          bg.color="#D6E3F6",
          fname.root="Splot",
          dir="./",
-         automap=TRUE,
          automap.method="mode",
          bb.clr=NA,
          bb.cex=2,
          returnVl=TRUE,
          saveFlag=FALSE,
-         saveName="Splot.RData")
+         saveName="Splot.RData",
+         cleanDir=TRUE)
 }
 
 \arguments{
@@ -82,6 +85,23 @@ makeImap(Splot,
     address. See details or vignette}
   \item{asLinks}{contains complete web address for points that should be
     treated as hyperlinks. See details or vignette}
+  \item{x.images}{data frame of n x m which contains paths to images relating to the xpos.  n should be the length of the xpos
+    argument if xy.type is "image.midpoints" and length of xpos - 1 if xy.type is
+    "image.boundaries" or "image.box". m columns contains information
+    regarding sample. This information is displayed as images in the
+    interactive plot window.}
+  \item{y.images}{data frame of n x m which contains paths to images
+  relating to the ypos.  n should be the length of the ypos argument if xy.type is "image.midpoints" and length of ypos - 1 if xy.type is
+    "image.boundaries" or "image.box". m columns contains information
+    regarding sample. This information is displayed as images in the
+    interactive plot window.}
+  \item{xy.images}{list of matricies. All matricies should be of n x m
+    where n is the length of y and m is the length of x when xy.type is
+    "image.midpoint". All matricies should be of n x m
+    where n is the length of y -1 and m is the length of x - 1 when xy.type is
+    "image.boundaries" or "image.box". This information is displayed in
+    the interactive plot window as images. The values in these
+    matricies should be complete paths to images}
   \item{font.type}{font type for tool-tip. Currently support fonts are
     Arial, Helvetica,and sans-serif}
   \item{font.color}{font color for tool-tip}
@@ -89,8 +109,6 @@ makeImap(Splot,
   \item{bg.color}{background color of tool-tip}
   \item{fname.root}{Base name to use for .png file name}
   \item{dir}{directory path to where files should be created}
-  \item{automap}{automatic detection of up.left and low.right bound
-    points. Fully functional on linux/unix machines only.}
   \item{automap.method}{Method to detect upper and lower bounds. Current
     options are "mode" or "median"}
   \item{bb.clr}{vector of possible color choices for automatic detection
@@ -100,6 +118,9 @@ makeImap(Splot,
   \item{returnVl}{Should Splot object be returned}
   \item{saveFlag}{Should Splot object be saved}
   \item{saveName}{If saveFlag, path file name to save object}
+  \item{cleanDir}{logical indicating if the intermediate files generated
+  by the application should be deleted. The files deleted are of no
+  consequence to the user; they are needed to identify correct mapping}
 }
 
 \details{

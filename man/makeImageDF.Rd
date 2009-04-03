@@ -22,7 +22,10 @@ makeImageDF(Splot,
             x.links=NA,
             y.links=NA,
             xy.links=NA,
-            asLinks=NA)
+            asLinks=NA,
+            x.images=NA,
+            y.images=NA,
+            xy.images=NA)
 }
 
 \arguments{
@@ -84,6 +87,23 @@ makeImageDF(Splot,
     "image.midpoints". If xy.type is "image.boundaries" or "image.box",
     then the lengths should be xpos-1 and ypos - 1. instead of xpos and
     ypos}
+  \item{x.images}{data frame of n x m which contains paths to images relating to the xpos.  n should be the length of the xpos
+    argument if xy.type is "image.midpoints" and length of xpos - 1 if xy.type is
+    "image.boundaries" or "image.box". m columns contains information
+    regarding sample. This information is displayed as images in the
+    interactive plot window.}
+  \item{y.images}{data frame of n x m which contains paths to images
+  relating to the ypos.  n should be the length of the ypos argument if xy.type is "image.midpoints" and length of ypos - 1 if xy.type is
+    "image.boundaries" or "image.box". m columns contains information
+    regarding sample. This information is displayed as images in the
+    interactive plot window.}
+  \item{xy.images}{list of matricies. All matricies should be of n x m
+    where n is the length of y and m is the length of x when xy.type is
+    "image.midpoint". All matricies should be of n x m
+    where n is the length of y -1 and m is the length of x - 1 when xy.type is
+    "image.boundaries" or "image.box". This information is displayed in
+    the interactive plot window as images. The values in these
+    matricies should be complete paths to images}
 
 }
 

@@ -35,6 +35,9 @@ heatmap.send <- function (x,
                           y.links=NA,
                           xy.links=NA,
                           asLinks=NA,
+                          x.images=NA,
+                          y.images=NA,
+                          xy.images=NA,
                           spot.radius=5,
                           source.plot=NA,
                           image.size="800x1100",
@@ -299,7 +302,9 @@ heatmap.send <- function (x,
     }
     if(!is.null(dim(x.labels))){
       if( (dim(x.labels)[1] == length(colInd))){
-        x.labels = x.labels[colInd,]
+        xnm = names(x.labels)
+        x.labels = as.data.frame(x.labels[colInd,])
+        names(x.labels) = xnm
       }else{
         br = TRUE
       }
@@ -383,7 +388,9 @@ heatmap.send <- function (x,
     }
     if(!is.null(dim(x.links))){
       if( (dim(x.links)[1] == length(colInd))){
-        x.links = x.links[colInd,]
+        xlnm = names(x.links)
+        x.links = as.data.frame(x.links[colInd,])
+        names(x.links)=xlnm
       }else{
         br = TRUE
       }
@@ -493,6 +500,100 @@ heatmap.send <- function (x,
 
 
 
+   # check dimensions and fix index of x.images,y.images, xy.images
+    br = FALSE
+    if(is.null(dim(x.images))){
+      if(length(x.images) != 1) br = TRUE
+    }
+    if(!is.null(dim(x.images))){
+      if( (dim(x.images)[1] == length(colInd))){
+        xinm = names(x.images)
+        x.images = as.data.frame(x.images[colInd,])
+        names(x.imagse) = xinm
+      }else{
+        br = TRUE
+      }
+    }
+    if(br){
+      cat(paste("x.images dimension is not correct. \n x.images should be a matrix with number of rows equal to ",nc ," \n continuing with x.images =NA \n", sep=""))
+      x.images = NA
+    }
+    br = FALSE
+    if(is.null(dim(y.images))){
+      if(length(y.images) != 1) br = TRUE
+    }
+    if(!is.null(dim(y.images))){
+      if( (dim(y.images)[1] == length(rowInd))){
+        y.images = y.images[rowInd,]
+      }else{
+        br = TRUE
+      }
+    }
+    if(br){
+      cat(paste("y.images dimension is not correct. \n y.images should be a matrix with number of rows equal to ",nr ," \n continuing with y.images =NA \n", sep=""))
+      y.images = NA
+    }
+
+    br = FALSE
+    if(!is.null(dim(xy.images))){
+      if(dim(xy.images)[1]!=nr) {
+        br = TRUE
+      }
+      if(dim(xy.images)[2]!=nc) {
+        
+         br = TRUE
+      }
+      if(br){
+        cat(paste("xy.images dimension is not correct. \n xy.images should be a matrix with \n number of rows equal to ",nr ," \n and the number of columns equal to ", nc, "\n continuing with y.images =NA \n", sep=""))
+        xy.images=NA
+      } 
+      if(!is.null(dim(xy.images))){
+        newDF = list()
+        newDF$xy.lbl = xy.images
+        xy.images = newDF
+      }    
+    }
+    br = FALSE
+    if(length(xy.images)==1){
+      if(!is.na(xy.images[1])){
+        if(dim(xy.images[[1]])[1]==nr) {
+          xy.images[[1]] = xy.images[[1]][rowInd,]
+        }else{
+          br = TRUE
+        }        
+        if(dim(xy.images[[1]])[2]==nc) {
+          xy.images[[1]] = xy.images[[1]][,colInd]
+        }else{
+          br = TRUE
+        }
+        if(br){
+          cat(paste("xy.images dimension is not correct. \n xy.images should be a matrix with \n number of rows equal to ",nr ," \n and the number of columns equal to ", nc, "\n continuing with xy.images =NA \n", sep=""))
+          xy.images=NA
+        } 
+      }
+    }       
+    br = FALSE
+    if(length(xy.images)>1){
+      for(k in 1:length(xy.images)){
+        if(dim(xy.images[[k]])[1]==nr) xy.images[[k]] = xy.images[[k]][rowInd,]
+        if(dim(xy.images[[k]])[1]!=nr) br = TRUE
+        if(dim(xy.images[[k]])[2]==nc) xy.images[[k]] = xy.images[[k]][,colInd]
+        if(dim(xy.images[[k]])[2]!=nc) br = TRUE
+      }
+    }
+    if(br){
+      cat(paste("an xy.images dimension is not correct.\n number of rows should be equal to ",nr ," \n and the number of columns equal to ", nc, "\n continuing with yx.images =NA \n", sep=""))
+      xy.images = NA
+    }
+
+
+
+
+
+
+
+    
+
    # save(list=ls(), file="Heatmap.Helper.RData", compress=T) 
 
 
@@ -527,7 +628,7 @@ heatmap.send <- function (x,
     x.pos = c( (sendX-0.5), (sendX[length(sendX)]+0.5) )
     y.pos = c( (sendY-0.5), (sendY[length(sendY)]+0.5) )
     
-    Splot = makeImap(Splot, figure=1, xy.type="image.box", x.pos=x.pos, y.pos=y.pos, spot.radius=spot.radius, x.labels=x.labels, y.labels=y.labels, xy.labels=xy.labels, x.links=x.links, y.links=y.links, xy.links=xy.links, asLinks=asLinks,fname.root=fname.root, dir=dir, returnVl=TRUE, ...)
+    Splot = makeImap(Splot, figure=1, xy.type="image.box", x.pos=x.pos, y.pos=y.pos, spot.radius=spot.radius, x.labels=x.labels, y.labels=y.labels, xy.labels=xy.labels, x.links=x.links, y.links=y.links, xy.links=xy.links, asLinks=asLinks, x.images=x.images, y.images=y.images, xy.images=xy.images, fname.root=fname.root, dir=dir, returnVl=TRUE, ...)
     
     Splot = makeSplot(Splot, fname.root=fname.root, dir=dir, window.size=window.size, returnObj=TRUE)
 

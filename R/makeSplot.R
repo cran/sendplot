@@ -13,145 +13,201 @@ makeSplot <- function(Splot,
                       Default=TRUE,
                       header="v3",
                       window.size = "800x1100", # in px
-                      returnObj = FALSE,
-                      getLims=FALSE  # used internally
+                      returnObj = TRUE
+                     
                       ){
 
   # set up file names
   fname.ps=paste(dir,fname.root,".ps",sep="")
   fname.png=paste(dir,fname.root,".png",sep="")
   fname.jpeg=paste(dir,fname.root,".jpeg",sep="")
+  fname.tiff=paste(dir,fname.root,".tif",sep="")
   fname.html=paste(dir,fname.root,".html",sep="")
   
   #
   # create static image
   #
 
-  # overwriteSourcePlot is used instead of what is set in Splot object unless not acceptbale type or NA
-  # if of not acceptable type 
-  if( !is.na(overwriteSourcePlot) & (overwriteSourcePlot != "ps") & (overwriteSourcePlot != "png") & (overwriteSourcePlot != "jpeg") ){
-    overwriteSourcePlot = NA
-  }else{
-    source.plot = overwriteSourcePlot
-  }  
-  if(is.na(overwriteSourcePlot))  source.plot = Splot$source.plot
-  
-  # to get bounging values, primitive does not work with postscript
-  # temporarily change to png 
-  if(getLims) {
-    if( (source.plot != "png") & (source.plot != "jpeg")) source.plot = "png"
-  }
-
-  # begin png file if flagged
-  if(source.plot=="png"){
-    wi = strsplit(Splot$image.size, "x")[[1]][1]
-    hi = strsplit(Splot$image.size, "x")[[1]][2]
-    png(file=fname.png, width=as.real(wi), height=as.real(hi), pointsize=Splot$pointsize, res=Splot$res)
-  }
-  # begin jpeg file if flagged
-  if(source.plot=="jpeg"){
-    wi = strsplit(Splot$image.size, "x")[[1]][1]
-    hi = strsplit(Splot$image.size, "x")[[1]][2]
-    jpeg(file=fname.jpeg, width=as.real(wi), height=as.real(hi), pointsize=Splot$pointsize, res=Splot$res)
-  }
-  # begin postscript file if flagged
-  if(source.plot=="ps"){
-    postscript(file=paste(dir,fname.ps,sep=""),paper=Splot$ps.paper,width=Splot$ps.width,height=Splot$ps.height,horizontal=FALSE, pointsize=Splot$pointsize)
-  }
-
-      
-  Splot$plot.output = list()
-  
-  
-  # initiate layout
-  if(max(as.vector(Splot$mat),na.rm=TRUE)>1) nf = layout(Splot$mat, respect=TRUE)
-  if(Splot$mai.prc) mai.def=par("mai")
 
 
-  # initialize getLims 
-  if(is.null(Splot$plot.lims)){
-    plot.lims = list()
-    plot.lims$xmins = rep(NA, length(Splot$plot.calls))
-    plot.lims$xmaxs = rep(NA, length(Splot$plot.calls))
-    plot.lims$ymins = rep(NA, length(Splot$plot.calls))
-    plot.lims$ymaxs = rep(NA, length(Splot$plot.calls))
-    Splot$plot.lims = plot.lims    
-  }
- 
-  
-  # loop over plot calls to place plots in order or 1:n in layout
-  for(i in 1:length(Splot$plot.calls)){
-    # set up plot margin
-    if(length(Splot$mai.mat)>1){
-      if(!Splot$mai.prc) par(mai=Splot$mai.mat[i,])
-      if(Splot$mai.prc)  par(mai=Splot$mai.mat[i,]*mai.def)            
+
+  # if single entry check for acceptable type
+  if(length(overwriteSourcePlot)==1){
+
+    if(!is.na(overwriteSourcePlot) & ((overwriteSourcePlot != "ps") & (overwriteSourcePlot != "png") & (overwriteSourcePlot != "jpeg") & (overwriteSourcePlot != "tiff"))){
+      overwriteSourcePlot = NA
     }
-    # evaluate plot call
-    plt = eval.js(Splot$plot.calls[[i]])
+    if(!is.na(overwriteSourcePlot) & ((overwriteSourcePlot != "png") & (overwriteSourcePlot != "jpeg"))){
+      overwriteSourcePlot = c("png", overwriteSourcePlot)
+    }                                     
+    if(is.na(overwriteSourcePlot[1]))  overwriteSourcePlot = Splot$source.plot
 
-    if(is.null(plt)) Splot$plot.output[i] = NA
-    if(!is.null(plt)){
-      Splot$plot.output[i] = NA
-      class(Splot$plot.output[i]) = "list"
-      Splot$plot.output[[i]] = plt
-    }
-    
-    # cycle through all additional plot calls for current plot
-    sub.np = length(Splot$plot.extras[[i]])
-    for(sp in 1:sub.np){
-      if(!is.na(Splot$plot.extras[[i]][[sp]]))
-        eval.js(Splot$plot.extras[[i]][[sp]])
-    }
-
-    
-    Splot$plot.lims$xmins[i] = par()$usr[1]
-    Splot$plot.lims$xmaxs[i] = par()$usr[2]
-    Splot$plot.lims$ymins[i] = par()$usr[3]
-    Splot$plot.lims$ymaxs[i] = par()$usr[4]
-    
-    
+    pngF = length(which(overwriteSourcePlot == "png")) > 0
+    psF = length(which(overwriteSourcePlot == "ps")) > 0
+    tiffF = length(which(overwriteSourcePlot == "tiff")) > 0
+    jpegF = length(which(overwriteSourcePlot == "jpeg")) > 0
        
-  }# end for loop over plot calls
-
-
-
-
-
-  
-  
-  # retrieve xlim/ylim information to add bounding points 
-  #if(getLims){
-    #Splot = getPlotsBounds(Splot)   
-  #}
-
-
-
-
-
-
-  
-
-  # end device 
-  dev.off()
-
-           ##############################################################
-           ##############################################################
-           #
-           # problems with converting from ps to png and having 
-           #   interactive work correctly
-           # look into this further
-           #   
-           ##############################################################
-           ##############################################################
-      
-
-  
-  # convert ps to png if ps was made and on unix OS
-  if(source.plot=="ps" & Splot$platform=="unix"){
+ 
+  }else{
+    # if vector check acceptable types 
+    pngF = length(which(overwriteSourcePlot == "png")) > 0
+    psF = length(which(overwriteSourcePlot == "ps")) > 0
+    tiffF = length(which(overwriteSourcePlot == "tiff")) > 0
+    jpegF = length(which(overwriteSourcePlot == "jpeg")) > 0
     
-    system(paste("convert -size 800x1100 ",dir,fname.ps," -resize ",Splot$image.size," ",dir,fname.png,sep=""))
+    if(!pngF & !jpegF) pngF = TRUE
+     
   }
 
+  
+  wi = strsplit(Splot$image.size, "x")[[1]][1]
+  hi = strsplit(Splot$image.size, "x")[[1]][2]
+
+  startFig = "png"
+  if(!pngF) startFig = "jpeg"
+
+  
+  if(startFig == "png"){
+    png(filename=fname.png, width=as.real(wi), height=as.real(hi), pointsize=Splot$pointsize, res=Splot$res)
+    dev.control("enable")
+    
+    Splot$plot.output = list()
+  
+    # initiate layout
+    if(max(as.vector(Splot$mat),na.rm=TRUE)>1) nf = layout(Splot$mat, respect=TRUE)
+    if(Splot$mai.prc) mai.def=par("mai")
+
+    # initialize getLims 
+    if(is.null(Splot$plot.lims)){
+      plot.lims = list()
+      plot.lims$xmins = rep(NA, length(Splot$plot.calls))
+      plot.lims$xmaxs = rep(NA, length(Splot$plot.calls))
+      plot.lims$ymins = rep(NA, length(Splot$plot.calls))
+      plot.lims$ymaxs = rep(NA, length(Splot$plot.calls))
+      Splot$plot.lims = plot.lims    
+    }
+  
+    # loop over plot calls to place plots in order or 1:n in layout
+    for(i in 1:length(Splot$plot.calls)){
+      # set up plot margin
+      if(length(Splot$mai.mat)>1){
+        if(!Splot$mai.prc) par(mai=Splot$mai.mat[i,])
+        if(Splot$mai.prc)  par(mai=Splot$mai.mat[i,]*mai.def)            
+      }
+      # evaluate plot call
+      plt = eval.js(Splot$plot.calls[[i]])
+
+      if(is.null(plt)) Splot$plot.output[i] = NA
+      if(!is.null(plt)){
+        Splot$plot.output[i] = NA
+        class(Splot$plot.output[i]) = "list"
+        Splot$plot.output[[i]] = plt
+      }
+    
+      # cycle through all additional plot calls for current plot
+      sub.np = length(Splot$plot.extras[[i]])
+      for(sp in 1:sub.np){
+        if(!is.na(Splot$plot.extras[[i]][[sp]]))
+          eval.js(Splot$plot.extras[[i]][[sp]])
+      }
+
+      Splot$plot.lims$xmins[i] = par()$usr[1]
+      Splot$plot.lims$xmaxs[i] = par()$usr[2]
+      Splot$plot.lims$ymins[i] = par()$usr[3]
+      Splot$plot.lims$ymaxs[i] = par()$usr[4]
+           
+    }# end for loop over plot calls
+
+
+    if(jpegF){
+      dev.copy(jpeg, filename=fname.jpeg, width=as.real(wi), height=as.real(hi), pointsize=Splot$pointsize, res=Splot$res)
+      dev.off()
+    }
+    if(tiffF){
+      dev.copy(tiff, filename=fname.tiff, width=as.real(wi), height=as.real(hi), pointsize=Splot$pointsize, res=Splot$res)
+      dev.off()
+    }
+    if(psF){
+      dev.copy(postscript,file=fname.ps,paper=Splot$ps.paper,width=Splot$ps.width,height=Splot$ps.height,horizontal=FALSE, pointsize=Splot$pointsize)
+      dev.off()
+    }
+    dev.off() 
+    
+
+  }else{
+
+    jpeg(filename=fname.jpeg, width=as.real(wi), height=as.real(hi), pointsize=Splot$pointsize, res=Splot$res)
+    dev.control("enable")
+
+    
+    Splot$plot.output = list()
+  
+    # initiate layout
+    if(max(as.vector(Splot$mat),na.rm=TRUE)>1) nf = layout(Splot$mat, respect=TRUE)
+    if(Splot$mai.prc) mai.def=par("mai")
+
+    # initialize getLims 
+    if(is.null(Splot$plot.lims)){
+      plot.lims = list()
+      plot.lims$xmins = rep(NA, length(Splot$plot.calls))
+      plot.lims$xmaxs = rep(NA, length(Splot$plot.calls))
+      plot.lims$ymins = rep(NA, length(Splot$plot.calls))
+      plot.lims$ymaxs = rep(NA, length(Splot$plot.calls))
+      Splot$plot.lims = plot.lims    
+    }
+  
+    # loop over plot calls to place plots in order or 1:n in layout
+    for(i in 1:length(Splot$plot.calls)){
+      # set up plot margin
+      if(length(Splot$mai.mat)>1){
+        if(!Splot$mai.prc) par(mai=Splot$mai.mat[i,])
+        if(Splot$mai.prc)  par(mai=Splot$mai.mat[i,]*mai.def)            
+      }
+      # evaluate plot call
+      plt = eval.js(Splot$plot.calls[[i]])
+
+      if(is.null(plt)) Splot$plot.output[i] = NA
+      if(!is.null(plt)){
+        Splot$plot.output[i] = NA
+        class(Splot$plot.output[i]) = "list"
+        Splot$plot.output[[i]] = plt
+      }
+    
+      # cycle through all additional plot calls for current plot
+      sub.np = length(Splot$plot.extras[[i]])
+      for(sp in 1:sub.np){
+        if(!is.na(Splot$plot.extras[[i]][[sp]]))
+          eval.js(Splot$plot.extras[[i]][[sp]])
+      }
+
+      Splot$plot.lims$xmins[i] = par()$usr[1]
+      Splot$plot.lims$xmaxs[i] = par()$usr[2]
+      Splot$plot.lims$ymins[i] = par()$usr[3]
+      Splot$plot.lims$ymaxs[i] = par()$usr[4]
+           
+    }# end for loop over plot calls
+
+
+    if(tiffF){
+      dev.copy(tiff, filename=fname.tiff, width=as.real(wi), height=as.real(hi), pointsize=Splot$pointsize, res=Splot$res)
+      dev.off()
+    }
+    if(psF){
+      dev.copy(postscript,file=fname.ps,paper=Splot$ps.paper,width=Splot$ps.width,height=Splot$ps.height,horizontal=FALSE, pointsize=Splot$pointsize)
+      dev.off()
+    }
+    dev.off() 
+        
+  } # end else
+
+
+
+
+
+
+
+  
+  
 
 
   #
@@ -256,7 +312,7 @@ makeSplot <- function(Splot,
         
         cat("</map>",fill=TRUE)
         cat("<div class=\"plot\">",fill=TRUE)
-        if(source.plot=="jpeg"){
+        if(!pngF){
 
           image.name.jpeg=paste(fname.root,".jpeg",sep="")
  
@@ -289,8 +345,7 @@ makeSplot <- function(Splot,
   }
 
   
- 
-  if(getLims) returnObj = TRUE
+  #if(getLims) returnObj = TRUE
   if(returnObj) return(Splot)
   
 }

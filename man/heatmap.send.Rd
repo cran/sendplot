@@ -35,6 +35,8 @@ heatmap.send(x,Rowv = NULL,
              x.labels=NA,y.labels=NA,xy.labels=NA,
              x.links=NA, y.links=NA,
              xy.links=NA,asLinks=NA,
+             x.images=NA, y.images=NA,
+             xy.images=NA,
              spot.radius=5,source.plot=NA,
              image.size="800x1100",
              fname.root="test",dir="./", header="v3",
@@ -132,6 +134,21 @@ heatmap.send(x,Rowv = NULL,
     vector of length equal to the second dimension of the x argument
     that will be repeated,a non NA value of length 1 that will be
     repeated for all points, or a vector of length dim(x)[1]*dim(x)[2]}  
+  \item{x.images}{data frame of n x m which contains paths for images
+    relating to the x axis of the heatmap plot. n should be
+    equal to the second dimension of the x argument. m columns contains
+    information regarding sample. This information is displayed as
+    images in the interactive plot window. This may be left NA}
+  \item{y.images}{data frame of n x m which contains paths for images
+    relating to the y axis of the heatmap plot. n should be
+    equal to the first dimension of the x argument. This information is
+    displayed as images in the interactive plot window. This may be
+    left as NA}
+  \item{xy.images}{list of matricies.  All matricies should be of n x m
+    where n is equal to the first dimension of the x argument and m is
+    equal to the second dimension of the x argument. This information is
+    displayed in the interactive plot window as images. The values
+    in these matricies should be complete path of images}
   \item{spot.radius}{radius of circle in pixels indicating area that
     will be interactive around the center of graphed points}
   \item{source.plot}{Indicates whether application should make a

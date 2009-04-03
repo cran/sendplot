@@ -44,7 +44,7 @@ addBounding <- function(Splot,
   }
 
   # make output with figure having bound points 
-  makeSplot(Splot, fname.root=boundFileName, dir=dir, makeInteractive=FALSE, overwriteSourcePlot="png")
+  makeSplot(Splot, fname.root=boundFileName, dir=dir, makeInteractive=FALSE, overwriteSourcePlot=c("png", "tiff"), returnObj=TRUE)
   
 
 }

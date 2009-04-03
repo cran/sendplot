@@ -155,16 +155,49 @@ initSplot <- function(mat,
   # if source.plot is NA use appropriate 
   #
   platform = .Platform$OS.type
-  # if source.plot is not specified default to appropriate file
-  #  source plot can only by png or ps or jpeg
 
-  if(is.na(source.plot) | !(source.plot=="ps" | source.plot=="png" | source.plot=="jpeg")){
-    # old way defaulted to ps on linux/unix
-    # better quality/clarity going directly to png
-       #if(platform == "unix") source.plot = "ps"
-       #if(platform == "windows" | platform == "mac") source.plot = "png"
-    source.plot = "png"  
+
+  # if single entry check for acceptable type
+  if(length(source.plot)==1){
+
+    if(!is.na(source.plot) & ((source.plot != "ps") & (source.plot != "png") & (source.plot != "jpeg") & (source.plot != "tiff"))){
+      source.plot = NA
+    }
+    if(!is.na(source.plot) & ((source.plot != "png") & (source.plot != "jpeg"))){
+      source.plot = c("png", source.plot)
+    }                                     
+    if(is.na(source.plot[1]))  source.plot = "png"
+
+    pngF = length(which(source.plot == "png")) > 0
+    psF = length(which(source.plot == "ps")) > 0
+    tiffF = length(which(source.plot == "tiff")) > 0
+    jpegF = length(which(source.plot == "jpeg")) > 0
+
+    source.plot = NA
+    if(pngF) source.plot = c(source.plot, "png")
+    if(jpegF) source.plot = c(source.plot, "jpeg")
+    if(tiffF) source.plot = c(source.plot, "tiff")
+    if(psF) source.plot = c(source.plot, "ps")
+    source.plot = source.plot[-1]
+    
+  }else{
+    # if vector check acceptable types 
+    pngF = length(which(source.plot == "png")) > 0
+    psF = length(which(source.plot == "ps")) > 0
+    tiffF = length(which(source.plot == "tiff")) > 0
+    jpegF = length(which(source.plot == "jpeg")) > 0
+    
+    if(!pngF & !jpegF) pngF = TRUE
+    
+    source.plot = NA
+    if(pngF) source.plot = c(source.plot, "png")
+    if(jpegF) source.plot = c(source.plot, "jpeg")
+    if(tiffF) source.plot = c(source.plot, "tiff")
+    if(psF) source.plot = c(source.plot, "ps")
+    source.plot = source.plot[-1] 
+    
   }
+
 
   
   Splot$platform = platform

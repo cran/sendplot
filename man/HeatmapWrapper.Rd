@@ -286,7 +286,6 @@ loc.inv = as.data.frame(loc.inv)
 direct = paste(tempdir(),"/",sep="")
 direct
 
-
 heatmap.send.legacy(temp, RowSideColors=rcol, ColSideColors=ccol,
 x.lbls=temp.inv, y.lbls=loc.inv, bound.pt=FALSE, paint=FALSE,
 spot.radius=20, dir=direct)

@@ -46,9 +46,7 @@ addBounding(Splot,
 \seealso{\code{\link{makeImap}}}
 
 \examples{
-
   # not called by user
-
 }
 
 \keyword{methods}

@@ -317,11 +317,9 @@ x.lbls = as.data.frame(x.lbls)
 
 
 
-
 #set up temporary directory
 direct = paste(tempdir(),"/",sep="")
 direct
-
 
 
 sendplot(mat, plot.calls, mai.mat,

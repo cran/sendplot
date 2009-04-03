@@ -105,6 +105,32 @@ mapMethod <- function(automap.method, temp){
 
         # column loc is median
         r1.col = floor(median(col.reg.1))
+
+        # make sure median is not one of the places that was 0 
+        if(!is.na(match(r1.col, col.reg.1[which(vec == 0)]))){
+          sDx = which(col.reg.1 == r1.col)
+          upDx = sDx
+          unF = TRUE
+          iM = 0
+          while(unF & (upDx < length(col.reg.1))) {
+            iM = iM + 1
+            unF = !is.na(match(col.reg.1[sDx+iM], col.reg.1[which(vec == 0)]))
+            upDx = upDx+1
+          }
+          lwDx = sDx
+          lnF = TRUE
+          iM = 0
+          while(lnF & (lwDx > 0)) {
+            iM = iM + 1
+            lnF = !is.na(match(col.reg.1[sDx-iM], col.reg.1[which(vec == 0)]))
+            lwDx = lwDx - 1
+          }
+          if( (upDx-sDx) <= (sDx-lwDx) ) {
+            r1.col= col.reg.1[upDx]
+          }else{
+            r1.col= col.reg.1[lwDx]
+          }  
+        }        
         # row location is length of different in determine column
         r1.row = which(temp[r1.col,]>0)[1]
         add.r = floor((row.count[r1.col])/2) 
@@ -150,6 +176,32 @@ mapMethod <- function(automap.method, temp){
         
         # column loc is median
         r2.col = floor(median(col.reg.2))
+        # make sure median is not one of the places that was 0 
+        if(!is.na(match(r2.col, col.reg.2[which(vec2 == 0)]))){
+          sDx = which(col.reg.2 == r2.col)
+          upDx = sDx
+          unF = TRUE
+          iM = 0
+          while(unF & (upDx < length(col.reg.2))) {
+            iM = iM + 1
+            unF = !is.na(match(col.reg.2[sDx+iM], col.reg.2[which(vec2 == 0)]))
+            upDx = upDx+1
+          }
+          lwDx = sDx
+          lnF = TRUE
+          iM = 0
+          while(lnF & (lwDx > 0)) {
+            iM = iM + 1
+            lnF = !is.na(match(col.reg.2[sDx-iM], col.reg.2[which(vec2 == 0)]))
+            lwDx = lwDx - 1
+          }
+          if( (upDx-sDx) <= (sDx-lwDx) ) {
+            r2.col= col.reg.2[upDx]
+          }else{
+            r2.col= col.reg.2[lwDx]
+          }  
+        }
+        
         # row location is length of different in determine column
         r2.row = which(temp[r2.col,]>0)[1]
         add2.r = floor((row.count[r2.col])/2) 
