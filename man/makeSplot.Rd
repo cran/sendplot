@@ -265,8 +265,8 @@ Splot = makeSplot(Splot, fname.root="exToy", dir=direct, returnObj=TRUE)
 #
 #
 #  Now demonstarte removing interactive regions for figures
-#
-#
+#  Note: to see effect must remake plot with the makeSplot
+#  above
 
 
 # removes outlier point interactive in figure 1

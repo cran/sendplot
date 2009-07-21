@@ -1,0 +1,38 @@
+export(heatmap.send,
+       heatmap.send.legacy,
+       imagesend,
+       initSplot,
+       makeSplot,
+       removeImap,
+       addDefault,
+       sendimage,
+       sendplot,
+       sendxy,
+       xy.send,
+       makeImap,
+       eval.js,
+
+       addBounding,
+       automapPts,
+       getBounds,
+       makeCharacter,
+       makeImageDF,
+       makeImap,
+       makePolyDF,
+       makeRectDF,
+       makeScatterDF,
+       mapMethod,
+       writeCircle.1,
+       writeRect.1,
+       writePoly.1,
+       writeCircle.2,
+       writeRect.2,
+       writePoly.2,
+       writeDefault1,
+       writeDefault2,
+       writeToHTML1,
+       writeToHTML2
+      )
+
+
+import(rtiff)
