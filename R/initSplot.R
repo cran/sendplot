@@ -160,7 +160,7 @@ initSplot <- function(mat,
   # if single entry check for acceptable type
   if(length(source.plot)==1){
 
-    if(!is.na(source.plot) & ((source.plot != "ps") & (source.plot != "png") & (source.plot != "jpeg") & (source.plot != "tiff"))){
+    if(!is.na(source.plot) & ((source.plot != "ps") & (source.plot != "png") & (source.plot != "jpeg") & (source.plot != "tiff") & (source.plot != "pdf"))){
       source.plot = NA
     }
     if(!is.na(source.plot) & ((source.plot != "png") & (source.plot != "jpeg"))){
@@ -172,12 +172,15 @@ initSplot <- function(mat,
     psF = length(which(source.plot == "ps")) > 0
     tiffF = length(which(source.plot == "tiff")) > 0
     jpegF = length(which(source.plot == "jpeg")) > 0
+    pdfF = length(which(source.plot == "pdf")) > 0
 
     source.plot = NA
     if(pngF) source.plot = c(source.plot, "png")
     if(jpegF) source.plot = c(source.plot, "jpeg")
     if(tiffF) source.plot = c(source.plot, "tiff")
     if(psF) source.plot = c(source.plot, "ps")
+    if(pdfF) source.plot = c(source.plot, "pdf")
+    
     source.plot = source.plot[-1]
     
   }else{
@@ -186,7 +189,8 @@ initSplot <- function(mat,
     psF = length(which(source.plot == "ps")) > 0
     tiffF = length(which(source.plot == "tiff")) > 0
     jpegF = length(which(source.plot == "jpeg")) > 0
-    
+    pdfF = length(which(source.plot == "pdf")) > 0
+  
     if(!pngF & !jpegF) pngF = TRUE
     
     source.plot = NA
@@ -194,6 +198,7 @@ initSplot <- function(mat,
     if(jpegF) source.plot = c(source.plot, "jpeg")
     if(tiffF) source.plot = c(source.plot, "tiff")
     if(psF) source.plot = c(source.plot, "ps")
+    if(pdfF) source.plot = c(source.plot, "pdf")
     source.plot = source.plot[-1] 
     
   }
@@ -206,7 +211,7 @@ initSplot <- function(mat,
   Splot$pointsize = pointsize
   Splot$res = res
   # if a postscript is used store information for device
-  if(source.plot == "ps"){
+  if(source.plot[1] == "ps"){
     Splot$ps.paper = ps.paper
     Splot$ps.width = ps.width
     Splot$ps.height = ps.height

@@ -23,6 +23,7 @@ makeSplot <- function(Splot,
   fname.jpeg=paste(dir,fname.root,".jpeg",sep="")
   fname.tiff=paste(dir,fname.root,".tif",sep="")
   fname.html=paste(dir,fname.root,".html",sep="")
+  fname.pdf=paste(dir,fname.root,".pdf",sep="")
   
   #
   # create static image
@@ -34,7 +35,7 @@ makeSplot <- function(Splot,
   # if single entry check for acceptable type
   if(length(overwriteSourcePlot)==1){
 
-    if(!is.na(overwriteSourcePlot) & ((overwriteSourcePlot != "ps") & (overwriteSourcePlot != "png") & (overwriteSourcePlot != "jpeg") & (overwriteSourcePlot != "tiff"))){
+    if(!is.na(overwriteSourcePlot) & ((overwriteSourcePlot != "ps") & (overwriteSourcePlot != "png") & (overwriteSourcePlot != "jpeg") & (overwriteSourcePlot != "tiff") & (overwriteSourcePlot != "pdf"))){
       overwriteSourcePlot = NA
     }
     if(!is.na(overwriteSourcePlot) & ((overwriteSourcePlot != "png") & (overwriteSourcePlot != "jpeg"))){
@@ -46,6 +47,7 @@ makeSplot <- function(Splot,
     psF = length(which(overwriteSourcePlot == "ps")) > 0
     tiffF = length(which(overwriteSourcePlot == "tiff")) > 0
     jpegF = length(which(overwriteSourcePlot == "jpeg")) > 0
+    pdfF = length(which(overwriteSourcePlot == "pdf")) > 0
        
  
   }else{
@@ -54,6 +56,7 @@ makeSplot <- function(Splot,
     psF = length(which(overwriteSourcePlot == "ps")) > 0
     tiffF = length(which(overwriteSourcePlot == "tiff")) > 0
     jpegF = length(which(overwriteSourcePlot == "jpeg")) > 0
+    pdfF = length(which(overwriteSourcePlot == "pdf")) > 0
     
     if(!pngF & !jpegF) pngF = TRUE
      
@@ -131,6 +134,10 @@ makeSplot <- function(Splot,
       dev.copy(postscript,file=fname.ps,paper=Splot$ps.paper,width=Splot$ps.width,height=Splot$ps.height,horizontal=FALSE, pointsize=Splot$pointsize)
       dev.off()
     }
+    if(pdfF){
+      dev.copy2pdf(file=fname.pdf,paper=Splot$ps.paper,width=Splot$ps.width,height=Splot$ps.height,pointsize=Splot$pointsize)
+      #dev.off()
+    }
     dev.off() 
     
 
@@ -195,6 +202,10 @@ makeSplot <- function(Splot,
     if(psF){
       dev.copy(postscript,file=fname.ps,paper=Splot$ps.paper,width=Splot$ps.width,height=Splot$ps.height,horizontal=FALSE, pointsize=Splot$pointsize)
       dev.off()
+    }
+    if(pdfF){
+      dev.copy2pdf(file=fname.pdf,paper=Splot$ps.paper,width=Splot$ps.width,height=Splot$ps.height,pointsize=Splot$pointsize)
+      #dev.off()
     }
     dev.off() 
         
