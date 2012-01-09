@@ -325,8 +325,10 @@ makeImap <- function(Splot,
       shell("mkdir makeImapTempDir", mustWork=NA,ignore.stderr =TRUE)
       shell(paste("mv ",dir,"*Dot* makeImapTempDir/",sep=""), mustWork=NA,ignore.stderr =TRUE)
       shell(paste("mv ",dir,fname.root,".tif makeImapTempDir/", sep=""), mustWork=NA,ignore.stderr =TRUE)
-      shell("rm -r makeImapTempDir", mustWork=NA,ignore.stderr =TRUE)
-
+      #shell("rm -r makeImapTempDir", mustWork=NA,ignore.stderr =TRUE)
+      shell("del /Q makeImapTempDir", mustWork=NA,ignore.stderr =TRUE)
+      shell("rd /Q makeImapTempDir", mustWork=NA,ignore.stderr =TRUE)
+      
     }
 
     
