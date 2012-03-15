@@ -18,6 +18,7 @@ heatmap.send <- function (x,
                           margins = c(5, 5),
                           ColSideColors,
                           RowSideColors,
+                          MainColor = heat.colors(12),
                           cexRow = 0.2 +  1/log10(nr),
                           cexCol = 0.2 + 1/log10(nc),
                           labRow = NULL, 
@@ -158,7 +159,7 @@ heatmap.send <- function (x,
 
     
    # in all cases the first plot must be our image
-   plot1 = "image(x=1:nc, y=1:nr, z=z, xlim = 0.5 + c(0, nc), ylim = 0.5 + c(0, nr), axes = FALSE, xlab = '', ylab = '');axis(1, 1:nc, labels = labCol, las = 2, line = -0.5, tick = 0,cex.axis = cexCol);"
+   plot1 = "image(x=1:nc, y=1:nr, z=z, xlim = 0.5 + c(0, nc), ylim = 0.5 + c(0, nr), axes = FALSE, xlab = '', ylab = '', col=MainColor);axis(1, 1:nc, labels = labCol, las = 2, line = -0.5, tick = 0,cex.axis = cexCol);"
     if (!is.null(xlab)) plot1 = paste(plot1,"mtext(xlab, side = 1, line = margins[1] - 1.25);", sep="")
     plot1 = paste(plot1, "axis(4, iy, labels = labRow, las = 2, line = -0.5, tick = 0,cex.axis = cexRow);", sep="")
      if (!is.null(ylab)) plot1 = paste(plot1,"mtext(ylab, side = 4, line = margins[2] - 1.25);",sep="")

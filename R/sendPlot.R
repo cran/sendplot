@@ -52,7 +52,7 @@ sendplot <- function(mat, plot.calls, x,y, mai.mat=NA, mai.prc=FALSE,
     if(source.plot=="png"){
       wi = strsplit(resize, "x")[[1]][1]
       hi = strsplit(resize, "x")[[1]][2]
-      png(file=fname.png, width=as.real(wi), height=as.real(hi))
+      png(filename=fname.png, width=as.real(wi), height=as.real(hi))
     }
     # begin postscript file if flagged
     if(source.plot=="ps"){
@@ -169,7 +169,7 @@ sendplot <- function(mat, plot.calls, x,y, mai.mat=NA, mai.prc=FALSE,
   if(source.plot=="png"){
     wi = strsplit(resize, "x")[[1]][1]
     hi = strsplit(resize, "x")[[1]][2]
-    png(file=fname.Dot.png, width=as.real(wi), height=as.real(hi))
+    png(filename=fname.Dot.png, width=as.real(wi), height=as.real(hi))
   }
   # begin postscript file if flagged
   if(source.plot=="ps"){
@@ -288,7 +288,7 @@ sendplot <- function(mat, plot.calls, x,y, mai.mat=NA, mai.prc=FALSE,
   if(source.plot=="png"){
     wi = strsplit(resize, "x")[[1]][1]
     hi = strsplit(resize, "x")[[1]][2]
-    png(file=fname.png, width=as.real(wi), height=as.real(hi))
+    png(filename=fname.png, width=as.real(wi), height=as.real(hi))
   }
   # begin postscript file if flagged
   if(source.plot=="ps"){

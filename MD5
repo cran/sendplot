@@ -1,4 +1,4 @@
-b71e8a6301fb565d68a784e8decc23fb *DESCRIPTION
+1302d5295eab4d17847155c90cb84f6c *DESCRIPTION
 726a8b155c194c682acda639a558a40e *INDEX
 75bb1f4d72f07bcbaca59ed38065a69a *NAMESPACE
 b3fac17c402966302f069e0d545bc699 *R/HeatmapWrapper.R
@@ -7,7 +7,7 @@ b3fac17c402966302f069e0d545bc699 *R/HeatmapWrapper.R
 79f924bb576c603b245a4b896853f997 *R/automapPts.R
 930cbbb1d83b5213e3df259b15cfdd84 *R/eval.js.R
 b21a5430170c4ff8c919f75016f9b6fe *R/getBounds.R
-8fef0af3cde663e4f0a605f2948b94af *R/heatmap.send.R
+bb0c09bfa50d1a1cae96fa1f8d145bf7 *R/heatmap.send.R
 f55c9535b47caaf8d2fad9b824a1868e *R/image.send.R
 a75ebd90814a5bba18ea1bdc0f5e8245 *R/initSplot.R
 f264df3e6fd088ad3311175f513ae690 *R/makeCharacter.R
@@ -20,7 +20,7 @@ cf26f39ec3b1d588e02722d706465c40 *R/makeSplot.R
 dea7349fd2737fe5d49198f0634a6277 *R/mapMethod.R
 df0f38721a355baa011c267229d863e6 *R/removeImap.R
 17dc246067593a846464930c89b1716b *R/sendimage.R
-405102664a16f828ef9263808aa91393 *R/sendplot.R
+90aef6fd174ecff253364d106bf35579 *R/sendplot.R
 9115402a2ff73adf75760bb0c298b718 *R/sendxy.R
 346f6e91d490dbac9da6cc841cbf1e1c *R/writeArea.R
 5dbe7d0d9e54b0d1d823563c8322b15e *R/writeDefault.R
@@ -52,7 +52,7 @@ ac8fefbb014e9ab9f94c4b01813ec473 *inst/doc/scatter.png
 b4af3361b2a13f6d8182150b14d061f0 *inst/doc/sendPlotImage.png
 b7692908ccb5fb3bbace6dc1d2dbb5be *inst/doc/sendPlotScatter.png
 f7f0f9130eb47aa3a7995b66e7f67d2c *inst/doc/sendplot.Rnw
-73e759c238e529f76955f7d23e6bfc1e *inst/doc/sendplot.pdf
+4bce5a0b7a1e7af9289ea23c5fe810c8 *inst/doc/sendplot.pdf
 8321cf8eb0afe28e5d0a5c23c1f298b0 *inst/doc/sinCurve.png
 5207ccc43e78aaa619c490c907bb434a *inst/doc/snapshot1.png
 ba50969af398aa644ad4015fb7b8537a *inst/doc/test.png
@@ -72,8 +72,8 @@ c95032a6aae735d69b5ed4987f862282 *man/addBounding.Rd
 9a4d1ac95f0987df664e5a03089f8d2f *man/automapPts.Rd
 584778d9e63c0311cdbb5d74613623f2 *man/eval.js.Rd
 bc63f6866da282ec0bdd131c4e8b4bfe *man/getBounds.Rd
-e0fdaab83587188ed224e97811604cc5 *man/heatmap.send.Rd
-cfe271b3896b2e7ea067e57f0aa13fd0 *man/imagesend.Rd
+c6c85c2433bef42b49fd85b6cddcea50 *man/heatmap.send.Rd
+b5e2e3133bce7d48f7709cf54bc6e69a *man/imagesend.Rd
 e9806f1bd39f853f0afd1288ac3d427d *man/initSplot.Rd
 2870d5325e619040cf6d7bcb3161e108 *man/makeCharacter.Rd
 bcc80072a866e3209818a462c3568452 *man/makeImageDF.Rd

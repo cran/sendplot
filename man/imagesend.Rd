@@ -100,13 +100,13 @@ imagesend(plot.call,
 \examples{
 library(sendplot)
 library(rtiff)
-
+library(stats)
 
 mai.mat = matrix(c(1,1,1,1), ncol=4)
 
 carsX  = as.matrix(mtcars)
 carsX <- sweep(carsX, 2, colMeans(carsX, na.rm = TRUE))
-        sx <- apply(carsX, 2, sd, na.rm = TRUE)
+        sx <- apply(X=carsX, MARGIN=2, FUN="sd", na.rm = TRUE)
         carsX <- sweep(carsX, 2, sx, "/")
 
 plot.call="image(x=1:dim(carsX)[2],y=1:dim(carsX)[1], z=t(carsX),axes =

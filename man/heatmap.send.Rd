@@ -25,6 +25,7 @@ heatmap.send(x,Rowv = NULL,
              scale = c("row", "column", "none"),
              na.rm = TRUE, margins = c(5, 5),
              ColSideColors,RowSideColors,
+             MainColor = heat.colors(12),
              cexRow = 0.2 +  1/log10(nr),
              cexCol = 0.2 + 1/log10(nc),
              labRow = NULL,labCol = NULL,
@@ -84,6 +85,8 @@ heatmap.send(x,Rowv = NULL,
   \item{RowSideColors}{ (optional) character vector of length 'nrow(x)'
           containing the color names for a vertical side bar that may
           be used to annotate the rows of 'x'}
+  \item{MainColor}{color scale for values. Passed into 'image' function
+          as col argument}
   \item{cexRow}{positive number, used as 'cex.axis' in for the row axis
     labeling. The defaults currently only use number of rows}
   \item{cexCol}{positive number, used as 'cex.axis' in for the column axis
