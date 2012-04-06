@@ -1,5 +1,5 @@
 Package: sendplot
-Version: 3.8.10
+Version: 3.8.10.1
 Date: Apr 6, 2012
 Title: Tool for sending interactive plots with tool-tip content.
 Author: Daniel P Gaile <dpgaile@buffalo.edu>, Lori A. Shepherd
@@ -14,6 +14,7 @@ Description: A tool for visualizing data
 License: GPL (>= 2)
 URL:
         http://sphhp.buffalo.edu/biostat/research/software/sendplot/index.php
-Packaged: 2012-04-06 12:27:18 UTC; las65
+Packaged: 2013-02-27 15:51:35 UTC; ripley
 Repository: CRAN
-Date/Publication: 2012-04-06 13:09:24
+Date/Publication: 2013-03-01 09:14:05
+NeedsCompilation: no
